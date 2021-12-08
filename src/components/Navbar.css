@@ -1,0 +1,51 @@
+.navbar-horizontal{
+    overflow: hidden;
+    width: 100%;
+}
+
+.logo{
+    margin: 0 45px 0 45px;
+}
+
+.aboutus, .contactus{
+    margin-right: 30px;
+}
+
+.navbar-horizontal .login, .navbar-horizontal .signup{
+    float:right;
+}
+
+.navbar-horizontal .search-container{
+    float: left;
+    margin-left: 200px;
+}
+
+.search-container input[type=text]{
+    height: 1.5em;
+    width: 500px;
+    border: none;
+    float: left;
+    font-size: 17px;
+}
+
+.navbar-horizontal li{
+    margin-top: 5px;
+    float: left;
+    padding: 8px;
+    color:white;
+}
+
+.navbar-horizontal a{
+    text-decoration: none;
+    display: block;
+    color: white;
+}
+
+.navbar-horizontal ul {
+    height: 50px;
+    padding: 0;
+    margin:0;
+    background-color: #1A2238;
+    list-style-type: none;
+    
+  }
