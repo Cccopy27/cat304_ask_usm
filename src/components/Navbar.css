@@ -1,6 +1,10 @@
 .navbar-horizontal{
+    grid-column: 1/7;
+    display: block;
     overflow: hidden;
+    position: absolute;
     width: 100%;
+    border-bottom: 1px solid #9DAAF2;
 }
 
 .logo{
@@ -39,6 +43,10 @@
     text-decoration: none;
     display: block;
     color: white;
+}
+
+.navbar-horizontal a.active{
+    color: #9DAAF2; 
 }
 
 .navbar-horizontal ul {

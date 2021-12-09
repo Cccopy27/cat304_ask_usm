@@ -1,0 +1,41 @@
+.sidebar{
+    width: 120px;
+    height: 100vh;
+    min-width: 120px;
+    color: #fff;
+    background-color: #1A2238;
+    grid-column: 1/1;
+    grid-row: 2/6;
+    
+}
+.home{
+    margin-bottom: 30px;
+}
+
+.sidebar-content{
+    margin-top: 60px;
+}
+
+.sidebar ul{
+    list-style-type: none;
+    display: flex;
+    
+    flex-direction: column;
+}
+
+.sidebar li{
+    margin-top: 10px;
+}
+
+.sidebar a{
+    text-decoration: none;
+    
+}
+
+.sidebar-links a{
+    color: white;
+}
+
+.sidebar-links a.active {
+    color: #9DAAF2;  
+}

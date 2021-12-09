@@ -1,3 +1,5 @@
 .App{
-    display: flex;
+    display: grid;
+    grid-template-rows: 1fr,5fr;
+    grid-template-columns: 1fr 4fr 2fr;
 }
