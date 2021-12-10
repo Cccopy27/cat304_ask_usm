@@ -1,9 +1,8 @@
 .navbar-horizontal{
-    grid-column: 1/7;
-    display: block;
-    overflow: hidden;
-    position: absolute;
-    width: 100%;
+    grid-area: navbar;
+    position:sticky;
+    top:0;
+    background-color: #1A2238;
     border-bottom: 1px solid #9DAAF2;
 }
 
@@ -45,6 +44,10 @@
     color: white;
 }
 
+.navbar-horizontal a:hover{
+    color: #9DAAF2; 
+}
+
 .navbar-horizontal a.active{
     color: #9DAAF2; 
 }
@@ -53,7 +56,6 @@
     height: 50px;
     padding: 0;
     margin:0;
-    background-color: #1A2238;
     list-style-type: none;
     
   }

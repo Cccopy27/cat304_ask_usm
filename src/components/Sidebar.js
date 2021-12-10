@@ -6,13 +6,17 @@ export default function Sidebar() {
         <div className="sidebar">
             <div className="sidebar-content">
                 <nav className="sidebar-links">
-                    <ul>
+                    <ul className="sidebar-ul">
+                        <li className="mainpage">
+                            <NavLink to = "/">ASK@USM</NavLink>
+                        </li>
                         <li className="home">
                             <NavLink to = "/home">Home</NavLink>
                         </li>
                         <li className="question">
                             <NavLink to = "/question">Questions</NavLink>
                         </li>
+                        
                         <li className="tag">
                             <NavLink to = "/tag">Tags</NavLink>
                         </li>

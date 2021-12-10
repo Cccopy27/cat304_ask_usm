@@ -1,5 +1,13 @@
 .App{
     display: grid;
-    grid-template-rows: 1fr,5fr;
-    grid-template-columns: 1fr 4fr 2fr;
+    grid-template-rows: 120px, calc(100vh - 120px);
+    grid-template-columns: 18vh auto;
+    grid-template-areas: "sidebar navbar"
+                         "sidebar content";
+}
+
+.content{
+    grid-area: content;
+    height: 1000px;
+    /* overflow: auto; */
 }
