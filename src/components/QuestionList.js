@@ -1,7 +1,7 @@
 
 export default function QuestionList() {
     return (
-        <div question-list>
+        <div className="question-list">
             <h4>question title</h4>
             <div>question des</div>
         </div>
