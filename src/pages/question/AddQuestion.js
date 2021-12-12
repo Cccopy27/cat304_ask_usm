@@ -1,21 +1,61 @@
-import { useState } from "react"
+import { useState } from "react";
+import { db, storage } from "../../firebase/config";
+import {collection, addDoc, Timestamp, updateDoc, arrayUnion, doc} from "firebase/firestore";
+import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function AddQuestion() {
     const [title, settitle] = useState("");
     const [des, setdes] = useState(""); 
     const [tag, settag] = useState([]);
     const [image, setimage] = useState([]);
+    
 
     // when user submit the form
-    const handleSubmit=(e)=>{
+    const handleSubmit=async(e)=>{
         e.preventDefault();
-        const object={
+        
+        // user input as object
+        const question_object={
             question_title: title,
             question_description: des,
             question_tag: tag,
-            question_image: image
+            question_image_url:"",
+            question_comments:[],
+            added_at: Timestamp.now(),
+            created_by:""
         }
-        console.log(object);
+
+        //add to database
+        const addedDoc = await addDoc(collection(db,"questions"),question_object);
+
+        // convert filelist to array to user array method
+        const image_arr = Array.from(image);
+
+        // upload photo to storage firebase to get its photo URL
+        image_arr.forEach(img=>{
+            // the image will store in question/question.id/image.name
+            const uploadPath = `question/${addedDoc.id}/${img.name}`;
+            const storageRef = ref(storage, uploadPath);
+
+            uploadBytes(storageRef, img)
+            .then((storageImg) =>{
+                // get image URL from storage
+                getDownloadURL(storageRef)
+                .then((imgURL)=>{
+                    // update doc imgURL
+                    updateDoc(doc(db,"questions",addedDoc.id),{
+                        question_image_url: arrayUnion(imgURL)
+                    })
+                })
+                console.log("added question successful");
+
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            
+        });
+
     }
     return (
         <div className="add-question-form">
@@ -46,8 +86,7 @@ export default function AddQuestion() {
                     <span>Image:</span>
                     <input
                     type="file"
-                    onChange={e => {setimage(e.target.value)}}
-                    value={image}
+                    onChange={e => {setimage(e.target.files)}}
                     multiple accept="image/*"
                     />
                 </label>
