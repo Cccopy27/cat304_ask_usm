@@ -1,5 +1,11 @@
-import QuestionList from "../../components/QuestionList"; 
+import QuestionList from "../../components/QuestionList";
+import { useNavigate } from "react-router-dom"; 
 export default function QuestionDashboard() {
+    const navigate = useNavigate();
+    // navigate to add question
+    const handleAddQuestion = (e) =>{
+        navigate("/addquestion");
+    }
     return (
         <div>
             <div className="question-filter">
@@ -8,13 +14,12 @@ export default function QuestionDashboard() {
             </div>
 
             <div className="question-add">
-                <button>Add Questions</button>
+                <button onClick={handleAddQuestion}>Add Questions</button>
                 {/* add question here */}
             </div>
 
             <div className="question-list">
                 <QuestionList/>
-                {/* add question here */}
             </div>
         </div>
     )
