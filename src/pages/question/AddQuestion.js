@@ -8,10 +8,12 @@ export default function AddQuestion() {
     const [des, setdes] = useState(""); 
     const [tag, settag] = useState([]);
     const [image, setimage] = useState([]);
+    const [loading,setloading] = useState(false);
     
 
     // when user submit the form
     const handleSubmit=async(e)=>{
+        setloading(true);
         e.preventDefault();
         
         // user input as object
@@ -48,14 +50,12 @@ export default function AddQuestion() {
                     })
                 })
                 console.log("added question successful");
-
+                setloading(false);
             })
             .catch(err => {
                 console.log(err);
-            })
-            
+            })            
         });
-
     }
     return (
         <div className="add-question-form">
@@ -91,8 +91,8 @@ export default function AddQuestion() {
                     />
                 </label>
 
-                <button>Add question</button>
-                
+                {!loading && <button>Add question</button>}
+                {loading && <button disabled>loading</button>}
             </form>
         </div>
     )
