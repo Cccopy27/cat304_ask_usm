@@ -4,17 +4,20 @@
 }
 
 .mainpage{
+    display: flex;
+    justify-content: center;
     border-bottom: 1px solid #9DAAF2;
     padding-bottom: 22px;
     text-align: center;
-}
-
-.logo{
-    padding: 0;
+    padding-left: 5px;
 }
 
 .home{
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+}
+
+.question, .tag, .new, .club{
+    margin-bottom: 10px;
 }
 
 .sidebar-content{

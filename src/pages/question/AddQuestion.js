@@ -59,42 +59,57 @@ export default function AddQuestion() {
         });
     }
     return (
-        <div className="add-question-form">
-            <h2>Add new question</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    <span>Question title:</span>
-                    <input
-                    required
-                    type="text"
-                    onChange={e => {settitle(e.target.value)}}
-                    value={title}
-                    />
-                </label>
+        <div className="add-question-container">
+            <div className="add-question-header">
+                <h2 className="add-question-title">Add new question</h2>
+            </div>
+            <div className="add-question-form-container">
+                <form className="add-question-form" onSubmit={handleSubmit}>
+                    <label className="add-question-title">
+                        <span>Question title:</span>
+                        <input
+                        required
+                        type="text"
+                        onChange={e => {settitle(e.target.value)}}
+                        value={title}
+                        />
+                    </label>
 
-                <label>
-                    <span>Question description:</span>
-                    <textarea
-                    required
-                    onChange={e => {setdes(e.target.value)}}
-                    value={des}
-                    />
-                </label>
+                    <label className="add-question-tag">
+                        <span>Question Tags:</span>
+                        <input
+                        required
+                        type="text"
+                        onChange={e => {settitle(e.target.value)}}
+                        value={title}
+                        />
+                    </label>
 
-                {/* add tag here  */}
+                    <label className="add-question-des">
+                        <span>Question description:</span>
+                        <textarea class="add-question-tag-input"
+                        required
+                        onChange={e => {settag(e.target.value)}}
+                        value={des}
+                        />
+                    </label>
 
-                <label>
-                    <span>Image:</span>
-                    <input
-                    type="file"
-                    onChange={e => {setimage(e.target.files)}}
-                    multiple accept="image/*"
-                    />
-                </label>
+                    {/* add tag here  */}
 
-                {!loading && <button>Add question</button>}
-                {loading && <button disabled>loading</button>}
-            </form>
+                    <label className="add-question-img">
+                        <span>Image:</span>
+                        <input
+                        type="file"
+                        onChange={e => {setimage(e.target.files)}}
+                        multiple accept="image/*"
+                        />
+                    </label>
+
+                    {!loading && <button>Add question</button>}
+                    {loading && <button disabled>loading</button>}
+                </form>
+            </div>
+            
         </div>
     )
 }
