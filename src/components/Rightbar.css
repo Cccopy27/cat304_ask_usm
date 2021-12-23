@@ -3,14 +3,7 @@
     grid-area: rightbar;
     display: flex;
     justify-content: center;
-    /* text-align: center; */
-    
 }
-
-/* .empty-area{
-    height: 50px;
-    background-color: red;
-} */
 
 .rightbar-content{
     flex: 1;
@@ -31,21 +24,18 @@
 
 .rightbar-content1{
     background-color: white;
-
     text-align: center;
     flex: 1;
 }
 
 .rightbar-content2{
     background-color: white;
-
     text-align: center;
     flex: 5;
 }
 
 .rightbar-content3{
     background-color: white;
-
     text-align: center;
     flex: 1;
 }
