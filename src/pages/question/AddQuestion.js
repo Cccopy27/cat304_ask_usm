@@ -2,6 +2,7 @@ import { useState } from "react";
 import { db, storage } from "../../firebase/config";
 import {collection, addDoc, Timestamp, updateDoc, arrayUnion, doc} from "firebase/firestore";
 import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import "./AddQuestion.css";
 
 export default function AddQuestion() {
     const [title, settitle] = useState("");
@@ -58,42 +59,54 @@ export default function AddQuestion() {
         });
     }
     return (
-        <div className="add-question-form">
-            <h2>Add new question</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    <span>Question title:</span>
-                    <input
-                    required
-                    type="text"
-                    onChange={e => {settitle(e.target.value)}}
-                    value={title}
-                    />
-                </label>
+        <div className="add-question-container">
+            <div className="add-question-header">
+                <h2 className="add-question-title">Add new question</h2>
+            </div>
+            <div className="add-question-form-container">
+                <form className="add-question-form" onSubmit={handleSubmit}>
+                    <label className="add-question-title">
+                        <span className="span-title">Question title:</span>
+                        <input
+                        required
+                        type="text"
+                        className="input-style"
+                        onChange={e => {settitle(e.target.value)}}
+                        value={title}
+                        />
+                    </label>
 
-                <label>
-                    <span>Question description:</span>
-                    <textarea
-                    required
-                    onChange={e => {setdes(e.target.value)}}
-                    value={des}
-                    />
-                </label>
+                    <label className="add-question-tag">
+                        <span className="span-title">Question Tags:</span>
+                    </label>
 
-                {/* add tag here  */}
+                    <label className="add-question-des">
+                        <span className="span-title">Question description:</span>
+                        <textarea 
+                        className="add-question-des-input input-style"
+                        required
+                        onChange={e => {setdes(e.target.value)}}
+                        value={des}
+                        />
+                    </label>
 
-                <label>
-                    <span>Image:</span>
-                    <input
-                    type="file"
-                    onChange={e => {setimage(e.target.files)}}
-                    multiple accept="image/*"
-                    />
-                </label>
+                    {/* add tag here  */}
 
-                {!loading && <button>Add question</button>}
-                {loading && <button disabled>loading</button>}
-            </form>
+                    <label className="add-question-img">
+                        <span className="span-title">Image:</span>
+                        <input
+                        className="input-style"
+                        type="file"
+                        onChange={e => {setimage(e.target.files)}}
+                        multiple accept="image/*"
+                        />
+                    </label>
+
+                    {!loading && <button className="submit-btn">Add question</button>}
+                    {loading && <button className="submit-btn"disabled>loading</button>}
+                </form>
+            </div>
+            
         </div>
     )
 }

@@ -10,6 +10,10 @@
     margin: 0 45px 0 45px;
 }
 
+.aboutus{
+    margin-left: 50px;
+}
+
 .aboutus, .contactus{
     margin-right: 30px;
 }
@@ -20,7 +24,7 @@
 
 .navbar-horizontal .search-container{
     float: left;
-    margin-left: 200px;
+    margin-left: 150px;
 }
 
 .search-container input[type=text]{
