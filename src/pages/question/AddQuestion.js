@@ -66,30 +66,26 @@ export default function AddQuestion() {
             <div className="add-question-form-container">
                 <form className="add-question-form" onSubmit={handleSubmit}>
                     <label className="add-question-title">
-                        <span>Question title:</span>
+                        <span className="span-title">Question title:</span>
                         <input
                         required
                         type="text"
+                        className="input-style"
                         onChange={e => {settitle(e.target.value)}}
                         value={title}
                         />
                     </label>
 
                     <label className="add-question-tag">
-                        <span>Question Tags:</span>
-                        <input
-                        required
-                        type="text"
-                        onChange={e => {settitle(e.target.value)}}
-                        value={title}
-                        />
+                        <span className="span-title">Question Tags:</span>
                     </label>
 
                     <label className="add-question-des">
-                        <span>Question description:</span>
-                        <textarea class="add-question-tag-input"
+                        <span className="span-title">Question description:</span>
+                        <textarea 
+                        className="add-question-des-input input-style"
                         required
-                        onChange={e => {settag(e.target.value)}}
+                        onChange={e => {setdes(e.target.value)}}
                         value={des}
                         />
                     </label>
@@ -97,16 +93,17 @@ export default function AddQuestion() {
                     {/* add tag here  */}
 
                     <label className="add-question-img">
-                        <span>Image:</span>
+                        <span className="span-title">Image:</span>
                         <input
+                        className="input-style"
                         type="file"
                         onChange={e => {setimage(e.target.files)}}
                         multiple accept="image/*"
                         />
                     </label>
 
-                    {!loading && <button>Add question</button>}
-                    {loading && <button disabled>loading</button>}
+                    {!loading && <button className="submit-btn">Add question</button>}
+                    {loading && <button className="submit-btn"disabled>loading</button>}
                 </form>
             </div>
             

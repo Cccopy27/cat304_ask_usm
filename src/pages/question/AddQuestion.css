@@ -24,6 +24,11 @@
     flex-direction: column;
     justify-content: space-around;
     height: 500px;
+    padding: 25px 25px;
+}
+
+.add-question-tag{
+    flex: 1;
 }
 
 .add-question-title{
@@ -37,10 +42,35 @@
 }
 
 .add-question-des-input{
+    width: 97% !important;
+    margin: 10px 0px 0px 0px !important;
+    /* margin-top: 10px;
+    margin-left: 0px !important;
+    margin-right: 10px !important; */
     padding: 10px;
-    height: 150px;
+    height: 200px !important;
 }
 
 .add-question-img{
     flex:1;
+}
+
+.input-style{
+    margin-left: 15px;
+    width: 70%;
+    font-size: 20px;
+    border: none;
+    height: 25px;
+    padding: 10px 10px;
+}
+
+.span-title{
+    font-size: 20px;
+}
+
+.submit-btn{
+    align-self: center;
+    width: 400px;
+    padding: 10px;
+    font-size: 20px;
 }
