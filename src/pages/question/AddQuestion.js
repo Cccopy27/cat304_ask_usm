@@ -2,6 +2,7 @@ import { useState } from "react";
 import { db, storage } from "../../firebase/config";
 import {collection, addDoc, Timestamp, updateDoc, arrayUnion, doc} from "firebase/firestore";
 import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import "./AddQuestion.css";
 
 export default function AddQuestion() {
     const [title, settitle] = useState("");

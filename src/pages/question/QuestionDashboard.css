@@ -1,0 +1,17 @@
+.question-header{
+    margin-left: 30px;
+    margin-top: 10px;
+    display: flex;
+}
+
+.question-filter{
+    flex:1;
+}
+
+.question-add{
+    flex:1;
+}
+
+.question-add-btn{
+    margin-top: 20px;
+}

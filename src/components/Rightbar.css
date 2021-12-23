@@ -1,0 +1,51 @@
+.rightbar-container{
+    background-color: rgb(197, 197, 94);
+    grid-area: rightbar;
+    display: flex;
+    justify-content: center;
+    /* text-align: center; */
+    
+}
+
+/* .empty-area{
+    height: 50px;
+    background-color: red;
+} */
+
+.rightbar-content{
+    flex: 1;
+    align-self: center;
+    width: 200px;
+    min-height: 500px;
+    position: fixed;
+    top:50px;
+    display: flex;
+    flex-direction: column;
+    margin: 30px 30px;
+    justify-content: space-between;
+}
+
+.rightbar-content div{
+    margin-top: 30px;
+}
+
+.rightbar-content1{
+    background-color: white;
+
+    text-align: center;
+    flex: 1;
+}
+
+.rightbar-content2{
+    background-color: white;
+
+    text-align: center;
+    flex: 5;
+}
+
+.rightbar-content3{
+    background-color: white;
+
+    text-align: center;
+    flex: 1;
+}
