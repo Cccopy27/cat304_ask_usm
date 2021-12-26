@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { db, storage } from "../../firebase/config";
 import {collection, addDoc, Timestamp, updateDoc, arrayUnion, doc} from "firebase/firestore";
 import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -11,7 +11,8 @@ export default function AddQuestion() {
     const [image, setimage] = useState([]);
     const [imageURLs,setImageURLs] = useState([]);
     const [loading,setloading] = useState(false);
-    
+    const [error,setError] = useState(false);
+    const formInput = useRef();
 
     // when user submit the form
     const handleSubmit=async(e)=>{
@@ -51,13 +52,24 @@ export default function AddQuestion() {
                         question_image_url: arrayUnion(imgURL)
                     })
                 })
-                console.log("added question successful");
-                setloading(false);
             })
             .catch(err => {
                 console.log(err);
+                setError(true);
             })            
         });
+        setloading(false);
+
+
+        if(!error){
+            settag([]);
+            settitle("");
+            setdes("");
+            setimage([]);
+            setImageURLs([]);
+            formInput.current.reset();
+        }
+        
     }
 
     // preview image
@@ -69,14 +81,13 @@ export default function AddQuestion() {
         setImageURLs(newImageURLs);
     },[image]);
 
-    
     return (
         <div className="add-question-container">
             <div className="add-question-header">
                 <h2 className="add-question-title">Add new question</h2>
             </div>
             <div className="add-question-form-container">
-                <form className="add-question-form" onSubmit={handleSubmit}>
+                <form className="add-question-form" onSubmit={handleSubmit} ref={formInput}>
                     <label className="add-question-title">
                         <span className="span-title">Question title:</span>
                         <input
@@ -119,7 +130,7 @@ export default function AddQuestion() {
                         <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
                     </div>
 
-                    {!loading && <button className="submit-btn">Add question</button>}
+                    {!loading && <button className="submit-btn" onClick={handleSubmit}>Add question</button>}
                     {loading && <button className="submit-btn"disabled>loading</button>}
                 </form>
             </div>
