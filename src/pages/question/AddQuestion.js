@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { db, storage } from "../../firebase/config";
 import {collection, addDoc, Timestamp, updateDoc, arrayUnion, doc} from "firebase/firestore";
 import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -9,6 +9,7 @@ export default function AddQuestion() {
     const [des, setdes] = useState(""); 
     const [tag, settag] = useState([]);
     const [image, setimage] = useState([]);
+    const [imageURLs,setImageURLs] = useState([]);
     const [loading,setloading] = useState(false);
     
 
@@ -58,6 +59,17 @@ export default function AddQuestion() {
             })            
         });
     }
+
+    // preview image
+    useEffect(()=>{
+        const newImageURLs = [];
+        image.forEach(image=>{
+            newImageURLs.push(URL.createObjectURL(image));
+        });
+        setImageURLs(newImageURLs);
+    },[image]);
+
+    
     return (
         <div className="add-question-container">
             <div className="add-question-header">
@@ -78,6 +90,7 @@ export default function AddQuestion() {
 
                     <label className="add-question-tag">
                         <span className="span-title">Question Tags:</span>
+                        {/* add tag here  */}
                     </label>
 
                     <label className="add-question-des">
@@ -90,17 +103,21 @@ export default function AddQuestion() {
                         />
                     </label>
 
-                    {/* add tag here  */}
 
                     <label className="add-question-img">
                         <span className="span-title">Image:</span>
                         <input
                         className="input-style"
                         type="file"
-                        onChange={e => {setimage(e.target.files)}}
+                        onChange={e => {setimage([...e.target.files])}}
                         multiple accept="image/*"
                         />
                     </label>
+
+                    <div className="image-preview-container">
+                        {imageURLs.map(imageSrc=>
+                        <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
+                    </div>
 
                     {!loading && <button className="submit-btn">Add question</button>}
                     {loading && <button className="submit-btn"disabled>loading</button>}
