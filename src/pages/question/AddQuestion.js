@@ -3,6 +3,7 @@ import { db, storage } from "../../firebase/config";
 import {collection, addDoc, Timestamp, updateDoc, arrayUnion, doc} from "firebase/firestore";
 import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {useFirestore} from "../../hooks/useFirestore";
+import { useNavigate } from "react-router";
 import "./AddQuestion.css";
 
 export default function AddQuestion() {
@@ -15,6 +16,7 @@ export default function AddQuestion() {
     const [error,setError] = useState(false);
     const formInput = useRef();
     const {addDocument,updateDocument, response} = useFirestore("questions");
+    const navigate = useNavigate();
 
     // when user submit the form
     const handleSubmit=async(e)=>{
@@ -73,6 +75,8 @@ export default function AddQuestion() {
             setimage([]);
             setImageURLs([]);
             formInput.current.reset();
+
+            navigate("/question");
         }
         
     }
