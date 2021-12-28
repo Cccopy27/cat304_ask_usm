@@ -8,32 +8,12 @@ import {db} from "../../firebase/config";
 export default function QuestionDashboard () {
     const [document,setDocument] = useState(null);
     const [error, setError] = useState(null);
+    const [loading,setLoading] = useState(false);
 
-    // fetch data
-    // useEffect(()=>{
-    //     const ref = collection(db,"questions");
-    //     const unsub = onSnapshot(ref, (snapshot)=>{
-    //         let result = [];
-    //         snapshot.docs.forEach((doc)=>{
-    //             result.push({...doc.data(), id: doc.id});
-    //         });
-
-    //         // update state
-    //         setDocoument(result);
-    //         console.log(document);
-    //         setError(null);
-    //     },(error)=>{
-    //         setError(error.message);
-    //         console.log(error);
-    //     })
-
-    //     // handle unmount
-    //     return()=>{
-    //         unsub();
-    //     }
-    // },[]);
     let result = [];
     useEffect(()=>{
+        window.scrollTo(0,0);
+        setLoading(true);
         getDocs(collection(db,"questions"))
         .then((querySnapshot) =>{
             querySnapshot.forEach((doc)=>{
@@ -43,6 +23,10 @@ export default function QuestionDashboard () {
         })
         .then(()=>{
             setDocument(result);
+            setLoading(false);
+        })
+        .catch(err=>{
+            setError(err);
         })
     },[])
     
@@ -67,7 +51,9 @@ export default function QuestionDashboard () {
 
             </div>
             <div className="question-list">
-                {document && <QuestionList questions={document}/>}
+                {error && <p>Something went wrong... {error}</p>}
+                {loading && <p>Loading...</p>}
+                {!loading && document && <QuestionList questions={document}/>}
             </div>
         </div>
     )

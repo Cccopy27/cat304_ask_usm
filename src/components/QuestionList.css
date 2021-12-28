@@ -1,4 +1,6 @@
 .question-list a{
+    overflow: hidden;
+    max-width: 600px;
     margin: 10px 10px;
     background-color: aliceblue;
     text-decoration: none;

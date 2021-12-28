@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar';
 import QuestionDashboard from './pages/question/QuestionDashboard';
 import AddQuestion from './pages/question/AddQuestion';
 import Rightbar from './components/Rightbar';
+import Question from './pages/question/Question';
 function App() {
   return (
     <div className="App">
@@ -16,7 +17,8 @@ function App() {
         <Routes>
           <Route path="/question" element={<QuestionDashboard/>}/>
           <Route path="/addquestion" element={<AddQuestion/>}/>
-
+          <Route path="/question/:id" element={<Question/>}/>
+    
         </Routes>
       </div>
       
