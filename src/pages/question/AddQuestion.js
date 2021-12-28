@@ -33,36 +33,36 @@ export default function AddQuestion() {
         }
 
         //add to database
-        const addedDoc = await addDocument(question_object);
+        await addDocument(question_object,image);
 
-        // convert filelist to array to user array method
-        const image_arr = Array.from(image);
+        // // convert filelist to array to user array method
+        // const image_arr = Array.from(image);
 
-        // upload photo to storage firebase to get its photo URL
-        image_arr.forEach(img=>{
-            // the image will store in question/question.id/image.name
-            const uploadPath = `question/${addedDoc.id}/${img.name}`;
-            const storageRef = ref(storage, uploadPath);
+        // // upload photo to storage firebase to get its photo URL
+        // image_arr.forEach(img=>{
+        //     // the image will store in question/question.id/image.name
+        //     const uploadPath = `question/${addedDoc.id}/${img.name}`;
+        //     const storageRef = ref(storage, uploadPath);
 
-            uploadBytes(storageRef, img)
-            .then((storageImg) =>{
-                // get image URL from storage
-                getDownloadURL(storageRef)
-                .then((imgURL)=>{
-                    // update doc imgURL
-                    updateDocument(addedDoc.id,{
-                        question_image_url: arrayUnion(imgURL)
-                    })
-                    // updateDoc(doc(db,"questions",addedDoc.id),{
-                    //     question_image_url: arrayUnion(imgURL)
-                    // })
-                })
-            })
-            .catch(err => {
-                console.log(err);
-                setError(true);
-            })            
-        });
+        //     uploadBytes(storageRef, img)
+        //     .then((storageImg) =>{
+        //         // get image URL from storage
+        //         getDownloadURL(storageRef)
+        //         .then((imgURL)=>{
+        //             // update doc imgURL
+        //             updateDocument(addedDoc.id,{
+        //                 question_image_url: arrayUnion(imgURL)
+        //             })
+        //             // updateDoc(doc(db,"questions",addedDoc.id),{
+        //             //     question_image_url: arrayUnion(imgURL)
+        //             // })
+        //         })
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //         setError(true);
+        //     })            
+        // });
         setloading(false);
 
 
