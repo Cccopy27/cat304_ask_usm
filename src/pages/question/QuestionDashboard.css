@@ -52,7 +52,7 @@
 }
 
 .question-list{
-    background-color:aliceblue ;
+    /* background-color:aliceblue ; */
     display: flex;
     flex-direction: column;
     margin-top: 15px;

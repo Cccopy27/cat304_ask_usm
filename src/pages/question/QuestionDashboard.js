@@ -1,7 +1,51 @@
+import {useEffect, useState} from "react";
 import QuestionList from "../../components/QuestionList";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import {collection, onSnapshot, getDocs} from "firebase/firestore"; 
 import "./QuestionDashboard.css";
-export default function QuestionDashboard() {
+import {db} from "../../firebase/config";
+
+export default function QuestionDashboard () {
+    const [document,setDocument] = useState(null);
+    const [error, setError] = useState(null);
+
+    // fetch data
+    // useEffect(()=>{
+    //     const ref = collection(db,"questions");
+    //     const unsub = onSnapshot(ref, (snapshot)=>{
+    //         let result = [];
+    //         snapshot.docs.forEach((doc)=>{
+    //             result.push({...doc.data(), id: doc.id});
+    //         });
+
+    //         // update state
+    //         setDocoument(result);
+    //         console.log(document);
+    //         setError(null);
+    //     },(error)=>{
+    //         setError(error.message);
+    //         console.log(error);
+    //     })
+
+    //     // handle unmount
+    //     return()=>{
+    //         unsub();
+    //     }
+    // },[]);
+    let result = [];
+    useEffect(()=>{
+        getDocs(collection(db,"questions"))
+        .then((querySnapshot) =>{
+            querySnapshot.forEach((doc)=>{
+                console.log("hi");
+                result.push({...doc.data(), id:doc.id});
+            });
+        })
+        .then(()=>{
+            setDocument(result);
+        })
+    },[])
+    
     const navigate = useNavigate();
     // navigate to add question
     const handleAddQuestion = (e) =>{
@@ -22,10 +66,8 @@ export default function QuestionDashboard() {
                 </div>
 
             </div>
-            
-
             <div className="question-list">
-                <QuestionList/>
+                {document && <QuestionList questions={document}/>}
             </div>
         </div>
     )
