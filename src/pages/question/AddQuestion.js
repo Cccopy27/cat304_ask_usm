@@ -2,6 +2,7 @@ import { useEffect, useState,useRef } from "react";
 import { db, storage } from "../../firebase/config";
 import {collection, addDoc, Timestamp, updateDoc, arrayUnion, doc} from "firebase/firestore";
 import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {useFirestore} from "../../hooks/useFirestore";
 import "./AddQuestion.css";
 
 export default function AddQuestion() {
@@ -13,6 +14,7 @@ export default function AddQuestion() {
     const [loading,setloading] = useState(false);
     const [error,setError] = useState(false);
     const formInput = useRef();
+    const {addDocument,updateDocument, response} = useFirestore("questions");
 
     // when user submit the form
     const handleSubmit=async(e)=>{
@@ -31,7 +33,7 @@ export default function AddQuestion() {
         }
 
         //add to database
-        const addedDoc = await addDoc(collection(db,"questions"),question_object);
+        const addedDoc = await addDocument(question_object);
 
         // convert filelist to array to user array method
         const image_arr = Array.from(image);
@@ -48,9 +50,12 @@ export default function AddQuestion() {
                 getDownloadURL(storageRef)
                 .then((imgURL)=>{
                     // update doc imgURL
-                    updateDoc(doc(db,"questions",addedDoc.id),{
+                    updateDocument(addedDoc.id,{
                         question_image_url: arrayUnion(imgURL)
                     })
+                    // updateDoc(doc(db,"questions",addedDoc.id),{
+                    //     question_image_url: arrayUnion(imgURL)
+                    // })
                 })
             })
             .catch(err => {
