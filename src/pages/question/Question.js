@@ -19,6 +19,7 @@ export default function Question() {
                 <h2>{document.question_title}</h2>
                 <p>{document.question_description}</p>
                 <p>tags:{document.question_tag}</p>
+                <img className="question-image"src={document.question_image_url}></img>
                 <p>added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}</p>
                 <p>created_by: {document.created_by}</p>
 
