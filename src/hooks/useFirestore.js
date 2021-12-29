@@ -56,8 +56,6 @@ export const useFirestore=(collections)=>{
                 image_arr.forEach(img=>{
                     // the image will store in question/question.id/image.name
                     const uploadPath = `question/${addedDocument.id}/${img.name}`;
-                    console.log(addedDocument);
-
                     const storageRef = ref(storage, uploadPath);
 
                     uploadBytes(storageRef, img)

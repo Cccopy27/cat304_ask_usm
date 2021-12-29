@@ -17,7 +17,6 @@ export default function QuestionDashboard () {
         getDocs(collection(db,"questions"))
         .then((querySnapshot) =>{
             querySnapshot.forEach((doc)=>{
-                console.log("hi");
                 result.push({...doc.data(), id:doc.id});
             });
         })
