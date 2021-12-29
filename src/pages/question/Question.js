@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 import Swal from "sweetalert2";
+import EditQuestion from "./EditQuestion";
 
 export default function Question() {
     // get id from param
@@ -21,21 +22,18 @@ export default function Question() {
     // image listing usage
     const [imageURL,setImageURL] = useState([]);
     const[loading,setLoading] = useState(false);
-    
+    const [editMode, setEditMode] = useState(false);
     useEffect(() => {
         window.scrollTo(0,0);
         const tempArray = [];
         // get all image
         // only show image if the document is fetched and got image to show
         if(document && document.question_image_url){
-            
             document.question_image_url.forEach(item=>{
                 tempArray.push(item);
             })
             setImageURL(tempArray);
-            
-        }
-        
+        }   
     }, [document]);
     // delete question
     const handleDelete=(e)=>{
@@ -62,7 +60,7 @@ export default function Question() {
 
                 // delete storage image
                 // loop each image
-                console.log(document);
+                
                 document.question_image_name.forEach(image_name=>{
                     // Create a reference to the file to delete
                     const desertRef = ref(storage, `question/${document.id}/${image_name}`);
@@ -90,26 +88,32 @@ export default function Question() {
     if(!document){
         return <div>Loading...</div>
     };
-    
-    
+    const handleEdit=()=>{
+        setEditMode(true);
+    }
     return (
         <div>
-            <div className="question-details">
-                <h2>{document.question_title}</h2>
-                <p>{document.question_description}</p>
-                <p>tags:{document.question_tag}</p>
-                {/* <img className="question-image"src={document.question_image_url}></img> */}
-                {imageURL && imageURL.map(imageSrc=>
-                        <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
-                {/* {document.question_image_url.forEach((image_url)=>{
-                    <img className="question-image"src={image_url}></img>
-                })} */}
-                
-                <p>added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}</p>
-                <p>created_by: {document.created_by}</p>
-                {document && <button onClick={handleDelete}>delete</button>}
+            {!editMode && 
+                <div className="question-details">
+                    <h2>{document.question_title}</h2>
+                    
+                    <p>added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}</p>
+                    <p>tags:{document.question_tag}</p>
 
-            </div>
+                    <p>{document.question_description}</p>
+                    
+                    {imageURL && imageURL.map(imageSrc=>
+                            <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
+
+                    <p>created_by: {document.created_by}</p>
+                    
+                    <button onClick={handleDelete}>delete</button>
+                    
+                    <button onClick={handleEdit}>edit</button>
+                </div>
+            }
+            <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode}/>
+            
         </div>
     )
 }

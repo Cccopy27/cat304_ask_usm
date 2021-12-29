@@ -25,7 +25,6 @@ export const useDocument =(collections,id)=>{
             console.log(err.message);
             setError(err.message);
         })
-
         return()=>{unsub()};
 
     },[collections,id])
