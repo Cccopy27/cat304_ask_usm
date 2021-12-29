@@ -21,9 +21,12 @@ export default function Question() {
     const [imageURL,setImageURL] = useState([]);
     
     useEffect(() => {
+        window.scrollTo(0,0);
         const tempArray = [];
         // get all image
-        if(document){
+        // only show image if the document is fetched and got image to show
+        if(document && document.question_image_url){
+            
             document.question_image_url.forEach(item=>{
                 tempArray.push(item);
             })
