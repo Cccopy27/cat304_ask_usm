@@ -29,8 +29,14 @@
 
 .question-add-btn{
     height: 30px;
+    background-color: #1A2238;
+    color: white;
 }
 
+.question-add-btn:hover{
+    cursor: pointer;
+    color: #9DAAF2;
+}
 .question-header-title{
     display: flex;
     justify-content: center;

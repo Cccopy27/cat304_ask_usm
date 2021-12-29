@@ -4,6 +4,7 @@ import {collection, addDoc, Timestamp, updateDoc, arrayUnion, doc} from "firebas
 import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {useFirestore} from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 import "./AddQuestion.css";
 
 export default function AddQuestion() {
@@ -20,35 +21,64 @@ export default function AddQuestion() {
     const navigate = useNavigate();
 
     // when user submit the form
-    const handleSubmit=async(e)=>{
-        setloading(true);
+    const handleSubmit=(e)=>{
         e.preventDefault();
+        if(formInput.current.checkValidity()){
+            Swal.fire({
+                title: 'Do you want to add the question?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Add',
+                denyButtonText: `Don't add`,
+              }).then(async(result) => {
+                if (result.isConfirmed) {
+                    setloading(true);
+                    Swal.fire({
+                        title:"Now Loading...",
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                    })
+                    Swal.showLoading();
+                
+                // user input as object
+                const question_object={
+                    question_title: title,
+                    question_description: des,
+                    question_tag: tag,
+                    question_image_name:imageName,
+                    question_image_url:"",
+                    question_comments:[],
+                    added_at: Timestamp.now(),
+                    created_by:""
+                }
+    
+                //add to database
+                await addDocument(question_object,image);
+                setloading(false);
+    
+                if(!error){
+                    settag([]);
+                    settitle("");
+                    setdes("");
+                    setimage([]);
+                    setImageURLs([]);
+                    formInput.current.reset();
+                    navigate("/question");
+                }
+                  Swal.fire('Saved!', '', 'success')
+                } else if (result.isDenied) {
+                  Swal.fire('Question not added', '', 'info')
+                }
+              })
+        }
+        else{
+            Swal.fire({
+                title:"Make sure the form is completed!",
+                showConfirmButton: true,
+            })
+        }
         
-        // user input as object
-        const question_object={
-            question_title: title,
-            question_description: des,
-            question_tag: tag,
-            question_image_name:imageName,
-            question_image_url:"",
-            question_comments:[],
-            added_at: Timestamp.now(),
-            created_by:""
-        }
-
-        //add to database
-        await addDocument(question_object,image);
-        setloading(false);
-
-        if(!error){
-            settag([]);
-            settitle("");
-            setdes("");
-            setimage([]);
-            setImageURLs([]);
-            formInput.current.reset();
-            navigate("/question");
-        }
+        
         
     }
 
