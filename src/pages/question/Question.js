@@ -9,6 +9,7 @@ import { getStorage, ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 import Swal from "sweetalert2";
 import EditQuestion from "./EditQuestion";
+import AddComment from "./AddComment";
 
 export default function Question() {
     // get id from param
@@ -113,6 +114,7 @@ export default function Question() {
                 </div>
             }
             <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode}/>
+            <AddComment question_id={document.id}/>
             
         </div>
     )

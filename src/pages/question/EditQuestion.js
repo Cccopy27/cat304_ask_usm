@@ -5,6 +5,8 @@ import { useNavigate } from "react-router";
 import {collection, addDoc, Timestamp, updateDoc, arrayUnion, doc} from "firebase/firestore";
 import {useFirestore} from "../../hooks/useFirestore";
 import {useDocument} from "../../hooks/useDocument";
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import {storage} from "../../firebase/config";
 
 
 export default function EditQuestion({document,editMode,setEditMode}) {
@@ -83,6 +85,20 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                     added_at: Timestamp.now(),
                     created_by:""
                 }
+
+                // delete all image from storage
+                document.question_image_name.forEach(image_name=>{
+                    // Create a reference to the file to delete
+                    const desertRef = ref(storage, `question/${document.id}/${image_name}`);
+                    // Delete the file
+                    deleteObject(desertRef).then(() => {
+                        // File deleted successfully
+
+                    }).catch((error) => {
+                        console.log(error);
+                    // Uh-oh, an error occurred!
+                    });
+                })
     
                 //update  database
                 await updateDocument(document.id,question_object,image);
