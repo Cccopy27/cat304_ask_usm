@@ -12,6 +12,7 @@ export default function AddQuestion() {
     const [tag, settag] = useState([]);
     const [image, setimage] = useState([]);
     const [imageURLs,setImageURLs] = useState([]);
+    const [imageName,setImageName] = useState([]);
     const [loading,setloading] = useState(false);
     const [error,setError] = useState(false);
     const formInput = useRef();
@@ -28,7 +29,7 @@ export default function AddQuestion() {
             question_title: title,
             question_description: des,
             question_tag: tag,
-            question_iamge_name:"",
+            question_image_name:imageName,
             question_image_url:"",
             question_comments:[],
             added_at: Timestamp.now(),
@@ -54,9 +55,12 @@ export default function AddQuestion() {
     // preview image
     useEffect(()=>{
         const newImageURLs = [];
+        const imageNameList = [];
         image.forEach(image=>{
             newImageURLs.push(URL.createObjectURL(image));
+            imageNameList.push(image.name);
         });
+        setImageName(imageNameList);
         setImageURLs(newImageURLs);
     },[image]);
     console.log(imageURLs);

@@ -19,7 +19,7 @@ export default function Question() {
     const navigate = useNavigate();
     // image listing usage
     const [imageURL,setImageURL] = useState([]);
-    console.log(document);
+    
     useEffect(() => {
         const tempArray = [];
         // get all image
@@ -28,6 +28,7 @@ export default function Question() {
                 tempArray.push(item);
             })
             setImageURL(tempArray);
+            
         }
         
     }, [document]);
@@ -37,18 +38,23 @@ export default function Question() {
         deleteDocument(document.id);
 
         // delete storage image
-        // Create a reference to the file to delete
-        const desertRef = ref(storage, `question/${document.id}`);
+        // loop each image
+        document.question_image_name.forEach(image_name=>{
+            // Create a reference to the file to delete
+            const desertRef = ref(storage, `question/${document.id}/${image_name}`);
+            // Delete the file
+            deleteObject(desertRef).then(() => {
+                // File deleted successfully
+                console.log("good");
+                navigate("/question");
+            }).catch((error) => {
+                console.log(error);
+            // Uh-oh, an error occurred!
+            });
+        })
         
-        // Delete the file
-        deleteObject(desertRef).then(() => {
-            // File deleted successfully
-            console.log("good");
-            navigate("/question");
-        }).catch((error) => {
-            console.log(error);
-        // Uh-oh, an error occurred!
-        });
+        
+        
     };
     if(error){
         return <div>{error}</div>
