@@ -97,7 +97,7 @@ export default function AddQuestion() {
                 <h2 className="add-question-title">Add new question</h2>
             </div>
             <div className="add-question-form-container">
-                <form className="add-question-form" onSubmit={handleSubmit} ref={formInput}>
+                <form className="add-question-form" ref={formInput}>
                     <label className="add-question-title">
                         <span className="span-title">Question title:</span>
                         <input

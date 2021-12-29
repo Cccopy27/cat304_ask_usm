@@ -26,7 +26,7 @@ const firestoreReducer = (state, action)=>{
             return state;
     }
 }
-
+// collections = the name of collection u wan to access
 export const useFirestore=(collections)=>{
     const [response, dispatch] = useReducer(firestoreReducer, initialState);
     const [isCancelled, setIsCancelled] = useState(false);
@@ -41,6 +41,8 @@ export const useFirestore=(collections)=>{
     const collection_Ref = collection(db, collections);
 
     // add document
+    // document = the document or data u wan to add into
+    // image (optional) = for upload image
     const addDocument = async(document,image)=>{
         dispatch({type:"IS_PENDING"});
         try{
@@ -71,12 +73,6 @@ export const useFirestore=(collections)=>{
                                 console.log(imgURL);
 
                             })
-                            // updateDocument(doc.id,{
-                            //     question_image_url: arrayUnion(imgURL)
-                            // })
-                            // updateDoc(doc(db,"questions",addedDoc.id),{
-                            //     question_image_url: arrayUnion(imgURL)
-                            // })
                         })
                     })          
                 });
@@ -91,6 +87,7 @@ export const useFirestore=(collections)=>{
     }
 
     // delete document
+    // id = the document id u wan to delete
     const deleteDocument = async(id)=>{
         dispatch({type:"IS_PENDING"});
         try{
@@ -104,11 +101,43 @@ export const useFirestore=(collections)=>{
     }
 
     //update document
-    const updateDocument= async(id,updates)=>{
+    // id = the document id u wan to make change with
+    // updates = the changes u wan to make
+    // image (optional) = for upload image
+    const updateDocument= async(id,updates, image)=>{
         dispatch({type: "IS_PENDING"});
 
         try{
             const updatedoc = await updateDoc(doc(collection_Ref,id), updates);
+            // handle image
+            if(image){
+                console.log("enter");
+                // convert filelist to array to user array method
+                const image_arr = Array.from(image);
+                // upload photo to storage firebase to get its photo URL
+                image_arr.forEach(img=>{
+                    // the image will store in question/question.id/image.name
+                    const uploadPath = `question/${id}/${img.name}`;
+                    const storageRef = ref(storage, uploadPath);
+
+                    uploadBytes(storageRef, img)
+                    .then((storageImg) =>{
+                        // get image URL from storage
+                        getDownloadURL(storageRef)
+                        .then((imgURL)=>{
+                            // update doc imgURL
+                            updateDoc(doc(collection_Ref,id), {
+                                question_image_url: arrayUnion(imgURL)
+                            })
+                            .then(()=>{
+                                console.log(imgURL);
+
+                            })
+                        })
+                    })          
+                });
+            }
+
             dispatchIfNotCancelled({type: "UPDATED_DOCUMENT", payload: updatedoc})
             // return updateDoc
         }
