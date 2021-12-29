@@ -77,9 +77,6 @@ export default function AddQuestion() {
                 showConfirmButton: true,
             })
         }
-        
-        
-        
     }
 
     // preview image
@@ -93,7 +90,7 @@ export default function AddQuestion() {
         setImageName(imageNameList);
         setImageURLs(newImageURLs);
     },[image]);
-    console.log(imageURLs);
+
     return (
         <div className="add-question-container">
             <div className="add-question-header">

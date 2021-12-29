@@ -7,6 +7,7 @@ import { useFirestore } from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
+import Swal from "sweetalert2";
 
 export default function Question() {
     // get id from param
@@ -19,6 +20,7 @@ export default function Question() {
     const navigate = useNavigate();
     // image listing usage
     const [imageURL,setImageURL] = useState([]);
+    const[loading,setLoading] = useState(false);
     
     useEffect(() => {
         window.scrollTo(0,0);
@@ -38,26 +40,49 @@ export default function Question() {
     // delete question
     const handleDelete=(e)=>{
         e.preventDefault();
-        deleteDocument(document.id);
+        // alert user
+        Swal.fire({
+            title: 'Do you want to delete the question?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            denyButtonText: `Don't delete`,
+            
+          }).then(async(result) => {
+              // delete
+            if (result.isConfirmed) {
+                // loading
+                setLoading(true);
+                Swal.fire({
+                    title:"Now Loading...",
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+                Swal.showLoading();
 
-        // delete storage image
-        // loop each image
-        document.question_image_name.forEach(image_name=>{
-            // Create a reference to the file to delete
-            const desertRef = ref(storage, `question/${document.id}/${image_name}`);
-            // Delete the file
-            deleteObject(desertRef).then(() => {
-                // File deleted successfully
-                console.log("good");
-                navigate("/question");
-            }).catch((error) => {
-                console.log(error);
-            // Uh-oh, an error occurred!
-            });
-        })
-        
-        
-        
+                // delete storage image
+                // loop each image
+                console.log(document);
+                document.question_image_name.forEach(image_name=>{
+                    // Create a reference to the file to delete
+                    const desertRef = ref(storage, `question/${document.id}/${image_name}`);
+                    // Delete the file
+                    deleteObject(desertRef).then(() => {
+                        // File deleted successfully
+
+                    }).catch((error) => {
+                        console.log(error);
+                    // Uh-oh, an error occurred!
+                    });
+                })
+                deleteDocument(document.id)
+              Swal.fire('Deleted!', '', 'success');
+              setLoading(false);
+              navigate("/question");
+            } else if (result.isDenied) {
+              Swal.fire('Question not deleted', '', 'info')
+            }
+          })
     };
     if(error){
         return <div>{error}</div>
@@ -82,7 +107,7 @@ export default function Question() {
                 
                 <p>added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}</p>
                 <p>created_by: {document.created_by}</p>
-                <button onClick={handleDelete}>delete</button>
+                {document && <button onClick={handleDelete}>delete</button>}
 
             </div>
         </div>
