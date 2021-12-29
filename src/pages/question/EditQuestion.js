@@ -81,7 +81,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                     question_tag: tag,
                     question_image_name:imageName,
                     question_image_url:"",
-                    question_comments:[],
+                    // question_comments:[],
                     added_at: Timestamp.now(),
                     created_by:""
                 }

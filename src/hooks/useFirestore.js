@@ -109,6 +109,8 @@ export const useFirestore=(collections)=>{
 
         try{
             const updatedoc = await updateDoc(doc(collection_Ref,id), updates);
+
+            
             // handle image
             if(image){
                 console.log("enter");
