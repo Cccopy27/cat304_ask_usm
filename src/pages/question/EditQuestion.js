@@ -36,6 +36,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                     tempArray.push(item);
                 })
                 setImageURL(tempArray);
+                setImageName(document.question_image_name);
             }
         }
     }, [document,editMode]);
@@ -80,27 +81,35 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                     question_tag: tag,
                     question_image_name:imageName,
                     question_image_url:"",
-                    // question_comments:[],
                     added_at: Timestamp.now(),
                     created_by:""
                 }
+                // if user use back old image
+                if(image.length === 0){
+                    console.log("hit");
+                    question_object.question_image_url = document.question_image_url;
+                }
 
+                // if user upload new image
                 // delete all image from storage
-                document.question_image_name.forEach(image_name=>{
-                    // Create a reference to the file to delete
-                    const desertRef = ref(storage, `question/${document.id}/${image_name}`);
-                    // Delete the file
-                    deleteObject(desertRef).then(() => {
-                        // File deleted successfully
-
-                    }).catch((error) => {
-                        console.log(error);
-                    // Uh-oh, an error occurred!
-                    });
-                })
+                if(image.length != 0){
+                    document.question_image_name.forEach(image_name=>{
+                        // Create a reference to the file to delete
+                        const desertRef = ref(storage, `question/${document.id}/${image_name}`);
+                        // Delete the file
+                        deleteObject(desertRef).then(() => {
+                            // File deleted successfully
+    
+                        }).catch((error) => {
+                            console.log(error);
+                        // Uh-oh, an error occurred!
+                        });
+                    })
+                }
+                
     
                 //update  database
-                await updateDocument(document.id,question_object,image);
+                await updateDocument(document.id,question_object,image,"question");
                 setLoading(false);
     
                 if(!response.error){
