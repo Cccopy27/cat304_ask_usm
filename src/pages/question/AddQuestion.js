@@ -1,7 +1,5 @@
 import { useEffect, useState,useRef } from "react";
-import { db, storage } from "../../firebase/config";
-import {collection, addDoc, Timestamp, updateDoc, arrayUnion, doc} from "firebase/firestore";
-import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {Timestamp} from "firebase/firestore";
 import {useFirestore} from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
@@ -17,7 +15,7 @@ export default function AddQuestion() {
     const [loading,setloading] = useState(false);
     const [error,setError] = useState(false);
     const formInput = useRef();
-    const {addDocument,updateDocument, response} = useFirestore("questions");
+    const {addDocument, response} = useFirestore(["questions"]);
     const navigate = useNavigate();
 
     // when user submit the form
@@ -40,32 +38,42 @@ export default function AddQuestion() {
                     })
                     Swal.showLoading();
                 
-                // user input as object
-                const question_object={
-                    question_title: title,
-                    question_description: des,
-                    question_tag: tag,
-                    question_image_name:imageName,
-                    question_image_url:"",
-                    // question_comments:[],
-                    added_at: Timestamp.now(),
-                    created_by:""
-                }
+                    // user input as object
+                    const question_object={
+                        question_title: title,
+                        question_description: des,
+                        question_tag: tag,
+                        question_image_name:imageName,
+                        question_image_url:"",
+                        // question_comments:[],
+                        added_at: Timestamp.now(),
+                        created_by:""
+                    }
     
-                //add to database
-                await addDocument(question_object,image);
-                setloading(false);
-    
-                if(!error){
-                    settag([]);
-                    settitle("");
-                    setdes("");
-                    setimage([]);
-                    setImageURLs([]);
-                    formInput.current.reset();
-                    navigate("/question");
-                }
-                  Swal.fire('Saved!', '', 'success')
+                    //add to database
+                    await addDocument(question_object,image);
+                    setloading(false);
+                    
+                    // no error
+                    if(!response.error){
+                        settag([]);
+                        settitle("");
+                        setdes("");
+                        setimage([]);
+                        setImageURLs([]);
+                        formInput.current.reset();
+                        Swal.fire('Saved!', '', 'success')
+                        navigate("/question");
+                    }
+                    // got error
+                    else{
+                        console.log("something wrong");
+                        Swal.fire({
+                            icon:"error",
+                            title:"Something wrong",
+                            showConfirmButton: true,
+                        })
+                    }
                 } else if (result.isDenied) {
                   Swal.fire('Question not added', '', 'info')
                 }
