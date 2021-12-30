@@ -2,9 +2,17 @@ import "./Comment.css";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useState } from "react";
 import EditComment from "./EditComment";
+import Swal from "sweetalert2";
+import {ref, deleteObject } from "firebase/storage";
+import {storage} from "../../firebase/config";
+import { useFirestore } from "../../hooks/useFirestore";
 
-export default function Comment({comment, question_id, comment_id}) {
+export default function Comment({comment, question_id}) {
     const [editMode,setEditMode] = useState(false);
+    const[loading,setLoading] = useState(false);
+    const {deleteDocument,updateDocument } = useFirestore(["questions",question_id,"comment"]);
+
+
     const handleEdit= (e)=>{
         e.preventDefault();
         setEditMode(true);
@@ -12,6 +20,49 @@ export default function Comment({comment, question_id, comment_id}) {
 
     const handleDelete= (e)=>{
         e.preventDefault();
+        // alert user
+        Swal.fire({
+            title: 'Do you want to delete this comment?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            denyButtonText: `Don't delete`,
+            
+          }).then(async(result) => {
+              // delete
+            if (result.isConfirmed) {
+                // loading
+                setLoading(true);
+                Swal.fire({
+                    title:"Now Loading...",
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+                Swal.showLoading();
+
+                // delete storage image
+                // loop each image
+                
+                comment.comment_image_name.forEach(image_name=>{
+                    // Create a reference to the file to delete
+                    const desertRef = ref(storage, `comment/${comment.id}/${image_name}`);
+                    // Delete the file
+                    deleteObject(desertRef).then(() => {
+                        // File deleted successfully
+
+                    }).catch((error) => {
+                        console.log(error);
+                    // Uh-oh, an error occurred!
+                    });
+                })
+                deleteDocument(comment.id)
+              Swal.fire('Deleted!', '', 'success');
+              setLoading(false);
+            //   navigate(`/question/");
+            } else if (result.isDenied) {
+              Swal.fire('Question not deleted', '', 'info')
+            }
+          })
     };
     return (
         <div>
