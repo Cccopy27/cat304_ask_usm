@@ -2,17 +2,17 @@ import { useState } from "react";
 import "./AddComment.css";
 import { useFirestore } from "../../hooks/useFirestore";
 import { Timestamp } from "firebase/firestore";
-import { db } from "../../firebase/config"
-import { collection,doc,onSnapshot,addDoc } from "firebase/firestore";
+import Swal from "sweetalert2";
 
 
 export default function AddComment({question_id}) {
     const [comments, setComments] = useState("");
     const [reply, setReply] = useState(null);
-    // const collectionRef= `questions,${question_id},comments`;
-    // const {addDocument,updateDocument} = useFirestore(collectionRef);
-    const collection_Ref = collection(db,"questions",question_id,"comment");
-    
+    const [image, setimage] = useState([]);
+    const [imageURLs,setImageURLs] = useState([]);
+    const [imageName,setImageName] = useState([]);
+    const [loading,setLoading] = useState(false);
+    const {addDocument, response} = useFirestore(["questions",question_id,"comment"]);
     // submit comment
     const handleSubmit=async(e)=>{
         e.preventDefault();
@@ -21,12 +21,25 @@ export default function AddComment({question_id}) {
             comments,
             created_by:"",
             added_at:Timestamp.now(),
+            // comment_image_name:imageName,
+            // comment_image_url:imageURLs,
         }
-        await addDoc(collection_Ref, commentObj).then(()=>{
-            console.log("added");
-        }).catch(err=>{
-            console.log(err);
-        });
+        // await addDoc(collection_Ref, commentObj).then(()=>{
+        //     console.log("added");
+        // }).catch(err=>{
+        //     console.log(err);
+        // });
+
+        await addDocument(commentObj);
+        // got error
+        if(response.error){
+            console.log("something wrong");
+            Swal.fire({
+                icon:"error",
+                title:"Something wrong",
+                showConfirmButton: true,
+            })
+        }
 
     }
     return (

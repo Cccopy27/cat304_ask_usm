@@ -2,17 +2,15 @@ import "./EditQuestion.css";
 import { useEffect, useState,useRef } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
-import {collection, addDoc, Timestamp, updateDoc, arrayUnion, doc} from "firebase/firestore";
+import {Timestamp} from "firebase/firestore";
 import {useFirestore} from "../../hooks/useFirestore";
-import {useDocument} from "../../hooks/useDocument";
-import { getStorage, ref, deleteObject } from "firebase/storage";
+import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 
 
 export default function EditQuestion({document,editMode,setEditMode}) {
     
-    const {updateDocument} = useFirestore("questions");
-    // const {document,docError} = useDocument("questions",question_id);
+    const {updateDocument,response} = useFirestore(["questions"]);
     const [loading,setLoading] = useState(false);
     const [title, settitle] = useState("");
     const [des, setdes] = useState(""); 
@@ -24,6 +22,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
     const tempArray =[];
     const formInput = useRef();
     const navigate = useNavigate();
+    
     // set all document value to current input field
     useEffect(async() => {
         window.scrollTo(0,0);
@@ -104,7 +103,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                 await updateDocument(document.id,question_object,image);
                 setLoading(false);
     
-                if(!error){
+                if(!response.error){
                     settag([]);
                     settitle("");
                     setdes("");

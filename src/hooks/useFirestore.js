@@ -26,7 +26,10 @@ const firestoreReducer = (state, action)=>{
             return state;
     }
 }
-// collections = the name of collection u wan to access
+// collections = the name of collection u wan to access in terms of array
+// example,want to collection(db, questions,"questions_id",comment)
+// pass [ questions,"questions_id",comment]
+
 export const useFirestore=(collections)=>{
     const [response, dispatch] = useReducer(firestoreReducer, initialState);
     const [isCancelled, setIsCancelled] = useState(false);
@@ -36,10 +39,11 @@ export const useFirestore=(collections)=>{
             dispatch(action);
         }
     }
-
-    // collection ref
-    const collection_Ref = collection(db, collections);
-
+    let collection_Ref = "";
+    
+        // collection ref
+        collection_Ref = collection(db, ...collections);
+    
     // add document
     // document = the document or data u wan to add into
     // image (optional) = for upload image

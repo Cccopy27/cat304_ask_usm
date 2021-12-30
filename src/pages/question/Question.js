@@ -5,7 +5,7 @@ import {useDocument} from "../../hooks/useDocument";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useFirestore } from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
-import { getStorage, ref, deleteObject } from "firebase/storage";
+import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 import Swal from "sweetalert2";
 import EditQuestion from "./EditQuestion";
@@ -18,7 +18,7 @@ export default function Question() {
     // fetch document with specific id
     const {error, document} = useDocument("questions",id);
     // get delete and update function from hooks
-    const {deleteDocument,updateDocument } = useFirestore("questions");
+    const {deleteDocument,updateDocument } = useFirestore(["questions"]);
     // navigation
     const navigate = useNavigate();
     // image listing usage
