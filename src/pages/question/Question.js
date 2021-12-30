@@ -9,8 +9,8 @@ import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 import Swal from "sweetalert2";
 import EditQuestion from "./EditQuestion";
-import AddComment from "./AddComment";
-import CommentSection from "./CommentSection";
+import AddComment from "../comment/AddComment";
+import CommentSection from "../comment/CommentSection";
 
 export default function Question() {
     // get id from param

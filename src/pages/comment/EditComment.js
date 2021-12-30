@@ -1,47 +1,41 @@
-import "./EditQuestion.css";
-import { useEffect, useState,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import "./EditComment.css";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
-import {Timestamp} from "firebase/firestore";
-import {useFirestore} from "../../hooks/useFirestore";
+import { useFirestore } from "../../hooks/useFirestore";
+import { Timestamp } from "firebase/firestore";
 import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 
 
-export default function EditQuestion({document,editMode,setEditMode}) {
-    
-    const {updateDocument,response} = useFirestore(["questions"]);
-    const [loading,setLoading] = useState(false);
-    const [title, settitle] = useState("");
-    const [des, setdes] = useState(""); 
-    const [tag, settag] = useState([]);
+export default function EditComment({document,editMode,setEditMode, question_id}) {
+    const [newComment,setNewComment] = useState("");
     const [image, setimage] = useState([]);
     const [imageURL,setImageURL] = useState([]);
     const [imageName,setImageName] = useState([]);
+    const [loading,setLoading] = useState(false);
     const [error, setError] = useState(false);
     const tempArray =[];
     const formInput = useRef();
-    const navigate = useNavigate();
-    
-    // set all document value to current input field
+    const {updateDocument,response} = useFirestore(["questions",question_id,"comment"]);
+
+
+    // show current comment 
     useEffect(async() => {
-        window.scrollTo(0,0);
         if(document){
-            settitle(document.question_title);
-            setdes(document.question_description);
+            setNewComment(document.comments);
 
             // get picture
-            if( document.question_image_url){
-                await document.question_image_url.forEach(item=>{
+            if( document.comment_image_url){
+                await document.comment_image_url.forEach(item=>{
                     tempArray.push(item);
                 })
                 setImageURL(tempArray);
-                setImageName(document.question_image_name);
+                setImageName(document.comment_image_name);
+
             }
         }
     }, [document,editMode]);
     
-   
     // preview image
     useEffect(()=>{
         const newImageURLs = [];
@@ -54,9 +48,10 @@ export default function EditQuestion({document,editMode,setEditMode}) {
         setImageURL(newImageURLs);
     },[image]);
 
-    // save changes
+    // submit comment
     const handleSave=(e)=>{
         e.preventDefault();
+
         if(formInput.current.checkValidity()){
             Swal.fire({
                 title: 'Do you want to save the changes?',
@@ -75,27 +70,26 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                     Swal.showLoading();
                 
                 // user input as object
-                const question_object={
-                    question_title: title,
-                    question_description: des,
-                    question_tag: tag,
-                    question_image_name:imageName,
-                    question_image_url:"",
-                    added_at: Timestamp.now(),
-                    created_by:""
-                }
-                // if user use back old image
-                if(image.length === 0){
-                    console.log("hit");
-                    question_object.question_image_url = document.question_image_url;
+                const comment_object={
+                    comments: newComment,
+                    created_by:"",
+                    added_at:Timestamp.now(),
+                    comment_image_name:imageName,
+                    comment_image_url:"",
+                    subComment:document.subComment,
                 }
 
-                // if user upload new image
+                // if user use back old image
+                if(image.length === 0){
+                    comment_object.comment_image_url = document.comment_image_url;
+                }
+
+                // if user use new image
                 // delete all image from storage
                 if(image.length != 0){
-                    document.question_image_name.forEach(image_name=>{
+                    document.comment_image_name.forEach(image_name=>{
                         // Create a reference to the file to delete
-                        const desertRef = ref(storage, `question/${document.id}/${image_name}`);
+                        const desertRef = ref(storage, `comment/${document.id}/${image_name}`);
                         // Delete the file
                         deleteObject(desertRef).then(() => {
                             // File deleted successfully
@@ -109,18 +103,16 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                 
     
                 //update  database
-                await updateDocument(document.id,question_object,image,"question");
+                await updateDocument(document.id,comment_object,image,"comment");
                 setLoading(false);
     
                 if(!response.error){
-                    settag([]);
-                    settitle("");
-                    setdes("");
+                    setNewComment("");
                     setimage([]);
                     setImageURL([]);
                     formInput.current.reset();
                     Swal.fire('Saved!', '', 'success');
-                    navigate(`/question/${document.id}`);
+                    // navigate(`/question/${question.id}`);
                     setEditMode(false);
                 }
                 else{
@@ -137,67 +129,36 @@ export default function EditQuestion({document,editMode,setEditMode}) {
         }
         else{
             Swal.fire({
-                title:"Make sure the form is completed!",
+                title:"Make sure the comment is not empty!",
                 showConfirmButton: true,
             })
         }
     }
 
-    const handleCancel = (e) =>{ 
+    const handleCancel =(e) =>{
         e.preventDefault();
-        Swal.fire({
-            title:"Are you sure want to discard your changes?",
-            showConfirmButton: true,
-            showDenyButton: true,
-            confirmButtonText: "Yes",
-            
-        }).then((result)=>{
-            // discard changes
-            if(result.isConfirmed){
-                settag([]);
-                settitle("");
-                setdes("");
-                setimage([]);
-                setImageURL([]);
-                formInput.current.reset();
-                navigate(`/question/${document.id}`);
-                setEditMode(false);
-            }
-        })
     }
+     
     return (
-        <>
+        <div>
             {editMode && 
-                <div className="question-details">
-                    <form className="add-question-form"  ref={formInput}>
-                        <label className="add-question-title">
-                            <span className="span-title">Question title:</span>
-                            <input
+                <div>
+                    <form ref={formInput}>
+                        <label>
+                        <input
                             required
                             type="text"
                             className="input-style"
-                            onChange={e => {settitle(e.target.value)}}
-                            value={title}
+                            onChange={e => {setNewComment(e.target.value)}}
+                            value={newComment}
                             />
                         </label>
-                        
-                        <p>tags:{document.question_tag}</p>
 
-                        <label className="add-question-des">
-                            <span className="span-title">Question description:</span>
-                            <textarea 
-                            className="add-question-des-input input-style"
-                            required
-                            onChange={e => {setdes(e.target.value)}}
-                            value={des}
-                            />
-                        </label>
-                            
                         <div className="image-preview-container">
                             {imageURL && imageURL.map(imageSrc=>
                             <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
                         </div>
-                        <label className="add-question-img">
+                        <label className="add-command-img">
                             <span className="span-title">Image:</span>
                             <input
                             className="input-style"
@@ -206,20 +167,13 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                             multiple accept="image/*"
                             />
                         </label>
-                        {!loading && 
-                        <button onClick={handleSave}>saves</button> }
-                        {!loading && 
-                        <button onClick={handleCancel}>cancel</button> }
-                        {loading && 
-                        <button disabled onClick={handleSave}>saves</button> }
-                        {loading && 
-                        <button disabled onClick={handleCancel}>cancel</button> }
+
+                        <button onClick={handleSave}>Save</button>
+                        <button onClick={handleCancel}>Cancel</button>
                     </form>
                 </div>
+            
             }
-        </>
-        
-        
-        
+        </div>
     )
 }
