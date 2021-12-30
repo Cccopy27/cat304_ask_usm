@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./AddComment.css";
 import { useFirestore } from "../../hooks/useFirestore";
 import { Timestamp } from "firebase/firestore";
@@ -21,16 +21,12 @@ export default function AddComment({question_id}) {
             comments,
             created_by:"",
             added_at:Timestamp.now(),
-            // comment_image_name:imageName,
-            // comment_image_url:imageURLs,
+            comment_image_name:imageName,
+            comment_image_url:"",
+            subComment:"",
         }
-        // await addDoc(collection_Ref, commentObj).then(()=>{
-        //     console.log("added");
-        // }).catch(err=>{
-        //     console.log(err);
-        // });
 
-        await addDocument(commentObj);
+        await addDocument(commentObj,image,"comment");
         // got error
         if(response.error){
             console.log("something wrong");
@@ -40,8 +36,21 @@ export default function AddComment({question_id}) {
                 showConfirmButton: true,
             })
         }
-
     }
+
+    // preview image
+    useEffect(()=>{
+        const newImageURLs = [];
+        const imageNameList = [];
+        image.forEach(image=>{
+            newImageURLs.push(URL.createObjectURL(image));
+            imageNameList.push(image.name);
+        });
+        setImageName(imageNameList);
+        setImageURLs(newImageURLs);
+    },[image]);
+
+    
     return (
         <div className="comment-container">
             <div className="comment-input-area">
@@ -53,6 +62,21 @@ export default function AddComment({question_id}) {
                     value={comments}
                     />
                 </label>
+                <label className="add-comment-img">
+                    <span className="span-title">Image:</span>
+                    <input
+                    className="input-style"
+                    type="file"
+                    onChange={e => {setimage([...e.target.files])}}
+                    multiple accept="image/*"
+                    />
+                </label>
+
+                <div className="image-preview-container">
+                    {imageURLs.map(imageSrc=>
+                    <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
+                </div>
+
                 <button onClick={handleSubmit}>Add Comments</button>
             </div>
             

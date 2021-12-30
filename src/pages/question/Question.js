@@ -15,28 +15,17 @@ import CommentSection from "./CommentSection";
 export default function Question() {
     // get id from param
     const {id} = useParams();
-    // fetch document with specific id
     const {error, document} = useDocument("questions",id);
-    // get delete and update function from hooks
     const {deleteDocument,updateDocument } = useFirestore(["questions"]);
-    // navigation
     const navigate = useNavigate();
-    // image listing usage
     const [imageURL,setImageURL] = useState([]);
     const[loading,setLoading] = useState(false);
     const [editMode, setEditMode] = useState(false);
+
     useEffect(() => {
-        window.scrollTo(0,0);
-        const tempArray = [];
-        // get all image
-        // only show image if the document is fetched and got image to show
-        if(document && document.question_image_url){
-            document.question_image_url.forEach(item=>{
-                tempArray.push(item);
-            })
-            setImageURL(tempArray);
-        }   
+        window.scrollTo(0,0);  
     }, [document]);
+
     // delete question
     const handleDelete=(e)=>{
         e.preventDefault();
@@ -104,8 +93,8 @@ export default function Question() {
 
                     <p>{document.question_description}</p>
                     
-                    {imageURL && imageURL.map(imageSrc=>
-                            <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
+                    {document.question_image_url && document.question_image_url.map(imageSrc=>
+                        <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
 
                     <p>created_by: {document.created_by}</p>
                     

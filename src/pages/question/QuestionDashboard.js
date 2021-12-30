@@ -7,6 +7,7 @@ import {db} from "../../firebase/config";
 
 // here didnt have real time listener because not required
 // user can refresh page to capture all latest changes
+
 export default function QuestionDashboard () {
     const [document,setDocument] = useState(null);
     const [error, setError] = useState(null);

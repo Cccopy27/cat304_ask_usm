@@ -51,7 +51,7 @@ export default function AddQuestion() {
                     }
     
                     //add to database
-                    await addDocument(question_object,image);
+                    await addDocument(question_object,image,"question");
                     setloading(false);
                     
                     // no error
