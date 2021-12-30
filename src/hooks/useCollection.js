@@ -14,6 +14,7 @@ export const useCollection=(collections, queries2,orderBy2)=>{
     const queries = useRef(queries2).current;
     const orderBys = useRef(orderBy2).current;
     useEffect(()=>{
+
         let ref = collection(db, ...collections);
         if(queries){
             ref = query(ref,where(...queries));
@@ -22,6 +23,7 @@ export const useCollection=(collections, queries2,orderBy2)=>{
             ref = query(ref, orderBy(...orderBys));
         }
         const unsub = onSnapshot(ref, (snapshot)=>{
+            console.log("I keep running in collections");
             let results= [];
             snapshot.docs.forEach((doc)=>{
                 results.push({...doc.data(), id: doc.id});
@@ -39,7 +41,7 @@ export const useCollection=(collections, queries2,orderBy2)=>{
         return()=>{
             unsub();
         }
-    },[collections, queries,orderBys])
+    },[])
 
     return{document, error};
 }

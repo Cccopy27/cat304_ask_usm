@@ -12,6 +12,7 @@ export const useDocument =(collections,id)=>{
     const [error, setError] = useState(null);
 
     useEffect(()=>{
+        console.log("I keep running in document");
         const ref = doc(collection(db,collections),id);
 
         // real time listener
@@ -30,7 +31,7 @@ export const useDocument =(collections,id)=>{
         })
         return()=>{unsub()};
 
-    },[collections,id])
+    },[])
 
     // return document with data
     // return error if there are
