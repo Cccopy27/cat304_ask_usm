@@ -13,7 +13,6 @@ export default function EditComment({document,editMode,setEditMode, question_id}
     const [imageURL,setImageURL] = useState([]);
     const [imageName,setImageName] = useState([]);
     const [loading,setLoading] = useState(false);
-    const [error, setError] = useState(false);
     const tempArray =[];
     const formInput = useRef();
     const {updateDocument,response} = useFirestore(["questions",question_id,"comment"]);
@@ -31,7 +30,6 @@ export default function EditComment({document,editMode,setEditMode, question_id}
                 })
                 setImageURL(tempArray);
                 setImageName(document.comment_image_name);
-
             }
         }
     }, [document,editMode]);
@@ -56,76 +54,76 @@ export default function EditComment({document,editMode,setEditMode, question_id}
             Swal.fire({
                 title: 'Do you want to save the changes?',
                 showDenyButton: true,
-                // showCancelButton: true,
                 confirmButtonText: 'Yes',
-                // denyButtonText: `Don't save`,
               }).then(async(result) => {
-                if (result.isConfirmed) {
-                    setLoading(true);
-                    Swal.fire({
-                        title:"Now Loading...",
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                    })
-                    Swal.showLoading();
-                
-                // user input as object
-                const comment_object={
-                    comments: newComment,
-                    created_by:"",
-                    added_at:Timestamp.now(),
-                    comment_image_name:imageName,
-                    comment_image_url:"",
-                    subComment:document.subComment,
-                }
+                  // edit
+                    if (result.isConfirmed) {
+                        //loading
+                        setLoading(true);
+                        Swal.fire({
+                            title:"Now Loading...",
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                        })
+                        Swal.showLoading();
+                    
+                        // user input as object
+                        const comment_object={
+                            comments: newComment,
+                            created_by:"",
+                            added_at:Timestamp.now(),
+                            comment_image_name:imageName,
+                            comment_image_url:"",
+                            subComment:document.subComment,
+                        }
 
-                // if user use back old image
-                if(image.length === 0){
-                    comment_object.comment_image_url = document.comment_image_url;
-                }
+                        // if user use back old image
+                        if(image.length === 0){
+                            comment_object.comment_image_url = document.comment_image_url;
+                        }
 
-                // if user use new image
-                // delete all image from storage
-                if(image.length != 0){
-                    document.comment_image_name.forEach(image_name=>{
-                        // Create a reference to the file to delete
-                        const desertRef = ref(storage, `comment/${document.id}/${image_name}`);
-                        // Delete the file
-                        deleteObject(desertRef).then(() => {
-                            // File deleted successfully
-    
-                        }).catch((error) => {
-                            console.log(error);
-                        // Uh-oh, an error occurred!
-                        });
-                    })
-                }
-                
-    
-                //update  database
-                await updateDocument(document.id,comment_object,image,"comment");
-                setLoading(false);
-    
-                if(!response.error){
-                    setNewComment("");
-                    setimage([]);
-                    setImageURL([]);
-                    formInput.current.reset();
-                    Swal.fire('Saved!', '', 'success');
-                    // navigate(`/question/${question.id}`);
-                    setEditMode(false);
-                }
-                else{
-                    console.log("something wrong");
-                    Swal.fire({
-                        icon:"error",
-                        title:"Something wrong",
-                        showConfirmButton: true,
-                    })
-                }
+                        // if user use new image
+                        // delete all image from storage
+                        if(image.length != 0){
+                            document.comment_image_name.forEach(image_name=>{
+                                // Create a reference to the file to delete
+                                const desertRef = ref(storage, `comment/${document.id}/${image_name}`);
+                                // Delete the file
+                                deleteObject(desertRef).then(() => {
+                                    // File deleted successfully
+            
+                                }).catch((error) => {
+                                    console.log(error);
+                                // Uh-oh, an error occurred!
+                                });
+                            })
+                        }
+                    
+        
+                        //update  database
+                        await updateDocument(document.id,comment_object,image,"comment");
+                        setLoading(false);
+            
+                        if(!response.error){
+                            // reset form
+                            setNewComment("");
+                            setimage([]);
+                            setImageURL([]);
+                            formInput.current.reset();
+                            Swal.fire('Saved!', '', 'success');
+                            setEditMode(false);
+                        }
+                        else{
+                            console.log("something wrong");
+                            Swal.fire({
+                                icon:"error",
+                                title:"Something wrong",
+                                showConfirmButton: true,
+                            })
+                        }
 
-                }
-              })
+                    }
+                })
         }
         else{
             Swal.fire({
@@ -135,8 +133,10 @@ export default function EditComment({document,editMode,setEditMode, question_id}
         }
     }
 
+    // edit mode = off
     const handleCancel =(e) =>{
         e.preventDefault();
+        setEditMode(false);
     }
      
     return (
@@ -145,9 +145,8 @@ export default function EditComment({document,editMode,setEditMode, question_id}
                 <div>
                     <form ref={formInput}>
                         <label>
-                        <input
+                        <textarea
                             required
-                            type="text"
                             className="input-style"
                             onChange={e => {setNewComment(e.target.value)}}
                             value={newComment}

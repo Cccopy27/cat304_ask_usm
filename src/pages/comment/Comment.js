@@ -10,14 +10,15 @@ import { useFirestore } from "../../hooks/useFirestore";
 export default function Comment({comment, question_id}) {
     const [editMode,setEditMode] = useState(false);
     const[loading,setLoading] = useState(false);
-    const {deleteDocument,updateDocument } = useFirestore(["questions",question_id,"comment"]);
+    const {deleteDocument} = useFirestore(["questions",question_id,"comment"]);
 
-
+    // edit mode on
     const handleEdit= (e)=>{
         e.preventDefault();
         setEditMode(true);
     };
 
+    // delete comment
     const handleDelete= (e)=>{
         e.preventDefault();
         // alert user
@@ -42,7 +43,6 @@ export default function Comment({comment, question_id}) {
 
                 // delete storage image
                 // loop each image
-                
                 comment.comment_image_name.forEach(image_name=>{
                     // Create a reference to the file to delete
                     const desertRef = ref(storage, `comment/${comment.id}/${image_name}`);
@@ -55,11 +55,13 @@ export default function Comment({comment, question_id}) {
                     // Uh-oh, an error occurred!
                     });
                 })
-                deleteDocument(comment.id)
+
+                // delete document comment
+                await deleteDocument(comment.id);
               Swal.fire('Deleted!', '', 'success');
               setLoading(false);
-            //   navigate(`/question/");
-            } else if (result.isDenied) {
+            } 
+            else if (result.isDenied) {
               Swal.fire('Question not deleted', '', 'info')
             }
           })
@@ -73,8 +75,10 @@ export default function Comment({comment, question_id}) {
                         <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
                     <div>added {formatDistanceToNow(comment.added_at.toDate(),{addSuffix:true})}</div>
                     <div>{comment.created_by}</div>
-                    <button onClick={handleEdit}>edit</button>
-                    <button onClick={handleDelete}>delete</button>
+                    {!loading && <button onClick={handleEdit}>edit</button>}
+                    {!loading && <button onClick={handleDelete}>delete</button>}
+                    {loading && <button disabled onClick={handleEdit}>edit</button>}
+                    {loading && <button disabled onClick={handleDelete}>delete</button>}
                 </div>
             }
             {comment && <EditComment document={comment} editMode={editMode} setEditMode={setEditMode} question_id={question_id}/>}

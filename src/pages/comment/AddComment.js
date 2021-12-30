@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 
 export default function AddComment({question_id}) {
     const [comments, setComments] = useState("");
-    const [reply, setReply] = useState(null);
     const [image, setimage] = useState([]);
     const [imageURLs,setImageURLs] = useState([]);
     const [imageName,setImageName] = useState([]);

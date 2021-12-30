@@ -1,6 +1,6 @@
 import "./CommentSection.css";
 import { useCollection } from "../../hooks/useCollection";
-import SubCommentSection from "../question/SubCommentSection";
+import SubCommentSection from "../comment/SubCommentSection";
 import AddSubComment from "./AddSubComment";
 import Comment from "./Comment";
 
@@ -22,7 +22,7 @@ export default function CommentSection({question_id}) {
                 <div key={item.id}>
                     <Comment comment={item} question_id={question_id} />
                     <AddSubComment question_id={question_id} comment_id={item.id} />
-                    <SubCommentSection subComment={item.subComment}/>
+                    <SubCommentSection subComment={item.subComment} question_id={question_id} comment_id={item.id}/>
                 </div>
             ))}
         </div>
