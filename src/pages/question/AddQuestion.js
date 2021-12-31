@@ -3,7 +3,7 @@ import {Timestamp} from "firebase/firestore";
 import {useFirestore} from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import "./AddQuestion.css";
+import styles from "./AddQuestion.module.css";
 
 export default function AddQuestion() {
     const [title, settitle] = useState("");
@@ -100,32 +100,32 @@ export default function AddQuestion() {
     },[image]);
 
     return (
-        <div className="add-question-container">
-            <div className="add-question-header">
-                <h2 className="add-question-title">Add new question</h2>
+        <div className={styles.add_question_container}>
+            <div className={styles.add_question_header}>
+                <h2 className={styles.add_question_title}>Add new question</h2>
             </div>
-            <div className="add-question-form-container">
-                <form className="add-question-form" ref={formInput}>
-                    <label className="add-question-title">
-                        <span className="span-title">Question title:</span>
+            <div className={styles.add_question_form_container}>
+                <form className={styles.add_question_form} ref={formInput}>
+                    <label className={styles.add_question_title}>
+                        <span className={styles.span_title}>Question title:</span>
                         <input
                         required
                         type="text"
-                        className="input-style"
+                        className={styles.input_style}
                         onChange={e => {settitle(e.target.value)}}
                         value={title}
                         />
                     </label>
 
-                    <label className="add-question-tag">
-                        <span className="span-title">Question Tags:</span>
+                    <label className={styles.add_question_tag}>
+                        <span className={styles.span_title}>Question Tags:</span>
                         {/* add tag here  */}
                     </label>
 
-                    <label className="add-question-des">
-                        <span className="span-title">Question description:</span>
+                    <label className={styles.add_question_des}>
+                        <span className={styles.span_title}>Question description:</span>
                         <textarea 
-                        className="add-question-des-input input-style"
+                        className={styles.add_question_des_input,styles.input_style}
                         required
                         onChange={e => {setdes(e.target.value)}}
                         value={des}
@@ -133,23 +133,23 @@ export default function AddQuestion() {
                     </label>
 
 
-                    <label className="add-question-img">
-                        <span className="span-title">Image:</span>
+                    <label className={styles.add_question_img}>
+                        <span className={styles.span_title}>Image:</span>
                         <input
-                        className="input-style"
+                        className={styles.input_style}
                         type="file"
                         onChange={e => {setimage([...e.target.files])}}
                         multiple accept="image/*"
                         />
                     </label>
 
-                    <div className="image-preview-container">
+                    <div className={styles.image_preview_container}>
                         {imageURLs.map(imageSrc=>
-                        <img className="image-preview" key={imageSrc}src={imageSrc} alt="image-preview"/>)}
+                        <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
                     </div>
 
-                    {!loading && <button className="submit-btn" onClick={handleSubmit}>Add question</button>}
-                    {loading && <button className="submit-btn"disabled>loading</button>}
+                    {!loading && <button className={styles.submit_btn} onClick={handleSubmit}>Add question</button>}
+                    {loading && <button className={styles.submit_btn}disabled>loading</button>}
                 </form>
             </div>
             

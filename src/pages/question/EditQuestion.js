@@ -1,4 +1,4 @@
-import "./EditQuestion.css";
+import styles from "./EditQuestion.module.css";
 import { useEffect, useState,useRef } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
@@ -173,10 +173,10 @@ export default function EditQuestion({document,editMode,setEditMode}) {
     return (
         <>
             {editMode && 
-                <div className="question-details">
-                    <form className="add-question-form"  ref={formInput}>
-                        <label className="add-question-title">
-                            <span className="span-title">Question title:</span>
+                <div className={styles.question_details}>
+                    <form className={styles.add_question_form}  ref={formInput}>
+                        <label className={styles.add_question_title}>
+                            <span className={styles.span_title}>Question title:</span>
                             <input
                             required
                             type="text"
@@ -188,24 +188,24 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                         
                         <p>tags:{document.question_tag}</p>
 
-                        <label className="add-question-des">
-                            <span className="span-title">Question description:</span>
+                        <label className={styles.add_question_des}>
+                            <span className={styles.span_title}>Question description:</span>
                             <textarea 
-                            className="add-question-des-input input-style"
+                            className={styles.add_question_des_input ,styles.input_style}
                             required
                             onChange={e => {setdes(e.target.value)}}
                             value={des}
                             />
                         </label>
                             
-                        <div className="image-preview-container">
+                        <div className={styles.image_preview_container}>
                             {imageURL && imageURL.map(imageSrc=>
-                            <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
+                            <img className={styles.image_preview} key={imageSrc}src={imageSrc}/>)}
                         </div>
-                        <label className="add-question-img">
-                            <span className="span-title">Image:</span>
+                        <label className={styles.add_question_img}>
+                            <span className={styles.span_title}>Image:</span>
                             <input
-                            className="input-style"
+                            className={styles.input_style}
                             type="file"
                             onChange={e => {setimage([...e.target.files])}}
                             multiple accept="image/*"

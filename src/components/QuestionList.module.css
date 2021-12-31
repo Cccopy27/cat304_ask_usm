@@ -1,4 +1,9 @@
-.question-list a{
+.question_list {
+    display: flex;
+    flex-direction: column;
+}
+
+.question_item{
     overflow: hidden;
     max-width: 600px;
     margin: 10px 10px;

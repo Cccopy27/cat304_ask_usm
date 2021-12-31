@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./AddComment.css";
+import styles from "./AddComment.module.css";
 import { useFirestore } from "../../hooks/useFirestore";
 import { Timestamp } from "firebase/firestore";
 import Swal from "sweetalert2";
@@ -54,29 +54,29 @@ export default function AddComment({question_id}) {
 
     
     return (
-        <div className="comment-container">
-            <div className="comment-input-area">
-                <label className="add-comment">
-                    <span className="span-title">Add your comment:</span>
+        <div className={styles.comment_container}>
+            <div className={styles.comment_input_area}>
+                <label className={styles.add_comment}>
+                    <span className={styles.span_title}>Add your comment:</span>
                     <textarea 
                     
                     onChange={e => {setComments(e.target.value)}}
                     value={comments}
                     />
                 </label>
-                <label className="add-comment-img">
-                    <span className="span-title">Image:</span>
+                <label className={styles.add_comment_img}>
+                    <span className={styles.span_title}>Image:</span>
                     <input
-                    className="input-style"
+                    className={styles.input_style}
                     type="file"
                     onChange={e => {setimage([...e.target.files])}}
                     multiple accept="image/*"
                     />
                 </label>
 
-                <div className="image-preview-container">
+                <div className={styles.image_preview_container}>
                     {imageURLs.map(imageSrc=>
-                    <img className="image-preview" key={imageSrc}src={imageSrc} alt="image_preview"/>)}
+                    <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image_preview"/>)}
                 </div>
 
                 <button onClick={handleSubmit}>Add Comments</button>

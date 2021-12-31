@@ -1,0 +1,34 @@
+.image_preview{
+    max-height: 100px;
+}
+
+.question_details{
+    display: flex;
+    flex-direction: column;
+}
+
+.question_header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.question_title{
+    flex: 10;
+}
+
+.question_add_btn{
+    
+    flex: 1;
+}
+
+.question_add_btn{
+    height: 30px;
+    background-color: #1A2238;
+    color: white;
+}
+
+.question_add_btn:hover{
+    cursor: pointer;
+    color: #9DAAF2;
+}

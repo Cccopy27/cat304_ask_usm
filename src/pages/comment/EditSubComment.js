@@ -1,5 +1,5 @@
 import { useState,useRef,useEffect } from "react";
-import "./EditSubComment.css";
+import styles from "./EditSubComment.module.css";
 import { useFirestore } from "../../hooks/useFirestore";
 import { Timestamp } from "firebase/firestore";
 import Swal from "sweetalert2";

@@ -1,9 +1,9 @@
-.add-question.container{
+.add_question.container{
     display: flex;
     flex-direction: column;
 }
 
-.add-question-header{
+.add_question_header{
     /* background-color: red; */
     margin-top: 20px;
     height: 60px;
@@ -12,14 +12,14 @@
     align-items: center;
 }
 
-.add-question-form-container{
+.add_question_form_container{
     margin-top: 15px;
     margin-left: 100px;
     margin-right: 100px;
     background-color: aliceblue;
 }
 
-.add-question-form{
+.add_question_form{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -27,21 +27,21 @@
     padding: 25px 25px;
 }
 
-.add-question-tag{
+.add_question_tag{
     flex: 1;
 }
 
-.add-question-title{
+.add_question_title{
     flex:1;
 }
 
-.add-question-des{
+.add_question_des{
     display: flex;
     flex-direction: column;
     flex:4;
 }
 
-.add-question-des-input{
+.add_question_des_input{
     width: 97% !important;
     margin: 10px 0px 0px 0px !important;
     /* margin-top: 10px;
@@ -51,11 +51,11 @@
     height: 200px !important;
 }
 
-.add-question-img{
+.add_question_img{
     flex:1;
 }
 
-.input-style{
+.input_style{
     margin-left: 15px;
     width: 70%;
     font-size: 20px;
@@ -64,24 +64,24 @@
     padding: 10px 10px;
 }
 
-.span-title{
+.span_title{
     font-size: 20px;
 }
 
-.submit-btn{
+.submit_btn{
     align-self: center;
     width: 400px;
     padding: 10px;
     font-size: 20px;
 }
 
-.image-preview-contaier{
+.image_preview_contaier{
     flex: 1;
     display: flex;
     flex-direction: row;
 }
 
-.image-preview{
+.image_preview{
     flex:1;
     max-height: 100px;
     max-width: 100px;
