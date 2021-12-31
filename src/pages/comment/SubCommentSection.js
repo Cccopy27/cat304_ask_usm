@@ -1,6 +1,4 @@
 import "./SubCommentSection.css";
-import { useCollection } from "../../hooks/useCollection";
-import { useState } from "react";
 import SubComment from "./SubComment";
 
 export default function SubCommentSection({subComment, question_id, comment_id}) {

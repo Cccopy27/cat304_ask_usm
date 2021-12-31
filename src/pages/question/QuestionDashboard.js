@@ -1,35 +1,35 @@
 import {useEffect, useState} from "react";
 import QuestionList from "../../components/QuestionList";
 import { useNavigate } from "react-router-dom";
-import {collection, onSnapshot, getDocs} from "firebase/firestore"; 
+import {collection, getDocs} from "firebase/firestore"; 
 import "./QuestionDashboard.css";
 import {db} from "../../firebase/config";
+import { useCollection } from "../../hooks/useCollection";
 
-// here didnt have real time listener because not required
-// user can refresh page to capture all latest changes
 
 export default function QuestionDashboard () {
-    const [document,setDocument] = useState(null);
+    // const [document,setDocument] = useState(null);
     const [error, setError] = useState(null);
     const [loading,setLoading] = useState(false);
+    const {document, response} = useCollection(["questions"]);
 
     let result = [];
     useEffect(()=>{
         window.scrollTo(0,0);
-        setLoading(true);
-        getDocs(collection(db,"questions"))
-        .then((querySnapshot) =>{
-            querySnapshot.forEach((doc)=>{
-                result.push({...doc.data(), id:doc.id});
-            });
-        })
-        .then(()=>{
-            setDocument(result);
-            setLoading(false);
-        })
-        .catch(err=>{
-            setError(err);
-        })
+        // setLoading(true);
+        // getDocs(collection(db,"questions"))
+        // .then((querySnapshot) =>{
+        //     querySnapshot.forEach((doc)=>{
+        //         result.push({...doc.data(), id:doc.id});
+        //     });
+        // })
+        // .then(()=>{
+        //     setDocument(result);
+        //     setLoading(false);
+        // })
+        // .catch(err=>{
+        //     setError(err);
+        // })
     },[])
     
     const navigate = useNavigate();

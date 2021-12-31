@@ -41,7 +41,7 @@ export default function SubComment({subComment,item, question_id, comment_id}) {
 
                 // filter out the current subComment 
                 const newSubCommentObj = subComment.filter(currComment=>{
-                    return currComment.id != item.id;
+                    return currComment.id !== item.id;
                 })
 
                 const newCommentChanges={
@@ -51,8 +51,17 @@ export default function SubComment({subComment,item, question_id, comment_id}) {
                 // update latest changes to the comment document
                 await updateDocument(comment_id,newCommentChanges);
 
-
-                Swal.fire('Deleted!', '', 'success');
+                if(!response.error){
+                    Swal.fire('Deleted!', '', 'success');
+                }
+                else{
+                    console.log("something wrong");
+                    Swal.fire({
+                        icon:"error",
+                        title:"Something wrong",
+                        showConfirmButton: true,
+                    })
+                }
                 setLoading(false);
             }
         })

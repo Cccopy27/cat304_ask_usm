@@ -16,10 +16,9 @@ export default function Question() {
     // get id from param
     const {id} = useParams();
     const {error, document} = useDocument("questions",id);
-    const {deleteDocument,updateDocument } = useFirestore(["questions"]);
+    const {deleteDocument } = useFirestore(["questions"]);
     const navigate = useNavigate();
-    const [imageURL,setImageURL] = useState([]);
-    const[loading,setLoading] = useState(false);
+    // const [loading,setLoading] = useState(false);
     const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
@@ -41,7 +40,7 @@ export default function Question() {
               // delete
             if (result.isConfirmed) {
                 // loading
-                setLoading(true);
+                // setLoading(true);
                 Swal.fire({
                     title:"Now Loading...",
                     allowEscapeKey: false,
@@ -66,7 +65,7 @@ export default function Question() {
                 })
                 deleteDocument(document.id)
               Swal.fire('Deleted!', '', 'success');
-              setLoading(false);
+            //   setLoading(false);
               navigate("/question");
             } else if (result.isDenied) {
               Swal.fire('Question not deleted', '', 'info')
@@ -94,7 +93,7 @@ export default function Question() {
                     <p>{document.question_description}</p>
                     
                     {document.question_image_url && document.question_image_url.map(imageSrc=>
-                        <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
+                        <img className="image-preview" key={imageSrc}src={imageSrc} alt="image-preview"/>)}
 
                     <p>created_by: {document.created_by}</p>
                     

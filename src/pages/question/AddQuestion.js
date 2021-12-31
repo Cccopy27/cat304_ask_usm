@@ -13,7 +13,7 @@ export default function AddQuestion() {
     const [imageURLs,setImageURLs] = useState([]);
     const [imageName,setImageName] = useState([]);
     const [loading,setloading] = useState(false);
-    const [error,setError] = useState(false);
+    // const [error,setError] = useState(false);
     const formInput = useRef();
     const {addDocument, response} = useFirestore(["questions"]);
     const navigate = useNavigate();
@@ -145,7 +145,7 @@ export default function AddQuestion() {
 
                     <div className="image-preview-container">
                         {imageURLs.map(imageSrc=>
-                        <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
+                        <img className="image-preview" key={imageSrc}src={imageSrc} alt="image-preview"/>)}
                     </div>
 
                     {!loading && <button className="submit-btn" onClick={handleSubmit}>Add question</button>}
