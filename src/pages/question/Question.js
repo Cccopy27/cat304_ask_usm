@@ -94,31 +94,44 @@ export default function Question() {
 
     return (
         <div>
-            {!editMode && 
-                <div className={styles.question_details}>
+            <div className={styles.question_container}>
+                {!editMode && 
+            
+                    <div className={styles.question_details}>
                     <div className={styles.question_header}>
                         <h2 className={styles.question_title}>{document.question_title}</h2>
-                        <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Questions</button>
+                        <div className={styles.question_add}>
+                            <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Questions</button>
+                        </div>
+                    
                     </div>
-                    
-                    <p>added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}</p>
-                    <p>tags:{document.question_tag}</p>
-
+                    <div className={styles.question_subTitle}>
+                        <p className={styles.question_subTitle_time}>  
+                            {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
+                        </p>
+                        
+                        <p className={styles.question_subTitle_author}>
+                            created by: {document.created_by}
+                        </p>
+                        <button onClick={handleDelete}>delete</button>
+                        <button onClick={handleEdit}>edit</button>
+                    </div>
+                    <div >
+                        <p className={styles.question_subTitle_tags}>
+                            tags:{document.question_tag}
+                        </p>
+                    </div>
                     <p>{document.question_description}</p>
-                    
                     {document.question_image_url && document.question_image_url.map(imageSrc=>
                         <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
-
-                    <p>created_by: {document.created_by}</p>
                     
-                    <button onClick={handleDelete}>delete</button>
-                    
-                    <button onClick={handleEdit}>edit</button>
                 </div>
-            }
-            <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode}/>
-            {!editMode && <AddComment question_id={document.id}/>}
-            {!editMode && <CommentSection question_id={document.id}/>}
+                }
+                <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode}/>
+                {!editMode && <AddComment question_id={document.id}/>}
+                {!editMode && <CommentSection question_id={document.id}/>}
+            </div>
+                
         </div>
     )
 }

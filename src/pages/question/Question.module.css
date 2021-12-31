@@ -2,6 +2,12 @@
     max-height: 100px;
 }
 
+.question_container{
+    margin: 20px 100px;
+    display: flex;
+    flex-direction: column;
+}
+
 .question_details{
     display: flex;
     flex-direction: column;
@@ -11,18 +17,22 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 }
 
-.question_title{
-    flex: 10;
+.question_subTitle{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+.question_subTitle_author{
+    margin-left: 30px;
 }
 
 .question_add_btn{
     
-    flex: 1;
-}
-
-.question_add_btn{
     height: 30px;
     background-color: #1A2238;
     color: white;
