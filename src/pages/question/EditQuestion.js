@@ -18,27 +18,33 @@ export default function EditQuestion({document,editMode,setEditMode}) {
     const [image, setimage] = useState([]);
     const [imageURL,setImageURL] = useState([]);
     const [imageName,setImageName] = useState([]);
-    const [error, setError] = useState(false);
+    // const [error, setError] = useState(false);
     const tempArray =[];
     const formInput = useRef();
     const navigate = useNavigate();
     
     // set all document value to current input field
-    useEffect(async() => {
+    useEffect(() => {
         window.scrollTo(0,0);
-        if(document){
-            settitle(document.question_title);
-            setdes(document.question_description);
 
-            // get picture
-            if( document.question_image_url){
-                await document.question_image_url.forEach(item=>{
-                    tempArray.push(item);
-                })
-                setImageURL(tempArray);
-                setImageName(document.question_image_name);
+        const getData=async()=>{
+            if(document){
+                settitle(document.question_title);
+                setdes(document.question_description);
+    
+                // get picture
+                if( document.question_image_url){
+                    await document.question_image_url.forEach(item=>{
+                        tempArray.push(item);
+                    })
+                    setImageURL(tempArray);
+                    setImageName(document.question_image_name);
+                }
             }
         }
+
+        getData();
+        
     }, [document,editMode]);
     
    
@@ -86,13 +92,12 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                 }
                 // if user use back old image
                 if(image.length === 0){
-                    console.log("hit");
                     question_object.question_image_url = document.question_image_url;
                 }
 
                 // if user upload new image
                 // delete all image from storage
-                if(image.length != 0){
+                if(image.length !== 0){
                     document.question_image_name.forEach(image_name=>{
                         // Create a reference to the file to delete
                         const desertRef = ref(storage, `question/${document.id}/${image_name}`);

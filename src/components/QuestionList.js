@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import "./QuestionList.css";
 
 export default function QuestionList({questions}) {
+    
     return (
         <div className="question-list">
             {questions.length === 0 && <p>No questions available!</p>}

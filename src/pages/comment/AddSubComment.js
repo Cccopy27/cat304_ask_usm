@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 export default function AddSubComment({question_id, comment_id}) {
     const [subComments, setSubComments] = useState("");
     const {updateDocument, response} = useFirestore(["questions",question_id,"comment"]);
+    const [cooldown, setCooldown] = useState(false);
     
     // submit reply
     const handleSubmit=async(e)=>{
@@ -23,6 +24,7 @@ export default function AddSubComment({question_id, comment_id}) {
         const newCommentChanges={
             subComment:arrayUnion(newSubComment),
         }
+        setCooldown(true);
         await updateDocument(comment_id,newCommentChanges);
 
         // got error
@@ -34,6 +36,10 @@ export default function AddSubComment({question_id, comment_id}) {
                 showConfirmButton: true,
             })
         }
+        setTimeout(() => {
+            setCooldown(false);
+            
+        }, 3000);
 
     }
     return (
@@ -45,7 +51,9 @@ export default function AddSubComment({question_id, comment_id}) {
                     value={subComments}
                     />
                 </label>
-                <button onClick={handleSubmit}>Reply</button>
+                {!cooldown && <button onClick={handleSubmit}>Reply</button>}
+                {cooldown && <button disabled onClick={handleSubmit}>Reply</button>}
+
             </div>
         </div>
     )

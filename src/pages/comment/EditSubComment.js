@@ -11,7 +11,7 @@ export default function EditSubComment({item, editMode, setEditMode, question_id
 
 
     // show current comment     
-    useEffect(async() => {
+    useEffect(() => {
         // handle unmounted when this subcomment was deleted
         let isMounted = true;
         if(item){
@@ -21,55 +21,60 @@ export default function EditSubComment({item, editMode, setEditMode, question_id
     }, [item,editMode]);
 
     // save changes
-    const handleSave=async(e)=>{
+    const handleSave=(e)=>{
         e.preventDefault();
-
-        if(formInput.current.checkValidity()){
-            const newSubCommentObj={
-                id:item.id,
-                created_by:"",
-                content:newSubComment,
-                added_at:Timestamp.now(),
-            }
-
-            // update field array that same id with the current one 
-            const newSubCommentObj2 = subComment.map(currComment=>{
-                if(currComment.id === item.id){
-                    return newSubCommentObj;
+        
+        const submitForm=async()=>{
+            if(formInput.current.checkValidity()){
+                const newSubCommentObj={
+                    id:item.id,
+                    created_by:"",
+                    content:newSubComment,
+                    added_at:Timestamp.now(),
                 }
-                else{
-                    return currComment;
-                }
-            })
     
-            const newCommentChanges={
-                subComment:newSubCommentObj2,
+                // update field array that same id with the current one 
+                const newSubCommentObj2 = subComment.map(currComment=>{
+                    if(currComment.id === item.id){
+                        return newSubCommentObj;
+                    }
+                    else{
+                        return currComment;
+                    }
+                })
+        
+                const newCommentChanges={
+                    subComment:newSubCommentObj2,
+                }
+    
+                // update document
+                await updateDocument(comment_id,newCommentChanges);
+              
+                // got error
+                if(!response.error){
+                    setNewSubComment("");
+                    formInput.current.reset();
+                    setEditMode(false);
+                }else{
+                    console.log("something wrong");
+                    Swal.fire({
+                        icon:"error",
+                        title:"Something wrong",
+                        showConfirmButton: true,
+                    })
+                }
+    
             }
-
-            // update document
-            await updateDocument(comment_id,newCommentChanges);
-          
-            // got error
-            if(!response.error){
-                setNewSubComment("");
-                formInput.current.reset();
-                setEditMode(false);
-            }else{
-                console.log("something wrong");
+            else{
                 Swal.fire({
-                    icon:"error",
-                    title:"Something wrong",
+                    title:"Make sure the comment is not empty!",
                     showConfirmButton: true,
                 })
             }
+        }
 
-        }
-        else{
-            Swal.fire({
-                title:"Make sure the comment is not empty!",
-                showConfirmButton: true,
-            })
-        }
+        submitForm();
+        
     };
 
     const handleCancel=(e)=>{

@@ -12,26 +12,30 @@ export default function EditComment({document,editMode,setEditMode, question_id}
     const [image, setimage] = useState([]);
     const [imageURL,setImageURL] = useState([]);
     const [imageName,setImageName] = useState([]);
-    const [loading,setLoading] = useState(false);
+    // const [loading,setLoading] = useState(false);
     const tempArray =[];
     const formInput = useRef();
     const {updateDocument,response} = useFirestore(["questions",question_id,"comment"]);
 
 
     // show current comment 
-    useEffect(async() => {
-        if(document){
-            setNewComment(document.comments);
-
-            // get picture
-            if( document.comment_image_url){
-                await document.comment_image_url.forEach(item=>{
-                    tempArray.push(item);
-                })
-                setImageURL(tempArray);
-                setImageName(document.comment_image_name);
+    useEffect(() => {
+        const getallData=async()=>{
+            if(document){
+                setNewComment(document.comments);
+    
+                // get picture
+                if( document.comment_image_url){
+                    await document.comment_image_url.forEach(item=>{
+                        tempArray.push(item);
+                    })
+                    setImageURL(tempArray);
+                    setImageName(document.comment_image_name);
+                }
             }
         }
+        getallData();
+        
     }, [document,editMode]);
     
     // preview image
@@ -59,7 +63,7 @@ export default function EditComment({document,editMode,setEditMode, question_id}
                   // edit
                     if (result.isConfirmed) {
                         //loading
-                        setLoading(true);
+                        // setLoading(true);
                         Swal.fire({
                             title:"Now Loading...",
                             allowEscapeKey: false,
@@ -102,7 +106,7 @@ export default function EditComment({document,editMode,setEditMode, question_id}
         
                         //update  database
                         await updateDocument(document.id,comment_object,image,"comment");
-                        setLoading(false);
+                        // setLoading(false);
             
                         if(!response.error){
                             // reset form

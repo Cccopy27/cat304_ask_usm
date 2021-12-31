@@ -10,7 +10,7 @@ export default function AddComment({question_id}) {
     const [image, setimage] = useState([]);
     const [imageURLs,setImageURLs] = useState([]);
     const [imageName,setImageName] = useState([]);
-    const [loading,setLoading] = useState(false);
+    // const [loading,setLoading] = useState(false);
     const {addDocument, response} = useFirestore(["questions",question_id,"comment"]);
     // submit comment
     const handleSubmit=async(e)=>{
@@ -34,6 +34,9 @@ export default function AddComment({question_id}) {
                 title:"Something wrong",
                 showConfirmButton: true,
             })
+        }
+        else{
+            Swal.fire('Added!', '', 'success');
         }
     }
 
@@ -73,7 +76,7 @@ export default function AddComment({question_id}) {
 
                 <div className="image-preview-container">
                     {imageURLs.map(imageSrc=>
-                    <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
+                    <img className="image-preview" key={imageSrc}src={imageSrc} alt="image_preview"/>)}
                 </div>
 
                 <button onClick={handleSubmit}>Add Comments</button>
