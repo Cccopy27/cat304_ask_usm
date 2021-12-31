@@ -32,7 +32,6 @@ export default function Question() {
         Swal.fire({
             title: 'Do you want to delete the question?',
             showDenyButton: true,
-            showCancelButton: true,
             confirmButtonText: 'Delete',
             denyButtonText: `Don't delete`,
             
@@ -94,31 +93,51 @@ export default function Question() {
 
     return (
         <div>
-            {!editMode && 
-                <div className={styles.question_details}>
-                    <div className={styles.question_header}>
-                        <h2 className={styles.question_title}>{document.question_title}</h2>
-                        <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Questions</button>
+            <div className={styles.question_container}>
+                {!editMode && 
+                    <div className={styles.question_details}>
+                        <div className={styles.question_top}>
+                            <div className={styles.question_header}>
+                                <h1 className={styles.question_title}>{document.question_title}</h1>
+                                <div className={styles.question_add}>
+                                    <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Questions</button>
+                                </div>
+                        
+                            </div>
+                            <div className={styles.question_subTitle}>
+                                <div className={styles.question_subTitle_left}>
+                                    <p className={styles.question_subTitle_time}>  
+                                        {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
+                                    </p>
+                                    
+                                    <p className={styles.question_subTitle_author}>
+                                        created by: {document.created_by}
+                                    </p>
+                                </div>
+                                <div className={styles.question_subTitle_right}>
+                                    <button className={styles.deleteBtn}
+                                    onClick={handleDelete}>delete</button>
+                                    <button className={styles.editBtn}onClick={handleEdit}>edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div className={styles.question_bottom}>
+                        <p className={styles.question_subTitle_tags}>tags:{document.question_tag}
+                        </p>
+                        <p className={styles.question_des}>{document.question_description}</p>
+                        {document.question_image_url && document.question_image_url.map(imageSrc=>
+                            <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
                     </div>
                     
-                    <p>added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}</p>
-                    <p>tags:{document.question_tag}</p>
-
-                    <p>{document.question_description}</p>
                     
-                    {document.question_image_url && document.question_image_url.map(imageSrc=>
-                        <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
-
-                    <p>created_by: {document.created_by}</p>
-                    
-                    <button onClick={handleDelete}>delete</button>
-                    
-                    <button onClick={handleEdit}>edit</button>
                 </div>
-            }
-            <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode}/>
-            {!editMode && <AddComment question_id={document.id}/>}
-            {!editMode && <CommentSection question_id={document.id}/>}
+                }
+                <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode}/>
+                {!editMode && <AddComment question_id={document.id}/>}
+                {!editMode && <CommentSection question_id={document.id}/>}
+            </div>
+                
         </div>
     )
 }

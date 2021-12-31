@@ -1,0 +1,14 @@
+.subcomment_container{
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+    margin-top: 10px;
+
+}
+
+.input_style{
+    border: none;
+    font-size: 16px;
+    padding: 2px;
+    width: 800px;
+
+}

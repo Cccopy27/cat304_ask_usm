@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 export default function EditSubComment({item, editMode, setEditMode, question_id, comment_id,subComment}) {
     const [newSubComment, setNewSubComment] = useState("");
     const formInput = useRef();
+    const subCommentRef=useRef();
     const {updateDocument, response} = useFirestore(["questions",question_id,"comment"]);
 
 
@@ -14,11 +15,25 @@ export default function EditSubComment({item, editMode, setEditMode, question_id
     useEffect(() => {
         // handle unmounted when this subcomment was deleted
         let isMounted = true;
-        if(item){
-            if(isMounted) setNewSubComment(item.content);
+
+        const getDate=()=>{
+            if(item){
+                if(isMounted) {
+                    setNewSubComment(item.content);
+                };
+            }
         }
+        getDate();
+        
         return()=>{isMounted=false}
     }, [item,editMode]);
+
+    useEffect(()=>{
+        if(newSubComment && subCommentRef.current){
+            subCommentRef.current.style.height="auto";
+            subCommentRef.current.style.height=subCommentRef.current.scrollHeight + "px";
+        }
+    },[newSubComment])
 
     // save changes
     const handleSave=(e)=>{
@@ -72,9 +87,7 @@ export default function EditSubComment({item, editMode, setEditMode, question_id
                 })
             }
         }
-
         submitForm();
-        
     };
 
     const handleCancel=(e)=>{
@@ -82,20 +95,24 @@ export default function EditSubComment({item, editMode, setEditMode, question_id
         setNewSubComment("");
         formInput.current.reset();
         setEditMode(false);
-    }
+    };
+
     return (
-        <div>
+        <div className={styles.subcomment_container}>
             <form ref={formInput}>
                 <label>
-                    <input
+                    <textarea
                     required
-                    className="input-style"
-                    onChange={e => {setNewSubComment(e.target.value)}}
+                    className={styles.input_style}
+                    onChange={e=>{setNewSubComment(e.target.value)}}
                     value={newSubComment}
+                    ref={subCommentRef}
                     />
-
-                    <button onClick={handleSave}>Save</button>
-                    <button onClick={handleCancel}>Cancel</button>
+                    <div>
+                        <button onClick={handleSave}>Save</button>
+                        <button onClick={handleCancel}>Cancel</button>
+                    </div>
+                    
                 </label>
             </form>
         </div>

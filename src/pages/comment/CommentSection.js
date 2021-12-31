@@ -15,16 +15,23 @@ export default function CommentSection({question_id}) {
     };
     
     return (
-        <div>
-            <h3>Comments</h3>
-            {document.map(item => (
-                
-                <div key={item.id}>
-                    <Comment comment={item} question_id={question_id} />
-                    <AddSubComment question_id={question_id} comment_id={item.id} />
-                    <SubCommentSection subComment={item.subComment} question_id={question_id} comment_id={item.id}/>
-                </div>
-            ))}
+        <div className={styles.comment_container}>
+            {document.length === 0 && <h2 className={styles.comment_header}>No Comment</h2>}
+            {document.length !== 0 && <h2 className={styles.comment_header}>{document.length} Comments</h2>}
+
+            <div className={styles.comment_content}>
+                {document.map(item => (
+                    <div className={styles.comment_each} key={item.id}>
+                        <Comment comment={item} question_id={question_id} />
+                        <div className={styles.subComment}>
+                            <AddSubComment question_id={question_id} comment_id={item.id} />
+                            <SubCommentSection subComment={item.subComment} question_id={question_id} comment_id={item.id}/>
+                        </div>
+                        
+                    </div>
+                ))}
+            </div>
+            
         </div>
     )
 }

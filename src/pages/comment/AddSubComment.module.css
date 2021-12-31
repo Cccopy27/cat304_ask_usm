@@ -1,0 +1,14 @@
+.comment_container{
+    margin-top: 10px;
+    /* border-top: 1px solid black; */
+}
+
+.comment_textarea{
+    width: 400px;
+    border: 0.2px dotted black;
+}
+
+.comment_input_area{
+    display: flex;
+    flex-direction: row;
+}

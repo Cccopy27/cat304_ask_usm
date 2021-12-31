@@ -5,6 +5,7 @@ import { useFirestore } from "../../hooks/useFirestore";
 import { Timestamp } from "firebase/firestore";
 import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 
 export default function EditComment({document,editMode,setEditMode, question_id}) {
@@ -16,14 +17,14 @@ export default function EditComment({document,editMode,setEditMode, question_id}
     const tempArray =[];
     const formInput = useRef();
     const {updateDocument,response} = useFirestore(["questions",question_id,"comment"]);
-
+    const commentRef = useRef();
 
     // show current comment 
     useEffect(() => {
         const getallData=async()=>{
             if(document){
                 setNewComment(document.comments);
-    
+                
                 // get picture
                 if( document.comment_image_url){
                     await document.comment_image_url.forEach(item=>{
@@ -35,6 +36,10 @@ export default function EditComment({document,editMode,setEditMode, question_id}
             }
         }
         getallData();
+        if(newComment && commentRef.current){
+            commentRef.current.style.height="auto";
+            commentRef.current.style.height=commentRef.current.scrollHeight+"px";
+        }
         
     }, [document,editMode]);
     
@@ -142,40 +147,59 @@ export default function EditComment({document,editMode,setEditMode, question_id}
         e.preventDefault();
         setEditMode(false);
     }
+
+    // textarea grow
+    useEffect(() => {
+        if(newComment && commentRef.current){
+            commentRef.current.style.height="auto";
+            commentRef.current.style.height=commentRef.current.scrollHeight+"px";
+        }
+        
+    }, [newComment])
+        
+      
+    
      
     return (
         <div>
             {editMode && 
                 <div>
                     <form ref={formInput}>
-                        <label>
-                        <textarea
-                            required
-                            className={styles.input_style}
-                            onChange={e => {setNewComment(e.target.value)}}
-                            value={newComment}
-                            />
+                        <label className={styles.comment_label}>
+                            <textarea
+                                required
+                                ref={commentRef}
+                                className={styles.input_style}
+                                onChange={e=>{setNewComment(e.target.value)}}
+                                value={newComment}
+                                />
                         </label>
-
-                        <div className={styles.image_preview_container}>
-                            {imageURL && imageURL.map(imageSrc=>
-                            <img className={styles.image_preview} key={imageSrc}src={imageSrc}/>)}
-                        </div>
-                        <label className={styles.add_command_img}>
-                            <span className={styles.span_title}>Image:</span>
-                            <input
-                            className={styles.input_style}
-                            type="file"
-                            onChange={e => {setimage([...e.target.files])}}
-                            multiple accept="image/*"
-                            />
-                        </label>
-
-                        <button onClick={handleSave}>Save</button>
-                        <button onClick={handleCancel}>Cancel</button>
+                            <div className={styles.image_preview_container}>
+                                {imageURL && imageURL.map(imageSrc=>
+                                <img className={styles.image_preview} key={imageSrc}src={imageSrc}/>)}
+                            </div>
+                            
+                            <div className={styles.comment_bottom}>
+                                <div className={styles.comment_left}>
+                                    <p>added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}</p>
+                                    <p className={styles.comment_author}>added by {document.created_by}</p>
+                                </div>
+                                
+                                <div className={styles.btn}>
+                                    <label className={styles.add_command_img}>
+                                        <input
+                                        className={styles.image_input}
+                                        type="file"
+                                        onChange={e => {setimage([...e.target.files])}}
+                                        multiple accept="image/*"
+                                        />
+                                    </label>
+                                    <button className={styles.saveBtn} onClick={handleSave}>Save</button>
+                                    <button className={styles.cancelBtn} onClick={handleCancel}>Cancel</button>
+                                </div>
+                            </div>
                     </form>
                 </div>
-            
             }
         </div>
     )
