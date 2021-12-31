@@ -1,0 +1,18 @@
+.created_by{
+    color: aqua;
+}
+
+.subComment_container{
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.subComment{
+    padding: 2px;
+    width: 800px;
+    word-wrap: break-word;
+}
+.content{
+    
+}

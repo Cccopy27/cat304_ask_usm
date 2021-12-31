@@ -1,0 +1,29 @@
+.comment_container{
+    margin: 40px 100px 0px 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.comment_input_area{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.comment_textarea{
+    font-size: large;
+    width: 650px;
+}
+
+.add_comment_img{
+    margin-top: 15px;
+}
+
+.image_preview_container{
+    margin-top: 20px;
+}
+
+.image_preview{
+    height: 150px;
+}

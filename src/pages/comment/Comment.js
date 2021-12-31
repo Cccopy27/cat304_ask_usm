@@ -25,7 +25,6 @@ export default function Comment({comment, question_id}) {
         Swal.fire({
             title: 'Do you want to delete this comment?',
             showDenyButton: true,
-            showCancelButton: true,
             confirmButtonText: 'Delete',
             denyButtonText: `Don't delete`,
             
@@ -62,7 +61,7 @@ export default function Comment({comment, question_id}) {
               setLoading(false);
             } 
             else if (result.isDenied) {
-              Swal.fire('Question not deleted', '', 'info')
+              Swal.fire('Comment not deleted', '', 'info')
             }
           })
     };
@@ -70,15 +69,25 @@ export default function Comment({comment, question_id}) {
         <div>
             {!editMode && 
                 <div> 
-                    <h4>{comment.comments}</h4>
+                    <p className={styles.comments}>{comment.comments}</p>
+                    <div className={styles.image_container}></div>
                     {comment.comment_image_url && comment.comment_image_url.map(imageSrc=>
                         <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image_preview"/>)}
-                    <div>added {formatDistanceToNow(comment.added_at.toDate(),{addSuffix:true})}</div>
-                    <div>{comment.created_by}</div>
-                    {!loading && <button onClick={handleEdit}>edit</button>}
-                    {!loading && <button onClick={handleDelete}>delete</button>}
-                    {loading && <button disabled onClick={handleEdit}>edit</button>}
-                    {loading && <button disabled onClick={handleDelete}>delete</button>}
+                    <div className={styles.comment_bottom}>
+                        <div className={styles.comment_left}>
+                            <p>added {formatDistanceToNow(comment.added_at.toDate(),{addSuffix:true})}</p>
+                            <p className={styles.comment_author}>added by {comment.created_by}</p>
+                        </div>
+                        
+                        <div className={styles.btn}>
+                            {!loading && <button className={styles.btnEdit}onClick={handleEdit}>edit</button>}
+                            {!loading && <button className={styles.btnDelete}onClick={handleDelete}>delete</button>}
+                            {loading && <button className={styles.btnEdit} disabled onClick={handleEdit}>edit</button>}
+                            {loading && <button className={styles.btnDelete}disabled onClick={handleDelete}>delete</button>}
+                        </div>
+                        
+                    </div>
+                    
                 </div>
             }
             {comment && <EditComment document={comment} editMode={editMode} setEditMode={setEditMode} question_id={question_id}/>}

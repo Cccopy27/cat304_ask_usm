@@ -1,6 +1,8 @@
 .sidebar{
     background-color: #1A2238;
     grid-area: sidebar;
+    /* height: 2500px; */
+    
 }
 
 .mainpage{

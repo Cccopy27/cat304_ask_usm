@@ -6,7 +6,7 @@ import {Timestamp} from "firebase/firestore";
 import {useFirestore} from "../../hooks/useFirestore";
 import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
-
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 export default function EditQuestion({document,editMode,setEditMode}) {
     
@@ -21,6 +21,8 @@ export default function EditQuestion({document,editMode,setEditMode}) {
     // const [error, setError] = useState(false);
     const tempArray =[];
     const formInput = useRef();
+    const textAreaDes = useRef();
+    const textAreaTitle = useRef();
     const navigate = useNavigate();
     
     // set all document value to current input field
@@ -30,8 +32,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
         const getData=async()=>{
             if(document){
                 settitle(document.question_title);
-                setdes(document.question_description);
-    
+                setdes(document.question_description); 
                 // get picture
                 if( document.question_image_url){
                     await document.question_image_url.forEach(item=>{
@@ -42,12 +43,34 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                 }
             }
         }
-
         getData();
-        
+        if(title && textAreaTitle.current){
+            textAreaTitle.current.style.height="auto";
+            textAreaTitle.current.style.height=textAreaTitle.current.scrollHeight + "px";
+        }
+        if(title && textAreaTitle.current){
+            textAreaTitle.current.style.height="auto";
+            textAreaTitle.current.style.height=textAreaTitle.current.scrollHeight + "px";
+        }
     }, [document,editMode]);
     
-   
+    // textarea grow
+    useEffect(()=>{
+        if(title && textAreaTitle.current){
+            textAreaTitle.current.style.height="auto";
+            textAreaTitle.current.style.height=textAreaTitle.current.scrollHeight + "px";
+        }
+    },[title]);
+
+    // textarea grow
+
+    useEffect(()=>{
+        if(des && textAreaDes.current){
+            textAreaDes.current.style.height="auto";
+            textAreaDes.current.style.height=textAreaDes.current.scrollHeight + "px";
+        }
+    },[des]);
+
     // preview image
     useEffect(()=>{
         const newImageURLs = [];
@@ -170,59 +193,82 @@ export default function EditQuestion({document,editMode,setEditMode}) {
             }
         })
     }
+
     return (
-        <>
-            {editMode && 
-                <div className={styles.question_details}>
-                    <form className={styles.add_question_form}  ref={formInput}>
-                        <label className={styles.add_question_title}>
-                            <span className={styles.span_title}>Question title:</span>
-                            <input
-                            required
-                            type="text"
-                            className="input-style"
-                            onChange={e => {settitle(e.target.value)}}
-                            value={title}
-                            />
-                        </label>
-                        
-                        <p>tags:{document.question_tag}</p>
+        <div>
+            <div className={styles.question_container}>
+                {editMode && 
+                    <div className={styles.question_details}>
+                        <form className={styles.add_question_form}  ref={formInput}>
+                            <div className={styles.question_top}>
+                                <div className={styles.question_header}>
+                                    <label className={styles.add_question_title}>
+                                        <textarea
+                                        className={styles.question_title}
+                                        ref={textAreaTitle}
+                                        required
+                                        onChange={e=>{settitle(e.target.value)}}
+                                        value={title}
+                                        />
+                                    </label>
+                                </div>
+
+                                <div className={styles.question_subTitle}>
+                                    <div className={styles.question_subTitle_left}>
+                                        <p className={styles.question_subTitle_time}>  
+                                            {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
+                                        </p>
+                                        
+                                        <p className={styles.question_subTitle_author}>
+                                            created by: {document.created_by}
+                                        </p>
+                                    </div>
+                                    <div className={styles.question_subTitle_right}>
+                                        {!loading && 
+                                        <button className={styles.saveBtn}onClick={handleSave}>saves</button> }
+                                        {!loading && 
+                                        <button className={styles.cancelBtn}onClick={handleCancel}>cancel</button> }
+                                        {loading && 
+                                        <button className={styles.saveBtn}disabled onClick={handleSave}>saves</button> }
+                                        {loading && 
+                                        <button className={styles.cancelBtn}disabled onClick={handleCancel}>cancel</button> }
+                                    </div>
+                                </div>  
+                            </div>
+                            
+                    <div className={styles.question_bottom}>
+                        <p>tags:{document.question_tag}
+                        </p>
 
                         <label className={styles.add_question_des}>
-                            <span className={styles.span_title}>Question description:</span>
                             <textarea 
-                            className={styles.add_question_des_input ,styles.input_style}
+                            className={styles.question_des}
+                            ref={textAreaDes}
                             required
-                            onChange={e => {setdes(e.target.value)}}
+                            onChange={e=>{setdes(e.target.value)}}
                             value={des}
                             />
                         </label>
-                            
-                        <div className={styles.image_preview_container}>
-                            {imageURL && imageURL.map(imageSrc=>
-                            <img className={styles.image_preview} key={imageSrc}src={imageSrc}/>)}
-                        </div>
-                        <label className={styles.add_question_img}>
-                            <span className={styles.span_title}>Image:</span>
+                                
+                        <label>
                             <input
-                            className={styles.input_style}
+                            className={styles.add_question_img}
                             type="file"
                             onChange={e => {setimage([...e.target.files])}}
                             multiple accept="image/*"
                             />
-                        </label>
-                        {!loading && 
-                        <button onClick={handleSave}>saves</button> }
-                        {!loading && 
-                        <button onClick={handleCancel}>cancel</button> }
-                        {loading && 
-                        <button disabled onClick={handleSave}>saves</button> }
-                        {loading && 
-                        <button disabled onClick={handleCancel}>cancel</button> }
-                    </form>
+                        </label>   
+                        <div className={styles.image_preview_container}>
+                            {imageURL && imageURL.map(imageSrc=>
+                            <img className={styles.image_preview} key={imageSrc}src={imageSrc}/>)}
+                        </div>
+                    </div>
+                         
+                    </form>           
                 </div>
-            }
-        </>
+                }
+            </div>
+        </div>
         
         
         

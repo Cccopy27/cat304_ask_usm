@@ -23,7 +23,6 @@ export default function SubComment({subComment,item, question_id, comment_id}) {
         Swal.fire({
             title: 'Do you want to delete this reply?',
             showDenyButton: true,
-            showCancelButton: true,
             confirmButtonText: 'Delete',
             denyButtonText: `Don't delete`,
             
@@ -64,20 +63,24 @@ export default function SubComment({subComment,item, question_id, comment_id}) {
                 }
                 setLoading(false);
             }
+            else if (result.isDenied) {
+                Swal.fire('Reply not deleted', '', 'info')
+            }
         })
     }
     return (
         <div>
             {!editMode && 
-                <div>
-                    <div key={item.id}>
-                        <h5>{item.content}</h5>
-                        <div>added {formatDistanceToNow(item.added_at.toDate(),{addSuffix:true})}</div>
-                        <div>{item.created_by}</div>
+                <div className={styles.subComment_container}>
+                    <div className={styles.subComment}>
+                        <span className={styles.content}>{item.content}</span>
+                        <span className={styles.created_by}> created by{item.created_by}</span>
+                        <span className={styles.added_at}> added {formatDistanceToNow(item.added_at.toDate(),{addSuffix:true})}</span>
+                        
                     </div>
-                    <button onClick={handleEdit}>edit</button>
-                    <button onClick={handleDelete}>delete</button>
-                </div> 
+                        <button onClick={handleEdit}>edit</button>
+                        <button onClick={handleDelete}>delete</button>
+                    </div> 
             }
             {editMode && <EditSubComment item={item} editMode={editMode} setEditMode={setEditMode} question_id={question_id} comment_id={comment_id} subComment={subComment}/>}
         </div>

@@ -1,0 +1,47 @@
+.input_style{
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding: 5px;
+}
+
+.image_preview{
+    height: 200px;
+    margin: 5px;
+}
+
+.image_preview_container{
+    margin-top: -15px;
+}
+
+.comment_bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.comment_left{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.comment_author{
+    margin-left: 20px;
+}
+
+.btn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.saveBtn{
+    margin-right: 20px;
+}

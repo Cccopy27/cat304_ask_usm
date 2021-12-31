@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./AddComment.module.css";
 import { useFirestore } from "../../hooks/useFirestore";
 import { Timestamp } from "firebase/firestore";
@@ -12,32 +12,42 @@ export default function AddComment({question_id}) {
     const [imageName,setImageName] = useState([]);
     // const [loading,setLoading] = useState(false);
     const {addDocument, response} = useFirestore(["questions",question_id,"comment"]);
+    const formInput = useRef();
     // submit comment
     const handleSubmit=async(e)=>{
         e.preventDefault();
 
-        const commentObj = {
-            comments,
-            created_by:"",
-            added_at:Timestamp.now(),
-            comment_image_name:imageName,
-            comment_image_url:"",
-            subComment:"",
+        if(formInput.current.checkValidity()){
+            const commentObj = {
+                comments,
+                created_by:"",
+                added_at:Timestamp.now(),
+                comment_image_name:imageName,
+                comment_image_url:"",
+                subComment:"",
+            }
+    
+            await addDocument(commentObj,image,"comment");
+            // got error
+            if(response.error){
+                console.log("something wrong");
+                Swal.fire({
+                    icon:"error",
+                    title:"Something wrong",
+                    showConfirmButton: true,
+                })
+            }
+            else{
+                setComments("");
+                setimage([]);
+                setImageURLs([]);
+                setImageName([]);
+                Swal.fire('Added!', '', 'success');
+            }
+        }else{
+            Swal.fire('Write Something!', '', 'info');  
         }
-
-        await addDocument(commentObj,image,"comment");
-        // got error
-        if(response.error){
-            console.log("something wrong");
-            Swal.fire({
-                icon:"error",
-                title:"Something wrong",
-                showConfirmButton: true,
-            })
-        }
-        else{
-            Swal.fire('Added!', '', 'success');
-        }
+        
     }
 
     // preview image
@@ -52,20 +62,30 @@ export default function AddComment({question_id}) {
         setImageURLs(newImageURLs);
     },[image]);
 
-    
+    const handleComment=(e)=>{
+        setComments(e.target.value);
+        if(formInput.current && comments){
+            formInput.current.style.height = "auto";
+            formInput.current.style.height = formInput.current.scrollHeight + "px";
+        }
+    }
     return (
         <div className={styles.comment_container}>
             <div className={styles.comment_input_area}>
                 <label className={styles.add_comment}>
-                    <span className={styles.span_title}>Add your comment:</span>
-                    <textarea 
-                    
-                    onChange={e => {setComments(e.target.value)}}
+                    <textarea
+                    ref={formInput}
+                    required
+                    className={styles.comment_textarea} 
+                    onChange={handleComment}
                     value={comments}
+                    placeholder="Add comment..."
                     />
                 </label>
+                <button onClick={handleSubmit}>Add Comments</button>
+                
+            </div>
                 <label className={styles.add_comment_img}>
-                    <span className={styles.span_title}>Image:</span>
                     <input
                     className={styles.input_style}
                     type="file"
@@ -73,15 +93,10 @@ export default function AddComment({question_id}) {
                     multiple accept="image/*"
                     />
                 </label>
-
                 <div className={styles.image_preview_container}>
-                    {imageURLs.map(imageSrc=>
-                    <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image_preview"/>)}
+                        {imageURLs.map(imageSrc=>
+                        <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image_preview"/>)}
+                    </div>
                 </div>
-
-                <button onClick={handleSubmit}>Add Comments</button>
-            </div>
-            
-        </div>
     )
 }
