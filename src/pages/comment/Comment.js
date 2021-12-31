@@ -1,4 +1,4 @@
-import "./Comment.css";
+import styles from "./Comment.module.css";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useState } from "react";
 import EditComment from "./EditComment";
@@ -72,7 +72,7 @@ export default function Comment({comment, question_id}) {
                 <div> 
                     <h4>{comment.comments}</h4>
                     {comment.comment_image_url && comment.comment_image_url.map(imageSrc=>
-                        <img className="image-preview" key={imageSrc}src={imageSrc} alt="image_preview"/>)}
+                        <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image_preview"/>)}
                     <div>added {formatDistanceToNow(comment.added_at.toDate(),{addSuffix:true})}</div>
                     <div>{comment.created_by}</div>
                     {!loading && <button onClick={handleEdit}>edit</button>}

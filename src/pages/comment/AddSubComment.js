@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./AddSubComment.css";
+import styles from "./AddSubComment.module.css";
 import { useFirestore } from "../../hooks/useFirestore";
 import { Timestamp,arrayUnion } from "firebase/firestore";
 import Swal from "sweetalert2";
@@ -43,8 +43,8 @@ export default function AddSubComment({question_id, comment_id}) {
 
     }
     return (
-        <div className="comment-container">
-             <div className="comment-input-area">
+        <div className={styles.comment_container}>
+             <div className={styles.comment_input_area}>
                 <label >
                     <textarea 
                     onChange={e => {setSubComments(e.target.value)}}

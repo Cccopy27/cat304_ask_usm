@@ -1,4 +1,4 @@
-import "./Question.css";
+import styles from "./Question.module.css";
 import { useState, useEffect } from "react";
 import {useParams} from "react-router-dom";
 import {useDocument} from "../../hooks/useDocument";
@@ -78,14 +78,28 @@ export default function Question() {
     if(!document){
         return <div>Loading...</div>
     };
+
+    // set edit mode to false
     const handleEdit=()=>{
         setEditMode(true);
     }
+
+    // add question
+    const handleAddQuestion=(e)=>{
+        e.preventDefault();
+        navigate("/addquestion");
+
+    }
+
+
     return (
         <div>
             {!editMode && 
-                <div className="question-details">
-                    <h2>{document.question_title}</h2>
+                <div className={styles.question_details}>
+                    <div className={styles.question_header}>
+                        <h2 className={styles.question_title}>{document.question_title}</h2>
+                        <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Questions</button>
+                    </div>
                     
                     <p>added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}</p>
                     <p>tags:{document.question_tag}</p>
@@ -93,7 +107,7 @@ export default function Question() {
                     <p>{document.question_description}</p>
                     
                     {document.question_image_url && document.question_image_url.map(imageSrc=>
-                        <img className="image-preview" key={imageSrc}src={imageSrc} alt="image-preview"/>)}
+                        <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
 
                     <p>created_by: {document.created_by}</p>
                     

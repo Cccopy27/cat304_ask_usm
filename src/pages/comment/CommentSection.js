@@ -1,4 +1,4 @@
-import "./CommentSection.css";
+import styles from "./CommentSection.module.css";
 import { useCollection } from "../../hooks/useCollection";
 import SubCommentSection from "../comment/SubCommentSection";
 import AddSubComment from "./AddSubComment";

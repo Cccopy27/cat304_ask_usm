@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "./EditComment.css";
+import styles from "./EditComment.module.css";
 import Swal from "sweetalert2";
 import { useFirestore } from "../../hooks/useFirestore";
 import { Timestamp } from "firebase/firestore";
@@ -151,20 +151,20 @@ export default function EditComment({document,editMode,setEditMode, question_id}
                         <label>
                         <textarea
                             required
-                            className="input-style"
+                            className={styles.input_style}
                             onChange={e => {setNewComment(e.target.value)}}
                             value={newComment}
                             />
                         </label>
 
-                        <div className="image-preview-container">
+                        <div className={styles.image_preview_container}>
                             {imageURL && imageURL.map(imageSrc=>
-                            <img className="image-preview" key={imageSrc}src={imageSrc}/>)}
+                            <img className={styles.image_preview} key={imageSrc}src={imageSrc}/>)}
                         </div>
-                        <label className="add-command-img">
-                            <span className="span-title">Image:</span>
+                        <label className={styles.add_command_img}>
+                            <span className={styles.span_title}>Image:</span>
                             <input
-                            className="input-style"
+                            className={styles.input_style}
                             type="file"
                             onChange={e => {setimage([...e.target.files])}}
                             multiple accept="image/*"

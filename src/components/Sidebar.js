@@ -1,29 +1,29 @@
 import { NavLink } from "react-router-dom";
-import "./Sidebar.css";
+import styles from "./Sidebar.module.css";
 
 export default function Sidebar() {
     return (
-        <div className="sidebar">
-            <div className="sidebar-content">
-                <nav className="sidebar-links">
-                    <ul className="sidebar-ul">
-                        <li className="mainpage">
+        <div className={styles.sidebar}>
+            <div className={styles.sidebar_content}>
+                <nav className={styles.sidebar_links}>
+                    <ul className={styles.sidebar_ul}>
+                        <li className={styles.mainpage}>
                             <NavLink to = "/">ASK@USM</NavLink>
                         </li>
-                        <li className="home">
+                        <li className={styles.home}>
                             <NavLink to = "/home">Home</NavLink>
                         </li>
-                        <li className="question">
+                        <li className={styles.question}>
                             <NavLink to = "/question">Questions</NavLink>
                         </li>
                         
-                        <li className="tag">
+                        <li className={styles.tag}>
                             <NavLink to = "/tag">Tags</NavLink>
                         </li>
-                        <li className="new">
+                        <li className={styles.new}>
                             <NavLink to = "/questions/:tag=news">News</NavLink>
                         </li>
-                        <li className="club">
+                        <li className={styles.club}>
                             <NavLink to = "/questions/:tag=clubs">Clubs</NavLink>
                         </li>
                     </ul>

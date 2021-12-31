@@ -1,4 +1,4 @@
-import "./SubComment.css";
+import styles from "./SubComment.module.css";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useState } from "react";
 import EditSubComment from "./EditSubComment";

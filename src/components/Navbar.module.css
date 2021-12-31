@@ -1,4 +1,4 @@
-.navbar-horizontal{
+.navbar_horizontal{
     grid-area: navbar;
     position:sticky;
     top:0;
@@ -18,16 +18,16 @@
     margin-right: 30px;
 }
 
-.navbar-horizontal .login, .navbar-horizontal .signup{
+.navbar_horizontal .login, .navbar_horizontal .signup{
     float:right;
 }
 
-.navbar-horizontal .search-container{
+.navbar_horizontal .search_container{
     float: left;
     margin-left: 150px;
 }
 
-.search-container input[type=text]{
+.search_container input[type=text]{
     height: 1.5em;
     width: 500px;
     border: none;
@@ -35,28 +35,28 @@
     font-size: 17px;
 }
 
-.navbar-horizontal li{
+.navbar_horizontal li{
     margin-top: 5px;
     float: left;
     padding: 8px;
     color:white;
 }
 
-.navbar-horizontal a{
+.navbar_horizontal a{
     text-decoration: none;
     display: block;
     color: white;
 }
 
-.navbar-horizontal a:hover{
+.navbar_horizontal a:hover{
     color: #9DAAF2; 
 }
 
-.navbar-horizontal a.active{
+.navbar_horizontal a.active{
     color: #9DAAF2; 
 }
 
-.navbar-horizontal ul {
+.navbar_horizontal ul {
     height: 50px;
     padding: 0;
     margin:0;

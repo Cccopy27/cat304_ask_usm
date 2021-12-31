@@ -1,4 +1,4 @@
-import "./SubCommentSection.css";
+import styles from "./SubCommentSection.module.css";
 import SubComment from "./SubComment";
 
 export default function SubCommentSection({subComment, question_id, comment_id}) {

@@ -1,11 +1,11 @@
-.rightbar-container{
+.rightbar_container{
     background-color: rgb(197, 197, 94);
     grid-area: rightbar;
     display: flex;
     justify-content: center;
 }
 
-.rightbar-content{
+.rightbar_content{
     flex: 1;
     align-self: center;
     width: 200px;
@@ -18,23 +18,23 @@
     justify-content: space-between;
 }
 
-.rightbar-content div{
+.rightbar_content div{
     margin-top: 30px;
 }
 
-.rightbar-content1{
+.rightbar_content1{
     background-color: white;
     text-align: center;
     flex: 1;
 }
 
-.rightbar-content2{
+.rightbar_content2{
     background-color: white;
     text-align: center;
     flex: 5;
 }
 
-.rightbar-content3{
+.rightbar_content3{
     background-color: white;
     text-align: center;
     flex: 1;
