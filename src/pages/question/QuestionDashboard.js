@@ -16,20 +16,6 @@ export default function QuestionDashboard () {
     let result = [];
     useEffect(()=>{
         window.scrollTo(0,0);
-        // setLoading(true);
-        // getDocs(collection(db,"questions"))
-        // .then((querySnapshot) =>{
-        //     querySnapshot.forEach((doc)=>{
-        //         result.push({...doc.data(), id:doc.id});
-        //     });
-        // })
-        // .then(()=>{
-        //     setDocument(result);
-        //     setLoading(false);
-        // })
-        // .catch(err=>{
-        //     setError(err);
-        // })
     },[])
     
     const navigate = useNavigate();
