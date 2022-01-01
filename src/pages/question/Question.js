@@ -6,11 +6,12 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useFirestore } from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
 import {ref, deleteObject } from "firebase/storage";
-import {storage} from "../../firebase/config";
+import {storage,db} from "../../firebase/config";
 import Swal from "sweetalert2";
 import EditQuestion from "./EditQuestion";
 import AddComment from "../comment/AddComment";
 import CommentSection from "../comment/CommentSection";
+import { writeBatch,doc,collection, getDocs } from "firebase/firestore";
 
 export default function Question() {
     // get id from param
@@ -62,10 +63,42 @@ export default function Question() {
                     // Uh-oh, an error occurred!
                     });
                 })
-                deleteDocument(document.id)
-              Swal.fire('Deleted!', '', 'success');
+                const tempKey = document.id;
+                await deleteDocument(document.id);
+
+                // delete subCollection
+                const commentList = await getDocs(collection(db,"questions",tempKey,"comment"));
+                // batch declare
+                const batch = writeBatch(db);
+                // delete all comment in batch
+                commentList.forEach(doc=>{
+
+                    // delete storage image
+                    // check got image to delete or not
+                    if(doc.data().comment_image_name){
+                        doc.data().comment_image_name.forEach(image_name=>{
+                            // Create a reference to the file to delete
+                            const desertRef = ref(storage, `comment/${doc.id}/${image_name}`);
+
+                            // Delete the file
+                            deleteObject(desertRef).then(() => {
+                                // File deleted successfully
+
+                            }).catch((error) => {
+                                console.log(error);
+                                // Uh-oh, an error occurred!
+                            });
+                        })
+                        
+                    }
+                    batch.delete(doc.ref);
+                })
+                // Commit the batch
+                await batch.commit();
+
+                Swal.fire('Deleted!', '', 'success');
             //   setLoading(false);
-              navigate("/question");
+                navigate("/question");
             } else if (result.isDenied) {
               Swal.fire('Question not deleted', '', 'info')
             }
