@@ -9,6 +9,8 @@
 
 }
 .comments{
+    white-space: pre-wrap;
+
     /* padding: 0px 5px 0px 5px; */
     /* width: 100%; */
     word-wrap: break-word;

@@ -118,10 +118,13 @@
 }
 
 .question_des{
+    white-space: pre-wrap;
     font-size: large;
-    width: 910px;
+    max-width: 910px;
     word-wrap: break-word;
-
+    background-color: #f5ffff;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .question_tag_big_container{

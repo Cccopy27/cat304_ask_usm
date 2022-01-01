@@ -58,10 +58,11 @@ export default function EditQuestion({document,editMode,setEditMode}) {
             textAreaTitle.current.style.height="auto";
             textAreaTitle.current.style.height=textAreaTitle.current.scrollHeight + "px";
         }
-        if(title && textAreaTitle.current){
-            textAreaTitle.current.style.height="auto";
-            textAreaTitle.current.style.height=textAreaTitle.current.scrollHeight + "px";
+        if(des && textAreaDes.current){
+            textAreaDes.current.style.height="auto";
+            textAreaDes.current.style.height=textAreaDes.current.scrollHeight + "px";
         }
+        
     }, [document,editMode]);
     
     // textarea grow
