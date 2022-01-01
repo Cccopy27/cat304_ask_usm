@@ -5,14 +5,38 @@
 .subComment_container{
     margin-top: 10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgb(212, 212, 212);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .subComment{
     padding: 2px;
-    width: 800px;
+    width: 600px;
     word-wrap: break-word;
+    font-size: smaller;
 }
-.content{
-    
+.content, .created_by, .added_at{
+    font-weight: 300;
+}
+
+.created_by{
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.edit_btn,.delete_btn{
+    background-color: transparent;
+    border: none;
+    color: rgb(165, 165, 165);  
+}
+.edit_btn{
+    margin-right:20px
+}
+
+.edit_btn:hover, .delete_btn:hover{
+    cursor: pointer;
+    color: #b84d64;
+
 }

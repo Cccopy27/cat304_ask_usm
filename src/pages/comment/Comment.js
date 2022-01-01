@@ -66,24 +66,24 @@ export default function Comment({comment, question_id}) {
           })
     };
     return (
-        <div>
+        <div className={styles.comment_big_container}>
             {!editMode && 
-                <div> 
+                <div className={styles.comment_container}> 
                     <p className={styles.comments}>{comment.comments}</p>
                     <div className={styles.image_container}></div>
                     {comment.comment_image_url && comment.comment_image_url.map(imageSrc=>
                         <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image_preview"/>)}
                     <div className={styles.comment_bottom}>
                         <div className={styles.comment_left}>
-                            <p>added {formatDistanceToNow(comment.added_at.toDate(),{addSuffix:true})}</p>
+                            <p className={styles.comment_time}>added {formatDistanceToNow(comment.added_at.toDate(),{addSuffix:true})}</p>
                             <p className={styles.comment_author}>added by {comment.created_by}</p>
                         </div>
                         
                         <div className={styles.btn}>
-                            {!loading && <button className={styles.btnEdit}onClick={handleEdit}>edit</button>}
-                            {!loading && <button className={styles.btnDelete}onClick={handleDelete}>delete</button>}
-                            {loading && <button className={styles.btnEdit} disabled onClick={handleEdit}>edit</button>}
-                            {loading && <button className={styles.btnDelete}disabled onClick={handleDelete}>delete</button>}
+                            {!loading && <button className={styles.btnEdit}onClick={handleEdit}>Edit</button>}
+                            {!loading && <button className={styles.btnDelete}onClick={handleDelete}>Delete</button>}
+                            {loading && <button className={styles.btnEdit} disabled onClick={handleEdit}>Edit</button>}
+                            {loading && <button className={styles.btnDelete}disabled onClick={handleDelete}>Delete</button>}
                         </div>
                         
                     </div>

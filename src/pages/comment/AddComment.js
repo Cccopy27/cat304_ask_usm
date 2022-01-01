@@ -10,6 +10,7 @@ export default function AddComment({question_id}) {
     const [image, setimage] = useState([]);
     const [imageURLs,setImageURLs] = useState([]);
     const [imageName,setImageName] = useState([]);
+    const [focusMode,setFocusMode] = useState(false);
     // const [loading,setLoading] = useState(false);
     const {addDocument, response} = useFirestore(["questions",question_id,"comment"]);
     const formInput = useRef();
@@ -43,6 +44,8 @@ export default function AddComment({question_id}) {
                 setImageURLs([]);
                 setImageName([]);
                 Swal.fire('Added!', '', 'success');
+                setFocusMode(false);
+
             }
         }else{
             Swal.fire('Write Something!', '', 'info');  
@@ -64,9 +67,18 @@ export default function AddComment({question_id}) {
 
     const handleComment=(e)=>{
         setComments(e.target.value);
+        // textarea grow
         if(formInput.current && comments){
             formInput.current.style.height = "auto";
             formInput.current.style.height = formInput.current.scrollHeight + "px";
+        }
+
+        // show add comment and upload file option when user enter something in comment
+        if(e.target.value.length === 0){
+            setFocusMode(false);
+        }
+        else{
+            setFocusMode(true);
         }
     }
     return (
@@ -82,21 +94,26 @@ export default function AddComment({question_id}) {
                     placeholder="Add comment..."
                     />
                 </label>
-                <button onClick={handleSubmit}>Add Comments</button>
+                {focusMode && <button className={styles.addBtn}onClick={handleSubmit}>Add Comments</button>}
                 
             </div>
-                <label className={styles.add_comment_img}>
-                    <input
-                    className={styles.input_style}
-                    type="file"
-                    onChange={e => {setimage([...e.target.files])}}
-                    multiple accept="image/*"
-                    />
-                </label>
-                <div className={styles.image_preview_container}>
+                {focusMode && 
+                <>
+                    <label className={styles.add_comment_img}>
+                        <input
+                        className={styles.input_style}
+                        type="file"
+                        onChange={e => {setimage([...e.target.files])}}
+                        multiple accept="image/*"
+                        />
+                    </label>
+                    <div className={styles.image_preview_container}>
                         {imageURLs.map(imageSrc=>
                         <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image_preview"/>)}
                     </div>
-                </div>
+                </>
+                
+                }
+        </div>
     )
 }

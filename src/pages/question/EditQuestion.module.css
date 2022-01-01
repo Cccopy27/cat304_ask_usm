@@ -69,9 +69,15 @@
     color: rgb(165, 165, 165);
 }
 
-.saveBtn:hover, .cancelBtn:hover{
-    color: #64b6f8;
+ .cancelBtn:hover{
+    color: #b84d64;
     cursor: pointer;
+}
+
+.saveBtn:hover{
+    color: #58d177;
+    cursor: pointer;
+
 }
 
 .question_subTitle_author{

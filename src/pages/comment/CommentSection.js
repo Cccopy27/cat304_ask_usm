@@ -22,11 +22,14 @@ export default function CommentSection({question_id}) {
             <div className={styles.comment_content}>
                 {document.map(item => (
                     <div className={styles.comment_each} key={item.id}>
-                        <Comment comment={item} question_id={question_id} />
-                        <div className={styles.subComment}>
-                            <AddSubComment question_id={question_id} comment_id={item.id} />
+                        <div className={styles.comment_each2}>
+                            <Comment comment={item} question_id={question_id} />
+                            <div className={styles.subComment}>
                             <SubCommentSection subComment={item.subComment} question_id={question_id} comment_id={item.id}/>
+                            </div>
+                            <AddSubComment question_id={question_id} comment_id={item.id} />
                         </div>
+                        
                         
                     </div>
                 ))}

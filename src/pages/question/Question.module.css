@@ -17,7 +17,7 @@
 }
 
 .question_top{
-    border-bottom: 1px solid rgb(165, 165, 165);
+    border-bottom: 1px solid #1A2238;
 }
 .question_header{
     display: flex;
@@ -104,19 +104,23 @@
 }
 
 .deleteBtn:hover,.editBtn:hover{
-    color: #64b6f8;
+    color: #b84d64;
     cursor: pointer;
 }
 
 .question_bottom{
     margin: 20px 40px 0px 100px;
     padding: 0px 0px 40px 0px;
-    border-bottom: 1px solid rgb(165, 165, 165);
+    border-bottom: 1px solid #1A2238;
+
     
 }
 
 .question_des{
     font-size: large;
+    width: 910px;
+    word-wrap: break-word;
+
 }
 
 .question_subTitle_tags{

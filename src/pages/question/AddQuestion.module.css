@@ -139,3 +139,7 @@
     cursor: pointer;
     color: #9DAAF2;
 }
+
+.add_img_btn{
+    background-color: transparent;
+}
