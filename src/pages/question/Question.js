@@ -98,7 +98,7 @@ export default function Question() {
                     <div className={styles.question_details}>
                         <div className={styles.question_top}>
                             <div className={styles.question_header}>
-                                <h1 className={styles.question_title}>{document.question_title}</h1>
+                                <p className={styles.question_title}>{document.question_title}</p>
                                 <div className={styles.question_add}>
                                     <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Questions</button>
                                 </div>
@@ -107,23 +107,24 @@ export default function Question() {
                             <div className={styles.question_subTitle}>
                                 <div className={styles.question_subTitle_left}>
                                     <p className={styles.question_subTitle_time}>  
-                                        {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
+                                        Added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
                                     </p>
                                     
                                     <p className={styles.question_subTitle_author}>
-                                        created by: {document.created_by}
+                                        Created by: {document.created_by}
                                     </p>
                                 </div>
                                 <div className={styles.question_subTitle_right}>
+                                    <button className={styles.editBtn}onClick={handleEdit}>Edit</button>
                                     <button className={styles.deleteBtn}
-                                    onClick={handleDelete}>delete</button>
-                                    <button className={styles.editBtn}onClick={handleEdit}>edit</button>
+                                    onClick={handleDelete}>Delete</button>
+                                    
                                 </div>
                             </div>
                         </div>
                     
                     <div className={styles.question_bottom}>
-                        <p className={styles.question_subTitle_tags}>tags:{document.question_tag}
+                        <p className={styles.question_subTitle_tags}>Tags:{document.question_tag}
                         </p>
                         <p className={styles.question_des}>{document.question_description}</p>
                         {document.question_image_url && document.question_image_url.map(imageSrc=>
