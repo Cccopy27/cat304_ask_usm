@@ -25,11 +25,10 @@ export default function AddQuestion() {
         e.preventDefault();
         if(formInput.current.checkValidity()){
             Swal.fire({
-                title: 'Do you want to add the question?',
+                title: 'Are you sure?',
                 showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: 'Add',
-                denyButtonText: `Don't add`,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`,
               }).then(async(result) => {
                 if (result.isConfirmed) {
                     setloading(true);
@@ -64,7 +63,7 @@ export default function AddQuestion() {
                         setimage([]);
                         setImageURLs([]);
                         formInput.current.reset();
-                        Swal.fire('Saved!', '', 'success')
+                        Swal.fire('Uploaded!', '', 'success')
                         navigate("/question");
                     }
                     // got error
@@ -77,7 +76,7 @@ export default function AddQuestion() {
                         })
                     }
                 } else if (result.isDenied) {
-                  Swal.fire('Question not added', '', 'info')
+                  Swal.fire('Nothing happen...', '', 'info')
                 }
               })
         }
@@ -102,32 +101,33 @@ export default function AddQuestion() {
     },[image]);
 
     // auto grow textarea
-    useEffect(()=>{
-        if(titleRef.current && title){
-            titleRef.current.style.height = "auto";
-            titleRef.current.style.height = titleRef.current.scrollHeight + "px";
-        }
-    },[title])
+    // useEffect(()=>{
+    //     if(titleRef.current && title){
+    //         titleRef.current.style.height = "auto";
+    //         titleRef.current.style.height = titleRef.current.scrollHeight + "px";
+    //     }
+    // },[title])
 
-    // auto grow textarea
-    useEffect(()=>{
-        if(desRef.current && title){
-            desRef.current.style.height = "auto";
-            desRef.current.style.height = desRef.current.scrollHeight + "px";
-        }
-    },[des])
+    // // auto grow textarea
+    // useEffect(()=>{
+    //     if(desRef.current && des){
+    //         desRef.current.style.height = "auto";
+    //         desRef.current.style.height = desRef.current.scrollHeight + "px";
+    //     }
+    // },[des])
     return (
         <div className={styles.add_question_container}>
-            <div className={styles.add_question_header}>
-                <h2 className={styles.add_question_title}>Add new question</h2>
-            </div>
+            
             <div className={styles.add_question_form_container}>
+                <div className={styles.add_question_header}>
+                    <p className={styles.add_question_title_header}>Ask something</p>
+                </div>
                 <form className={styles.add_question_form} ref={formInput}>
                     <label className={styles.add_question_title}>
                         <span className={styles.span_title}>Question title:</span>
                         <input
                         required
-                        ref={titleRef}
+                        // ref={titleRef}
                         type="text"
                         className={`${styles.input_style} ${styles.add_title_input}`}
                         onChange={e => {settitle(e.target.value)}}
@@ -144,17 +144,18 @@ export default function AddQuestion() {
                     <label className={styles.add_question_des}>
                         <span className={styles.span_title}>Question description:</span>
                         <textarea 
-                        className={styles.add_question_des_input,styles.input_style}
+                        className={`${styles.add_question_des_input} ${styles.input_style}`}
                         required
                         ref={desRef}
                         onChange={e => {setdes(e.target.value)}}
                         value={des}
+                        placeholder="Description"
                         />
                     </label>
 
 
                     <label className={styles.add_question_img}>
-                        <span className={styles.span_title}>Image:</span>
+                        <span className={styles.span_title}>Image: </span>
                         <input
                         // className={styles.input_style}
                         type="file"
@@ -168,7 +169,7 @@ export default function AddQuestion() {
                         <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
                     </div>
 
-                    {!loading && <button className={styles.submit_btn} onClick={handleSubmit}>Add question</button>}
+                    {!loading && <button className={styles.submit_btn} onClick={handleSubmit}>Upload</button>}
                     {loading && <button className={styles.submit_btn}disabled>loading</button>}
                 </form>
             </div>
