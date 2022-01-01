@@ -206,6 +206,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                                         <textarea
                                         className={styles.question_title}
                                         ref={textAreaTitle}
+                                        // type="text"
                                         required
                                         onChange={e=>{settitle(e.target.value)}}
                                         value={title}

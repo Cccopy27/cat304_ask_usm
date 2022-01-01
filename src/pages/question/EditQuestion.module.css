@@ -17,13 +17,13 @@
     padding: 0px;
     display: block;
     font-size: 2em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
+    /* margin-block-start: 0.67em;
+    margin-block-end: 0.67em; */
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
-    width: 90%;
+    width: 800px;
 }
 
 .question_details{
@@ -40,7 +40,8 @@
     flex-direction: row;
     align-items: center;  
     justify-content: space-between;
-    margin: 0px 20px;
+    margin: 10px 20px 0px 20px;
+
 }
 
 .question_subTitle p,.cancelBtn, .saveBtn {
