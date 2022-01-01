@@ -10,6 +10,7 @@ export default function AddSubComment({question_id, comment_id}) {
     const {updateDocument, response} = useFirestore(["questions",question_id,"comment"]);
     const [cooldown, setCooldown] = useState(false);
     const subCommentRef = useRef();
+    const [focusMode, setFocusMode] = useState(false);
     // submit reply
     const handleSubmit=async(e)=>{
         e.preventDefault();
@@ -40,6 +41,7 @@ export default function AddSubComment({question_id, comment_id}) {
                 })
             }else{
                 setSubComments("");
+                setFocusMode(false);
             }
             setTimeout(() => {
                 setCooldown(false);
@@ -61,7 +63,15 @@ export default function AddSubComment({question_id, comment_id}) {
         }
     }, [subComments])
         
-        
+    const handleSubComment=(e)=>{
+        setSubComments(e.target.value);
+        if(e.target.value.length===0){
+            setFocusMode(false);
+        }
+        else{
+            setFocusMode(true);
+        }
+    }
     
     return (
         <div className={styles.comment_container}>
@@ -69,17 +79,19 @@ export default function AddSubComment({question_id, comment_id}) {
                 <label >
                     <textarea 
                     className={styles.comment_textarea}
-                    onChange={e=>{setSubComments(e.target.value)}}
+                    onChange={handleSubComment}
                     ref={subCommentRef}
                     value={subComments}
+                    placeholder="Reply here..."
                     required
                     />
                 </label>
+                {focusMode && 
                 <div>
-                    {!cooldown && <button className={styles.replyBtn}onClick={handleSubmit}>Reply</button>}
+                    {!cooldown && <button className={styles.replyBtn}onClick={handleSubmit}>Add Reply</button>}
                     {cooldown && <button className={styles.replyBtn} disabled onClick={handleSubmit}>Reply</button>}
                 </div>
-                
+                }
             </div>
         </div>
     )

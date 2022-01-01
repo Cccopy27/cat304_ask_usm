@@ -181,7 +181,7 @@ export default function EditComment({document,editMode,setEditMode, question_id}
                             
                             <div className={styles.comment_bottom}>
                                 <div className={styles.comment_left}>
-                                    <p>added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}</p>
+                                    <p className={styles.comment_time}>added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}</p>
                                     <p className={styles.comment_author}>added by {document.created_by}</p>
                                 </div>
                                 

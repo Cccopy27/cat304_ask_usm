@@ -96,7 +96,6 @@
 .input_style:focus{
     outline: none;
     border-bottom: 1px solid rgb(80, 156, 255);
-
 }
 
 .span_title{
@@ -139,4 +138,8 @@
 .submit_btn:hover{
     cursor: pointer;
     color: #9DAAF2;
+}
+
+.add_img_btn{
+    background-color: transparent;
 }

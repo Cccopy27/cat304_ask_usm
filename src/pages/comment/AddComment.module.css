@@ -1,5 +1,5 @@
 .comment_container{
-    margin: 40px 100px 0px 100px;
+    margin: 10px 100px 0px 100px;
     display: flex;
     flex-direction: column;
 }
@@ -12,12 +12,22 @@
 }
 
 .comment_textarea{
-    font-size: large;
+    font-weight: 300;
+    font-size: medium;
     width: 650px;
+    border: none;
+    border-bottom: 1px solid rgb(165, 165, 165);
+
+}
+
+.comment_textarea:focus{
+    outline: none;
+    border-bottom: 1px solid rgb(80, 156, 255);
 }
 
 .add_comment_img{
     margin-top: 15px;
+    align-self: flex-start;
 }
 
 .image_preview_container{
@@ -26,4 +36,15 @@
 
 .image_preview{
     height: 150px;
+}
+
+.addBtn{
+    background-color: transparent;
+    border: none;
+    color: rgb(165, 165, 165);
+}
+
+.addBtn:hover{
+    color: #64b6f8;
+    cursor: pointer;
 }

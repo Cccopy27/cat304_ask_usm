@@ -1,15 +1,17 @@
 .comment_container{
-    margin-top:35px;
+    margin-top:5px;
     display: flex;
     flex-direction: column;
 }
 
 .comment_header{
     margin-left: 20px;
+    font-weight: 300;
+    color: rgb(38, 53, 117);
 }
 
 .comment_content{
-    margin: 0px 100px;
+    margin: 0px 0px;
     display: flex;
     flex-direction: column;
     justify-content: flex;
@@ -21,6 +23,13 @@
 
 .comment_each{
     padding-bottom: 10px;
-    border-bottom: 1px solid black;
     margin-bottom: 30px;
+    /* border-bottom: 1px solid rgb(165, 165, 165); */
+    border-bottom: 1px solid #1A2238;
+
+
+}
+
+.comment_each2{
+    margin:0px 20px 0px 100px;
 }

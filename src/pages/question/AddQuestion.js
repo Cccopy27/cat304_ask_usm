@@ -132,7 +132,7 @@ export default function AddQuestion() {
                         className={`${styles.input_style} ${styles.add_title_input}`}
                         onChange={e => {settitle(e.target.value)}}
                         value={title}
-                        placeholder="Title"
+                        placeholder="Title ..."
                         />
                     </label>
 
@@ -149,7 +149,7 @@ export default function AddQuestion() {
                         ref={desRef}
                         onChange={e => {setdes(e.target.value)}}
                         value={des}
-                        placeholder="Description"
+                        placeholder="Description ..."
                         />
                     </label>
 
@@ -159,6 +159,7 @@ export default function AddQuestion() {
                         <input
                         // className={styles.input_style}
                         type="file"
+                        className={styles.add_img_btn}
                         onChange={e => {setimage([...e.target.files])}}
                         multiple accept="image/*"
                         />

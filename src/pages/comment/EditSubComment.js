@@ -100,7 +100,7 @@ export default function EditSubComment({item, editMode, setEditMode, question_id
     return (
         <div className={styles.subcomment_container}>
             <form ref={formInput}>
-                <label>
+                <label className={styles.subComment}>
                     <textarea
                     required
                     className={styles.input_style}
@@ -108,9 +108,9 @@ export default function EditSubComment({item, editMode, setEditMode, question_id
                     value={newSubComment}
                     ref={subCommentRef}
                     />
-                    <div>
-                        <button onClick={handleSave}>Save</button>
-                        <button onClick={handleCancel}>Cancel</button>
+                    <div className="btn_group">
+                        <button className={styles.edit_btn} onClick={handleSave}>Save</button>
+                        <button className={styles.delete_btn} onClick={handleCancel}>Cancel</button>
                     </div>
                     
                 </label>

@@ -217,28 +217,28 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                                 <div className={styles.question_subTitle}>
                                     <div className={styles.question_subTitle_left}>
                                         <p className={styles.question_subTitle_time}>  
-                                            {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
+                                            Added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
                                         </p>
                                         
                                         <p className={styles.question_subTitle_author}>
-                                            created by: {document.created_by}
+                                            Created by: {document.created_by}
                                         </p>
                                     </div>
                                     <div className={styles.question_subTitle_right}>
                                         {!loading && 
-                                        <button className={styles.saveBtn}onClick={handleSave}>saves</button> }
+                                        <button className={styles.saveBtn}onClick={handleSave}>Save</button> }
                                         {!loading && 
-                                        <button className={styles.cancelBtn}onClick={handleCancel}>cancel</button> }
+                                        <button className={styles.cancelBtn}onClick={handleCancel}>Cancel</button> }
                                         {loading && 
-                                        <button className={styles.saveBtn}disabled onClick={handleSave}>saves</button> }
+                                        <button className={styles.saveBtn}disabled onClick={handleSave}>Save</button> }
                                         {loading && 
-                                        <button className={styles.cancelBtn}disabled onClick={handleCancel}>cancel</button> }
+                                        <button className={styles.cancelBtn}disabled onClick={handleCancel}>Cancel</button> }
                                     </div>
                                 </div>  
                             </div>
                             
                     <div className={styles.question_bottom}>
-                        <p>tags:{document.question_tag}
+                        <p>Tags:{document.question_tag}
                         </p>
 
                         <label className={styles.add_question_des}>

@@ -78,9 +78,12 @@ export default function SubComment({subComment,item, question_id, comment_id}) {
                         <span className={styles.added_at}> added {formatDistanceToNow(item.added_at.toDate(),{addSuffix:true})}</span>
                         
                     </div>
-                        <button onClick={handleEdit}>edit</button>
-                        <button onClick={handleDelete}>delete</button>
-                    </div> 
+                    <div className={styles.btn_group}>
+                        <button className={styles.edit_btn} onClick={handleEdit}>Edit</button>
+                        <button className={styles.delete_btn} onClick={handleDelete}>Delete</button>
+                    </div>
+                        
+                </div> 
             }
             {editMode && <EditSubComment item={item} editMode={editMode} setEditMode={setEditMode} question_id={question_id} comment_id={comment_id} subComment={subComment}/>}
         </div>

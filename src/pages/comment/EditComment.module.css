@@ -6,7 +6,16 @@
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    padding: 5px;
+    /* padding: 5px; */
+    padding: 0px;
+    outline: none;
+    border-bottom: 1px solid rgb(165, 165, 165);
+
+}
+
+.input_style:focus{
+    outline: none;
+    border-bottom: 1px solid rgb(80, 156, 255);
 }
 
 .image_preview{
@@ -23,7 +32,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgb(165, 165, 165);
+
 }
 
 .comment_left{
@@ -44,4 +54,25 @@
 
 .saveBtn{
     margin-right: 20px;
+}
+
+.saveBtn,.cancelBtn{
+    background-color: transparent;
+    border: none;
+    color: rgb(165, 165, 165);
+}
+
+.saveBtn:hover{
+    color: #58d177;
+    cursor: pointer;
+}
+
+.cancelBtn:hover{
+    color: #b84d64;
+    cursor: pointer;
+}
+
+.comment_time, .comment_author{
+    font-weight: 300;
+    font-size: small;
 }
