@@ -16,7 +16,8 @@
     margin-top: 15px;
     margin-left: 100px;
     margin-right: 100px;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
 .add_question_form{
@@ -29,10 +30,14 @@
 
 .add_question_tag{
     flex: 1;
+    margin-top: 20px;
 }
 
 .add_question_title{
     flex:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .add_question_des{
@@ -42,7 +47,7 @@
 }
 
 .add_question_des_input{
-    width: 97% !important;
+    width: 600px !important;
     margin: 10px 0px 0px 0px !important;
     /* margin-top: 10px;
     margin-left: 0px !important;
@@ -51,21 +56,37 @@
     height: 200px !important;
 }
 
+.add_title_input{
+    width: 600px;
+}
+
 .add_question_img{
     flex:1;
 }
 
 .input_style{
-    margin-left: 15px;
-    width: 70%;
+    margin-top: 10px;
+    /* background-color: aqua; */
+    /* margin-left: 15px; */
+    /* width: 70%; */
     font-size: 20px;
     border: none;
     height: 25px;
-    padding: 10px 10px;
+    /* padding: 10px 10px; */
+    background-color: transparent;
+    border-bottom: 1px solid rgb(165, 165, 165);
+}
+
+.input_style:focus{
+    outline: none;
+    border-bottom: 1px solid rgb(80, 156, 255);
+
 }
 
 .span_title{
     font-size: 20px;
+    font-family: "Roboto Slab", serif !important;
+    /* font-family: 'Courier New', Courier, monospace !important; */
 }
 
 .submit_btn{

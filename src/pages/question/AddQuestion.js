@@ -15,6 +15,8 @@ export default function AddQuestion() {
     const [loading,setloading] = useState(false);
     // const [error,setError] = useState(false);
     const formInput = useRef();
+    const titleRef = useRef();
+    const desRef = useRef();
     const {addDocument, response} = useFirestore(["questions"]);
     const navigate = useNavigate();
 
@@ -99,6 +101,21 @@ export default function AddQuestion() {
         setImageURLs(newImageURLs);
     },[image]);
 
+    // auto grow textarea
+    useEffect(()=>{
+        if(titleRef.current && title){
+            titleRef.current.style.height = "auto";
+            titleRef.current.style.height = titleRef.current.scrollHeight + "px";
+        }
+    },[title])
+
+    // auto grow textarea
+    useEffect(()=>{
+        if(desRef.current && title){
+            desRef.current.style.height = "auto";
+            desRef.current.style.height = desRef.current.scrollHeight + "px";
+        }
+    },[des])
     return (
         <div className={styles.add_question_container}>
             <div className={styles.add_question_header}>
@@ -110,10 +127,12 @@ export default function AddQuestion() {
                         <span className={styles.span_title}>Question title:</span>
                         <input
                         required
+                        ref={titleRef}
                         type="text"
-                        className={styles.input_style}
+                        className={`${styles.input_style} ${styles.add_title_input}`}
                         onChange={e => {settitle(e.target.value)}}
                         value={title}
+                        placeholder="Title"
                         />
                     </label>
 
@@ -127,6 +146,7 @@ export default function AddQuestion() {
                         <textarea 
                         className={styles.add_question_des_input,styles.input_style}
                         required
+                        ref={desRef}
                         onChange={e => {setdes(e.target.value)}}
                         value={des}
                         />
@@ -136,7 +156,7 @@ export default function AddQuestion() {
                     <label className={styles.add_question_img}>
                         <span className={styles.span_title}>Image:</span>
                         <input
-                        className={styles.input_style}
+                        // className={styles.input_style}
                         type="file"
                         onChange={e => {setimage([...e.target.files])}}
                         multiple accept="image/*"

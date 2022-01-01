@@ -8,7 +8,7 @@
     padding: 5px;
     /* width: 100%; */
     word-wrap: break-word;
-    width: 856px;
+    max-width: 800px;
 }
 
 .comment_bottom{
