@@ -51,7 +51,7 @@
     margin: 5px 5px;
 }
 
-.comment_time, .comment_author{
+.comment_time, .comment_author, .comment_edit{
     font-size: small;
     font-weight: 300;
 }
@@ -65,4 +65,8 @@
 .btnEdit:hover, .btnDelete:hover{
     color: #b84d64;
     cursor: pointer;
+}
+
+.comment_edit{
+    margin-left: 20px;
 }

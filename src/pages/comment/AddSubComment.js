@@ -23,6 +23,7 @@ export default function AddSubComment({question_id, comment_id}) {
                 created_by:"",
                 content:subComments,
                 added_at:Timestamp.now(),
+                edited_at:"",
             }
             // changes to comment object
             const newCommentChanges={

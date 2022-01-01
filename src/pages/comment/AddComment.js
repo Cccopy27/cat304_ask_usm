@@ -23,6 +23,7 @@ export default function AddComment({question_id}) {
                 comments,
                 created_by:"",
                 added_at:Timestamp.now(),
+                edited_at:"",
                 comment_image_name:imageName,
                 comment_image_url:"",
                 subComment:"",

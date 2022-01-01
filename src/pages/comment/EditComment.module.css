@@ -72,7 +72,11 @@
     cursor: pointer;
 }
 
-.comment_time, .comment_author{
+.comment_time, .comment_author, .comment_edited{
     font-weight: 300;
     font-size: small;
+}
+
+.comment_edited{
+    margin-left: 20px;
 }

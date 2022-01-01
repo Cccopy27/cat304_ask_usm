@@ -50,8 +50,12 @@
 
 }
 
-.question_subTitle_time, .question_subTitle_author{
+.question_subTitle_time, .question_subTitle_author ,.question_subTitle_edit{
     font-weight: 300;
+}
+
+.question_subTitle_edit{
+    margin-left: 20px;
 }
 
 .question_subTitle p,.cancelBtn, .saveBtn {

@@ -110,7 +110,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                     question_tag: tag,
                     question_image_name:imageName,
                     question_image_url:"",
-                    added_at: Timestamp.now(),
+                    edited_at: Timestamp.now(),
                     created_by:""
                 }
                 // if user use back old image
@@ -219,6 +219,11 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                                         <p className={styles.question_subTitle_time}>  
                                             Added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
                                         </p>
+
+                                        {document.edited_at && 
+                                        <p className={styles.question_subTitle_edit}>  
+                                            Edited {formatDistanceToNow(document.edited_at.toDate(),{addSuffix:true})}
+                                        </p>}
                                         
                                         <p className={styles.question_subTitle_author}>
                                             Created by: {document.created_by}

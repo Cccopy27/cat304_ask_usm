@@ -109,6 +109,12 @@ export default function Question() {
                                     <p className={styles.question_subTitle_time}>  
                                         Added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
                                     </p>
+
+                                    {document.edited_at && 
+                                        <p className={styles.question_subTitle_edit}>  
+                                            Edited {formatDistanceToNow(document.edited_at.toDate(),{addSuffix:true})}
+                                        </p>
+                                    }
                                     
                                     <p className={styles.question_subTitle_author}>
                                         Created by: {document.created_by}

@@ -48,6 +48,7 @@ export default function AddQuestion() {
                         question_image_url:"",
                         // question_comments:[],
                         added_at: Timestamp.now(),
+                        edited_at:"",
                         created_by:""
                     }
     

@@ -76,6 +76,11 @@ export default function Comment({comment, question_id}) {
                     <div className={styles.comment_bottom}>
                         <div className={styles.comment_left}>
                             <p className={styles.comment_time}>added {formatDistanceToNow(comment.added_at.toDate(),{addSuffix:true})}</p>
+                            {comment.edited_at && 
+                                <p className={styles.comment_edit}>edited       {formatDistanceToNow(comment.edited_at.toDate(),{addSuffix:true})}
+                                </p>
+                            }
+                            
                             <p className={styles.comment_author}>added by {comment.created_by}</p>
                         </div>
                         
