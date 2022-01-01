@@ -18,7 +18,10 @@ export default function AddComment({question_id}) {
     const handleSubmit=async(e)=>{
         e.preventDefault();
 
+        // make sure form is not empty
         if(formInput.current.checkValidity()){
+
+            // comment to add to database
             const commentObj = {
                 comments,
                 created_by:"",
@@ -27,11 +30,14 @@ export default function AddComment({question_id}) {
                 comment_image_url:"",
                 subComment:"",
             }
-    
+            
+            // add document
             await addDocument(commentObj,image,"comment");
+
             // got error
             if(response.error){
                 console.log("something wrong");
+                // alert user
                 Swal.fire({
                     icon:"error",
                     title:"Something wrong",
@@ -39,18 +45,20 @@ export default function AddComment({question_id}) {
                 })
             }
             else{
+                // clear input
                 setComments("");
                 setimage([]);
                 setImageURLs([]);
                 setImageName([]);
+                // alert user
                 Swal.fire('Added!', '', 'success');
+                // hide add comment button
                 setFocusMode(false);
-
             }
         }else{
+            // alert user
             Swal.fire('Write Something!', '', 'info');  
         }
-        
     }
 
     // preview image
