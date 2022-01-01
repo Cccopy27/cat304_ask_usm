@@ -130,8 +130,16 @@ export default function Question() {
                         </div>
                     
                     <div className={styles.question_bottom}>
-                        <p className={styles.question_subTitle_tags}>Tags:{document.question_tag}
-                        </p>
+                        <div className={styles.question_tag_big_container}>
+                        <p className={styles.question_subTitle_tags}>Tags:</p>
+                            <div className={styles.question_tag_container}>
+                            {document.question_tag.map(tag=>(
+                            <span className={styles.tag} key={tag.value}>{tag.value}</span>
+                        ))}
+                            </div>
+                        </div>
+                        
+                        
                         <p className={styles.question_des}>{document.question_description}</p>
                         {document.question_image_url && document.question_image_url.map(imageSrc=>
                             <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
