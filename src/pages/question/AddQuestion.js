@@ -4,7 +4,8 @@ import {useFirestore} from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import styles from "./AddQuestion.module.css";
-import Select, {StylesConfig} from "react-select";
+import Select from "react-select";
+import { useGlobalState } from "state-pool";
 
 export default function AddQuestion() {
     const [title, settitle] = useState("");
@@ -20,15 +21,7 @@ export default function AddQuestion() {
     const desRef = useRef();
     const {addDocument, response} = useFirestore(["questions"]);
     const navigate = useNavigate();
-
-    // tag categories
-    const categories = [
-        {value: "MyCsd", label: "MyCsd"},
-        {value: "Other", label: "Other"},
-        {value: "Hostel", label: "Hostel"},
-        {value: "CAT304", label: "CAT304"},
-        {value: "Club", label: "Club"},
-    ];
+    const [categories, setCategories] = useGlobalState("tag");
 
     // when user submit the form
     const handleSubmit=(e)=>{

@@ -8,6 +8,7 @@ import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import Select from "react-select";
+import { useGlobalState } from "state-pool";
 
 export default function EditQuestion({document,editMode,setEditMode}) {
     
@@ -25,15 +26,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
     const textAreaDes = useRef();
     const textAreaTitle = useRef();
     const navigate = useNavigate();
-
-    // categories
-    const categories = [
-        {value: "MyCsd", label: "MyCsd"},
-        {value: "Other", label: "Other"},
-        {value: "Hostel", label: "Hostel"},
-        {value: "CAT304", label: "CAT304"},
-        {value: "Club", label: "Club"},
-    ];
+    const [categories,setCategories] = useGlobalState("tag");
     
     // set all document value to current input field
     useEffect(() => {

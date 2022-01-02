@@ -17,6 +17,8 @@ const categories = [
   {value: "Hostel", label: "Hostel"},
   {value: "CAT304", label: "CAT304"},
   {value: "Club", label: "Club"},
+  {value: "News", label: "News"},
+
 ];
 // set global variable tag
 store.setState("tag",categories);
