@@ -5,15 +5,14 @@ import { useGlobalState } from "state-pool";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useParams } from "react-router-dom";
-import { isThisMinute } from "date-fns";
 
 export default function TagFilter({setTag,tag}) {
     const [categories, setCategories] = useGlobalState("tag");
     const navigate = useNavigate();
     const [tempTag, setTempTag] = useState(tag);
     const tagRef = useRef();
-    const paramResults = useParams();
-    
+    const {result} = useParams();
+
     // navigate to add question
     const handleAddQuestion = (e) =>{
         navigate("/addquestion");
@@ -32,7 +31,9 @@ export default function TagFilter({setTag,tag}) {
     useEffect(()=>{
         // reset form
         tagRef.current.clearValue();
-    },[paramResults])
+
+    },[result]);
+
     return (
         <div className={styles.tag_filter_container}>
             <div className={styles.tag_filter}>
@@ -44,6 +45,7 @@ export default function TagFilter({setTag,tag}) {
                         options={categories}
                         isMulti
                     />
+                    
                 </div>
                 <div className={styles.tag_btn_container}>
                     <button className={styles.tag_btn} onClick={handleSearch}>Search</button>

@@ -6,12 +6,12 @@ import { useParams } from "react-router-dom";
 
 export default function TagDashboard() {
     const {result} = useParams();
-    const [tag,setTag]=  useState("");
-
+    const [tag,setTag]=  useState([result]);
+    // update tag when page navigation
     useEffect(() => {
-        setTag(result);
-        
-    }, [result])
+        setTag([result]);
+    }, [result]);
+    
     return (
         <div className={styles.tagDashboard_container}>
             <TagFilter setTag={setTag} tag={tag}/>
