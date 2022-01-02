@@ -55,7 +55,7 @@ export default function TagResult({tag}) {
                 Popular tags...
                     <div className="popular_tags">
                         {categories.map((item)=>(
-                            <Link to={`/tag/${item.value}`}>
+                            <Link to={`/tag/${item.value}`} key={item.value}>
                                 <div>{item.value}</div>
                             </Link>
                         ))}
