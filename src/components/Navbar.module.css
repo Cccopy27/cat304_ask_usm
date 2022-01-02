@@ -62,5 +62,14 @@
     padding: 0;
     margin:0;
     list-style-type: none;
-    
-  }
+}
+
+.search_btn{
+    margin-left: 20px;
+    font-size: 25px;
+}
+
+.search_btn:hover{
+    cursor: pointer;
+    color: #9DAAF2;
+}
