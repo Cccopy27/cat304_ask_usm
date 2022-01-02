@@ -10,7 +10,7 @@ import { useGlobalState } from "state-pool";
 export default function AddQuestion() {
     const [title, settitle] = useState("");
     const [des, setdes] = useState(""); 
-    const [tag, settag] = useState("");
+    const [tag, settag] = useState([]);
     const [image, setimage] = useState([]);
     const [imageURLs,setImageURLs] = useState([]);
     const [imageName,setImageName] = useState([]);

@@ -10,7 +10,7 @@ export default function TagDashboard() {
 
     useEffect(() => {
         setTag(result);
-        console.log(result);
+        
     }, [result])
     return (
         <div className={styles.tagDashboard_container}>
