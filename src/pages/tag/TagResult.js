@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import QuestionList from "../../components/QuestionList";
 import { useCollection } from "../../hooks/useCollection";
+import { useGlobalState } from "state-pool";
 
 export default function TagResult({tag}) {
     const [popularMode, setPopularMode] = useState(true);
     const [resultString, setresultString] = useState("");
     const {document,error} = useCollection(["questions"]);
+    const [categories, setCategories] = useGlobalState("tag");
     // const [filterDoc, setFilterDoc] = useState([]);
     
     useEffect(()=>{
@@ -51,6 +53,11 @@ export default function TagResult({tag}) {
             {popularMode && 
                 <div className="result_header">
                 Popular tags...
+                    <div className="popular_tags">
+                        {categories.map((item)=>(
+                            <div>{item.value}</div>
+                        ))}
+                    </div>
                 </div>
             }
             {!popularMode && 
