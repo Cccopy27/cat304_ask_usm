@@ -45,7 +45,9 @@ export default function EditSubComment({item, editMode, setEditMode, question_id
                     id:item.id,
                     created_by:"",
                     content:newSubComment,
-                    added_at:Timestamp.now(),
+                    // added_at:Timestamp.now(),
+                    edited_at:Timestamp.now(),
+
                 }
     
                 // update field array that same id with the current one 

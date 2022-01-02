@@ -75,7 +75,13 @@ export default function SubComment({subComment,item, question_id, comment_id}) {
                     <div className={styles.subComment}>
                         <span className={styles.content}>{item.content}</span>
                         <span className={styles.created_by}> created by{item.created_by}</span>
-                        <span className={styles.added_at}> added {formatDistanceToNow(item.added_at.toDate(),{addSuffix:true})}</span>
+                        {item.edited_at && 
+                            <span className={styles.added_at}> Edited {formatDistanceToNow(item.edited_at.toDate(),{addSuffix:true})}</span>
+                        }
+                        {!item.edited_at && 
+                            <span className={styles.added_at}> Added {formatDistanceToNow(item.added_at.toDate(),{addSuffix:true})}</span>
+                        }
+                        
                         
                     </div>
                     <div className={styles.btn_group}>

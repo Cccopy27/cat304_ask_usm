@@ -9,9 +9,9 @@ import { useCollection } from "../../hooks/useCollection";
 
 export default function QuestionDashboard () {
     // const [document,setDocument] = useState(null);
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
     const [loading,setLoading] = useState(false);
-    const {document, response} = useCollection(["questions"]);
+    const {document, error} = useCollection(["questions"]);
 
     let result = [];
     useEffect(()=>{
@@ -28,12 +28,12 @@ export default function QuestionDashboard () {
             <div className={styles.question_header}>
                 <div className={styles.question_filter}>
                     <h2 className={styles.question_header_title}>All Questions</h2>
-                    <div className={styles.question_tags}>Tags</div>
+                    {/* <div className={styles.question_tags}>Tags</div> */}
 
                     <div className={styles.question_sort}>Sort-by</div>
                 </div>
                 <div className={styles.question_add}>
-                    <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Questions</button>
+                    <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Something</button>
                 </div>
 
             </div>

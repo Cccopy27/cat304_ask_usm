@@ -7,6 +7,8 @@ import {useFirestore} from "../../hooks/useFirestore";
 import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import Select from "react-select";
+import { useGlobalState } from "state-pool";
 
 export default function EditQuestion({document,editMode,setEditMode}) {
     
@@ -24,6 +26,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
     const textAreaDes = useRef();
     const textAreaTitle = useRef();
     const navigate = useNavigate();
+    const [categories,setCategories] = useGlobalState("tag");
     
     // set all document value to current input field
     useEffect(() => {
@@ -48,10 +51,11 @@ export default function EditQuestion({document,editMode,setEditMode}) {
             textAreaTitle.current.style.height="auto";
             textAreaTitle.current.style.height=textAreaTitle.current.scrollHeight + "px";
         }
-        if(title && textAreaTitle.current){
-            textAreaTitle.current.style.height="auto";
-            textAreaTitle.current.style.height=textAreaTitle.current.scrollHeight + "px";
+        if(des && textAreaDes.current){
+            textAreaDes.current.style.height="auto";
+            textAreaDes.current.style.height=textAreaDes.current.scrollHeight + "px";
         }
+        
     }, [document,editMode]);
     
     // textarea grow
@@ -110,7 +114,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                     question_tag: tag,
                     question_image_name:imageName,
                     question_image_url:"",
-                    added_at: Timestamp.now(),
+                    edited_at: Timestamp.now(),
                     created_by:""
                 }
                 // if user use back old image
@@ -219,6 +223,11 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                                         <p className={styles.question_subTitle_time}>  
                                             Added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
                                         </p>
+
+                                        {document.edited_at && 
+                                        <p className={styles.question_subTitle_edit}>  
+                                            Edited {formatDistanceToNow(document.edited_at.toDate(),{addSuffix:true})}
+                                        </p>}
                                         
                                         <p className={styles.question_subTitle_author}>
                                             Created by: {document.created_by}
@@ -238,8 +247,17 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                             </div>
                             
                     <div className={styles.question_bottom}>
-                        <p>Tags:{document.question_tag}
-                        </p>
+                        <div className={styles.tag_container}>
+                            <p className={styles.tag_name}>Tags: </p>
+                            <Select
+                                className={styles.tag}
+                                onChange={(option)=>settag(option)}
+                                options={categories}
+                                defaultValue={document.question_tag}
+                                isMulti
+                            />
+                        </div>
+                        
 
                         <label className={styles.add_question_des}>
                             <textarea 

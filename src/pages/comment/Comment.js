@@ -75,8 +75,13 @@ export default function Comment({comment, question_id}) {
                         <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image_preview"/>)}
                     <div className={styles.comment_bottom}>
                         <div className={styles.comment_left}>
-                            <p className={styles.comment_time}>added {formatDistanceToNow(comment.added_at.toDate(),{addSuffix:true})}</p>
-                            <p className={styles.comment_author}>added by {comment.created_by}</p>
+                            <p className={styles.comment_time}>Added {formatDistanceToNow(comment.added_at.toDate(),{addSuffix:true})}</p>
+                            {comment.edited_at && 
+                                <p className={styles.comment_edit}>Edited       {formatDistanceToNow(comment.edited_at.toDate(),{addSuffix:true})}
+                                </p>
+                            }
+                            
+                            <p className={styles.comment_author}>Added by {comment.created_by}</p>
                         </div>
                         
                         <div className={styles.btn}>

@@ -1,5 +1,5 @@
 .created_by{
-    color: aqua;
+    color:#3ab0c5
 }
 
 .subComment_container{
@@ -38,5 +38,10 @@
 .edit_btn:hover, .delete_btn:hover{
     cursor: pointer;
     color: #b84d64;
+
+}
+
+.content{
+    white-space: pre-wrap;
 
 }

@@ -4,6 +4,8 @@ import {useFirestore} from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import styles from "./AddQuestion.module.css";
+import Select from "react-select";
+import { useGlobalState } from "state-pool";
 
 export default function AddQuestion() {
     const [title, settitle] = useState("");
@@ -19,6 +21,7 @@ export default function AddQuestion() {
     const desRef = useRef();
     const {addDocument, response} = useFirestore(["questions"]);
     const navigate = useNavigate();
+    const [categories, setCategories] = useGlobalState("tag");
 
     // when user submit the form
     const handleSubmit=(e)=>{
@@ -38,19 +41,25 @@ export default function AddQuestion() {
                         allowOutsideClick: false,
                     })
                     Swal.showLoading();
+                    let tagList=[];
+                    //get tag value
+                    tag.forEach(item=>{
+                        tagList.push(item.value);
+                    })
                 
                     // user input as object
                     const question_object={
                         question_title: title,
                         question_description: des,
-                        question_tag: tag,
+                        question_tag: tagList,
                         question_image_name:imageName,
                         question_image_url:"",
                         // question_comments:[],
                         added_at: Timestamp.now(),
+                        edited_at:"",
                         created_by:""
                     }
-    
+                    console.log(question_object);
                     //add to database
                     await addDocument(question_object,image,"question");
                     setloading(false);
@@ -100,21 +109,6 @@ export default function AddQuestion() {
         setImageURLs(newImageURLs);
     },[image]);
 
-    // auto grow textarea
-    // useEffect(()=>{
-    //     if(titleRef.current && title){
-    //         titleRef.current.style.height = "auto";
-    //         titleRef.current.style.height = titleRef.current.scrollHeight + "px";
-    //     }
-    // },[title])
-
-    // // auto grow textarea
-    // useEffect(()=>{
-    //     if(desRef.current && des){
-    //         desRef.current.style.height = "auto";
-    //         desRef.current.style.height = desRef.current.scrollHeight + "px";
-    //     }
-    // },[des])
     return (
         <div className={styles.add_question_container}>
             
@@ -138,6 +132,11 @@ export default function AddQuestion() {
 
                     <label className={styles.add_question_tag}>
                         <span className={styles.span_title}>Question Tags:</span>
+                        <Select
+                            onChange={(option)=>settag(option)}
+                            options={categories}
+                            isMulti
+                        />
                         {/* add tag here  */}
                     </label>
 

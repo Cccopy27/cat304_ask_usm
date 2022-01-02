@@ -44,6 +44,7 @@
 
 .comment_author{
     margin-left: 20px;
+    color:#3ab0c5
 }
 
 .btn{
@@ -72,7 +73,11 @@
     cursor: pointer;
 }
 
-.comment_time, .comment_author{
+.comment_time, .comment_author, .comment_edited{
     font-weight: 300;
     font-size: small;
+}
+
+.comment_edited{
+    margin-left: 20px;
 }

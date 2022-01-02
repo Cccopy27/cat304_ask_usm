@@ -68,7 +68,6 @@ export const useFirestore=(collections)=>{
             }
             // handle image
             if(image){
-                console.log("enter");
                 // convert filelist to array to user array method
                 const image_arr = Array.from(image);
                 // upload photo to storage firebase to get its photo URL
@@ -92,7 +91,6 @@ export const useFirestore=(collections)=>{
                 });
             }
             
-            // console.log(isCancelled);
             dispatchIfNotCancelled({type:"ADDED_DOCUMENT", payload: addedDocument});
         }
         catch(err){
@@ -158,7 +156,7 @@ export const useFirestore=(collections)=>{
                             updateDoc(doc(collection_Ref,id), 
                                 changes(imgURL))
                             .then(()=>{
-                                console.log(imgURL);
+                                
 
                             })
                         })

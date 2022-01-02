@@ -133,7 +133,7 @@ export default function Question() {
                             <div className={styles.question_header}>
                                 <p className={styles.question_title}>{document.question_title}</p>
                                 <div className={styles.question_add}>
-                                    <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Questions</button>
+                                    <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Something</button>
                                 </div>
                         
                             </div>
@@ -142,6 +142,12 @@ export default function Question() {
                                     <p className={styles.question_subTitle_time}>  
                                         Added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
                                     </p>
+
+                                    {document.edited_at && 
+                                        <p className={styles.question_subTitle_edit}>  
+                                            Edited {formatDistanceToNow(document.edited_at.toDate(),{addSuffix:true})}
+                                        </p>
+                                    }
                                     
                                     <p className={styles.question_subTitle_author}>
                                         Created by: {document.created_by}
@@ -157,8 +163,16 @@ export default function Question() {
                         </div>
                     
                     <div className={styles.question_bottom}>
-                        <p className={styles.question_subTitle_tags}>Tags:{document.question_tag}
-                        </p>
+                        <div className={styles.question_tag_big_container}>
+                        <p className={styles.question_subTitle_tags}>Tags:</p>
+                            <div className={styles.question_tag_container}>
+                            {document.question_tag.map(tag=>(
+                            <span className={styles.tag} key={tag}>{tag}</span>
+                        ))}
+                            </div>
+                        </div>
+                        
+                        
                         <p className={styles.question_des}>{document.question_description}</p>
                         {document.question_image_url && document.question_image_url.map(imageSrc=>
                             <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
