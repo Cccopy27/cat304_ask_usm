@@ -15,7 +15,7 @@ export default function Navbar() {
                         <label>
                             <input
                             type="text"
-                            placeholder="Search..."
+                            placeholder="Search keywords..."
                             />
                         </label>
                     </form>

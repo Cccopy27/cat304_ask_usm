@@ -1,15 +1,19 @@
 import styles from "./TagFilter.module.css";
 import Select from "react-select";
-import { useState } from "react";
+import { useState,useRef, useEffect } from "react";
 import { useGlobalState } from "state-pool";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
+import { useParams } from "react-router-dom";
+import { isThisMinute } from "date-fns";
 
-export default function TagFilter() {
-    const [tag,setTag]=  useState("");
+export default function TagFilter({setTag,tag}) {
     const [categories, setCategories] = useGlobalState("tag");
     const navigate = useNavigate();
-    const [resultMode, setResultMode] = useState(false);
+    const [tempTag, setTempTag] = useState(tag);
+    const tagRef = useRef();
+    const paramResults = useParams();
+    
     // navigate to add question
     const handleAddQuestion = (e) =>{
         navigate("/addquestion");
@@ -18,15 +22,25 @@ export default function TagFilter() {
     // output result
     const handleSearch = (e)=>{
         e.preventDefault();
-        console.log("i");
+        // change tag format to only value
+        setTag(tempTag.map(item=>{
+            return item.value;
+        }))
     }
+
+    // reset input when changing pages
+    useEffect(()=>{
+        // reset form
+        tagRef.current.clearValue();
+    },[paramResults])
     return (
         <div className={styles.tag_filter_container}>
             <div className={styles.tag_filter}>
                 <h2 className={styles.tag_title}>Tags</h2>
                 <div className={styles.tag_options}>
                     <Select
-                        onChange={(option)=>setTag(option)}
+                        ref={tagRef}
+                        onChange={(option)=>setTempTag(option)}
                         options={categories}
                         isMulti
                     />

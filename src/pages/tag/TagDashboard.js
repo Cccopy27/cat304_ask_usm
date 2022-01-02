@@ -1,14 +1,23 @@
 import styles from "./TagDashboard.module.css"
 import TagFilter from "./TagFilter"
-export default function TagDashboard() {
+import { useState, useEffect } from "react";
+import TagResult from "./TagResult";
+import { useParams } from "react-router-dom";
 
+export default function TagDashboard() {
+    const {result} = useParams();
+    const [tag,setTag]=  useState("");
+
+    useEffect(() => {
+        setTag(result);
+        console.log(result);
+    }, [result])
     return (
         <div className={styles.tagDashboard_container}>
-            <TagFilter/>
+            <TagFilter setTag={setTag} tag={tag}/>
             <div className={styles.TagDashboard_content}>
-                some popular content
+                 <TagResult tag={tag}/>
             </div>
-            
         </div>
     )
 }

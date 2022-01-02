@@ -28,7 +28,7 @@ export default function QuestionDashboard () {
             <div className={styles.question_header}>
                 <div className={styles.question_filter}>
                     <h2 className={styles.question_header_title}>All Questions</h2>
-                    <div className={styles.question_tags}>Tags</div>
+                    {/* <div className={styles.question_tags}>Tags</div> */}
 
                     <div className={styles.question_sort}>Sort-by</div>
                 </div>

@@ -1,10 +1,11 @@
-import styles from "./TagResult.module.css";
 import { useParams } from "react-router-dom";
-export default function TagResult() {
-    const {result} = useParams();
+
+export default function TagResult({tag}) {
+    
     return (
         <div>
-            {result}
+            questions regarding {tag}
+            
         </div>
     )
 }
