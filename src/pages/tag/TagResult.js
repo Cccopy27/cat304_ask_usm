@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import QuestionList from "../../components/QuestionList";
 import { useCollection } from "../../hooks/useCollection";
 import { useGlobalState } from "state-pool";
@@ -55,7 +55,9 @@ export default function TagResult({tag}) {
                 Popular tags...
                     <div className="popular_tags">
                         {categories.map((item)=>(
-                            <div>{item.value}</div>
+                            <Link to={`/tag/${item.value}`}>
+                                <div>{item.value}</div>
+                            </Link>
                         ))}
                     </div>
                 </div>
