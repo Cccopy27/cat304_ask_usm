@@ -21,13 +21,13 @@ export default function EditQuestion({document,editMode,setEditMode}) {
     const [imageURL,setImageURL] = useState([]);
     const [imageName,setImageName] = useState([]);
     // const [error, setError] = useState(false);
-    const tempArray =[];
+    let tempArray =[];
     const formInput = useRef();
     const textAreaDes = useRef();
     const textAreaTitle = useRef();
     const navigate = useNavigate();
     const [categories,setCategories] = useGlobalState("tag");
-    
+    const [defaultSelector, setDefaultSelector] = useState([]);
     // set all document value to current input field
     useEffect(() => {
         window.scrollTo(0,0);
@@ -55,6 +55,17 @@ export default function EditQuestion({document,editMode,setEditMode}) {
             textAreaDes.current.style.height="auto";
             textAreaDes.current.style.height=textAreaDes.current.scrollHeight + "px";
         }
+
+        // format tag select
+        let tempArray2 = [];
+        document.question_tag.forEach(item=>{
+            const tempObj={
+                label:item,
+                value:item,
+            }
+            tempArray2.push(tempObj);
+        });
+        setDefaultSelector(tempArray2);
         
     }, [document,editMode]);
     
@@ -253,7 +264,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                                 className={styles.tag}
                                 onChange={(option)=>settag(option)}
                                 options={categories}
-                                defaultValue={document.question_tag}
+                                defaultValue={defaultSelector}
                                 isMulti
                             />
                         </div>
