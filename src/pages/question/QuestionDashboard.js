@@ -9,9 +9,9 @@ import { useCollection } from "../../hooks/useCollection";
 
 export default function QuestionDashboard () {
     // const [document,setDocument] = useState(null);
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
     const [loading,setLoading] = useState(false);
-    const {document, response} = useCollection(["questions"]);
+    const {document, error} = useCollection(["questions"]);
 
     let result = [];
     useEffect(()=>{

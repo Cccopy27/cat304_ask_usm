@@ -9,8 +9,8 @@ export default function TagDashboard() {
     const [tag,setTag]=  useState([result]);
     // update tag when page navigation
     useEffect(() => {
-        console.log(result.split("&"));
-        setTag([result]);
+
+        setTag(result.split("&"));
     }, [result]);
 
     return (

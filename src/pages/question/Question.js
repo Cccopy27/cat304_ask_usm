@@ -167,7 +167,7 @@ export default function Question() {
                         <p className={styles.question_subTitle_tags}>Tags:</p>
                             <div className={styles.question_tag_container}>
                             {document.question_tag.map(tag=>(
-                            <span className={styles.tag} key={tag.value}>{tag.value}</span>
+                            <span className={styles.tag} key={tag}>{tag}</span>
                         ))}
                             </div>
                         </div>

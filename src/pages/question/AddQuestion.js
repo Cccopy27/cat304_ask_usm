@@ -41,19 +41,17 @@ export default function AddQuestion() {
                         allowOutsideClick: false,
                     })
                     Swal.showLoading();
-
-                    // get tag value
-                    // const tagList = tag.map((item)=>{
-                    //     return{
-                    //         value: item.value
-                    //     }
-                    // })
+                    let tagList=[];
+                    //get tag value
+                    tag.forEach(item=>{
+                        tagList.push(item.value);
+                    })
                 
                     // user input as object
                     const question_object={
                         question_title: title,
                         question_description: des,
-                        question_tag: tag,
+                        question_tag: tagList,
                         question_image_name:imageName,
                         question_image_url:"",
                         // question_comments:[],
