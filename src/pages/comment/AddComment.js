@@ -46,13 +46,13 @@ export default function AddComment({question_id}) {
                 })
             }
             else{
+                // alert user
+                Swal.fire('Added!', '', 'success');
                 // clear input
                 setComments("");
                 setimage([]);
                 setImageURLs([]);
                 setImageName([]);
-                // alert user
-                Swal.fire('Added!', '', 'success');
                 // hide add comment button
                 setFocusMode(false);
             }

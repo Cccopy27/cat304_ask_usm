@@ -18,10 +18,19 @@ const categories = [
   {value: "CAT304", label: "CAT304"},
   {value: "Club", label: "Club"},
   {value: "News", label: "News"},
-
 ];
+
+// question order list
+const orderList=[
+  {value:"Latest",label:"Latest"},
+  {value:"View",label:"View"},
+  {value:"Rating",label:"Rating"},
+  {value:"Oldest",label:"Oldest"},
+
+]
 // set global variable tag
 store.setState("tag",categories);
+store.setState("order",orderList);
 
 function App() {
   return (

@@ -11,19 +11,22 @@ export const useCollection=(collections, queries2,orderBy2)=>{
 
     // useref to prevent infinite loop
     // _quries is an array and it is different on every function call
-    const queries = useRef(queries2).current;
-    const orderBys = useRef(orderBy2).current;
+    // const queries = useRef(queries2).current;
+    // console.log(queries2.current);
+    // const orderBys = useRef(orderBy2).current;
+    
     useEffect(()=>{
 
         let ref = collection(db, ...collections);
-        if(queries){
-            ref = query(ref,where(...queries));
+        if(queries2){
+            ref = query(ref,where(...queries2));
         }
-        if(orderBys){
-            ref = query(ref, orderBy(...orderBys));
+        if(orderBy2){
+            ref = query(ref, orderBy(...orderBy2));
         }
         const unsub = onSnapshot(ref, (snapshot)=>{
-            console.log("I keep running in collections");
+            console.log("I keep running in onSnapShot collections");
+
             let results= [];
             snapshot.docs.forEach((doc)=>{
                 results.push({...doc.data(), id: doc.id});
@@ -40,6 +43,7 @@ export const useCollection=(collections, queries2,orderBy2)=>{
         //handle unmount
         return()=>{
             unsub();
+            console.log("unmount");
         }
     },[])
 
