@@ -33,7 +33,7 @@ export default function QuestionDashboard () {
                     <div className={styles.question_sort}>Sort-by</div>
                 </div>
                 <div className={styles.question_add}>
-                    <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Questions</button>
+                    <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Something</button>
                 </div>
 
             </div>

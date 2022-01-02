@@ -133,7 +133,7 @@ export default function Question() {
                             <div className={styles.question_header}>
                                 <p className={styles.question_title}>{document.question_title}</p>
                                 <div className={styles.question_add}>
-                                    <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Questions</button>
+                                    <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Something</button>
                                 </div>
                         
                             </div>
