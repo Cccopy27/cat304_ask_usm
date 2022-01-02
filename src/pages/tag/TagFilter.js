@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 
-export default function TagFilter() {
+export default function TagFilter({setTag,tag}) {
     const [categories, setCategories] = useGlobalState("tag");
     const navigate = useNavigate();
-    const [tag, setTag] = useState([]);
+    const [tempTag, setTempTag] = useState(tag);
     const tagRef = useRef();
     const {result} = useParams();
 
@@ -23,7 +23,7 @@ export default function TagFilter() {
         e.preventDefault();
         let paramURL = "/tag/";
         // change tag format to only value
-        setTag(tag.map(item=>{
+        setTag(tempTag.map(item=>{
             paramURL+=item.value+"&";
             return item.value;
         }))
@@ -47,7 +47,7 @@ export default function TagFilter() {
                 <div className={styles.tag_options}>
                     <Select
                         ref={tagRef}
-                        onChange={(option)=>setTag(option)}
+                        onChange={(option)=>setTempTag(option)}
                         options={categories}
                         isMulti
                     />
