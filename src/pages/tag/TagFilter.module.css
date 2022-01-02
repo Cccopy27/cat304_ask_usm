@@ -26,8 +26,39 @@
     flex: 1;
 }
 
-.tag_btn{
+.tag_btn_container{
     flex: 1;
+    display: flex; 
+    flex-direction: row; 
+    justify-content: center;
+}
+
+.tag_btn{
+    /* font-size: 10px; */
+    flex: 1;
+    font-size: large;
+    /* background-color: transparent; */
+    border: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.tag_search{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.tag_btn, .tag_search{
+    height: 30px;
+    align-self: center;
+    flex: 1;
+    background-color: #d3d8f8;
+    
+}
+
+.tag_btn:hover + .tag_search,.tag_btn:hover ,.tag_search:hover+ .tag_btn{
+    cursor: pointer;
+    color: white;
 }
 
 .question_add{
@@ -46,4 +77,10 @@
 .question_add_btn:hover{
     cursor: pointer;
     color: #9DAAF2;
+}
+
+.tag_search{
+    font-size: 25px;
+    /* background-color: #1A2238; */
+    color: #1A2238;
 }
