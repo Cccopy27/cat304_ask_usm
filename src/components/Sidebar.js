@@ -21,10 +21,10 @@ export default function Sidebar() {
                             <NavLink to = "/tag/popular">Tags</NavLink>
                         </li>
                         <li className={styles.new}>
-                            <NavLink to = "/tag/news">News</NavLink>
+                            <NavLink to = "/tag/New">News</NavLink>
                         </li>
                         <li className={styles.club}>
-                            <NavLink to = "/tag/clubs">Clubs</NavLink>
+                            <NavLink to = "/tag/Club">Clubs</NavLink>
                         </li>
                     </ul>
                 </nav>

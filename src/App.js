@@ -18,10 +18,19 @@ const categories = [
   {value: "CAT304", label: "CAT304"},
   {value: "Club", label: "Club"},
   {value: "News", label: "News"},
-
 ];
+
+// question order list
+const orderList=[
+  {value:"Latest",label:"Latest"},
+  {value:"View",label:"View"},
+  {value:"Rating",label:"Rating"},
+  {value:"Oldest",label:"Oldest"},
+
+]
 // set global variable tag
 store.setState("tag",categories);
+store.setState("order",orderList);
 
 function App() {
   return (
@@ -35,8 +44,8 @@ function App() {
             <Route path="/question" element={<QuestionDashboard/>}/>
             <Route path="/addquestion" element={<AddQuestion/>}/>
             <Route path="/question/:id" element={<Question/>}/>
-            {/* <Route path="/tag" element={<TagDashboard/>}/> */}
             <Route path="/tag/:result" element={<TagDashboard/>}/>
+            <Route path="/question/search/:result" element={<QuestionDashboard/>}/>
 
       
           </Routes>

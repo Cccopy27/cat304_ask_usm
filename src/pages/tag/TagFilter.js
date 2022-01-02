@@ -5,9 +5,11 @@ import { useGlobalState } from "state-pool";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
-export default function TagFilter({setTag,tag}) {
+export default function TagFilter({setTag,tag, setFilter}) {
     const [categories, setCategories] = useGlobalState("tag");
+    const [orderList, setorderList] = useGlobalState("order");
     const navigate = useNavigate();
     const [tempTag, setTempTag] = useState(tag);
     const tagRef = useRef();
@@ -17,28 +19,59 @@ export default function TagFilter({setTag,tag}) {
     const handleAddQuestion = (e) =>{
         navigate("/addquestion");
     }
-
+  
     // output result
     const handleSearch = (e)=>{
         e.preventDefault();
-        let paramURL = "/tag/";
-        // change tag format to only value
-        setTag(tempTag.map(item=>{
-            paramURL+=item.value+"&";
-            return item.value;
-        }))
-
-        // remove last &
-        paramURL = paramURL.substring(0,paramURL.length-1);
-        navigate(paramURL);
+        console.log(tag);
+        //check valid
+        if(tempTag.length !== 0){
+            let paramURL = "/tag/";
+            // change tag format to only value
+            setTag(tempTag.map(item=>{
+                paramURL+=item.value+"&";
+                return item.value;
+            }))
+    
+            // remove last &
+            paramURL = paramURL.substring(0,paramURL.length-1);
+            setTag([]);
+            setTempTag([]);
+            navigate(paramURL);
+        }
+        else{
+            Swal.fire('Make sure at least one tag was selected', '', 'info');
+        }
+        
     }
 
     // reset input when changing pages
     useEffect(()=>{
         // reset form
         tagRef.current.clearValue();
-
+        setTag([]);
+        setTempTag([]);
     },[result]);
+
+    const handleFilter=(options)=>{
+        switch(options.value){
+            case "Latest": 
+                setFilter(["added_at","desc"]);
+                break;
+            case "View": 
+                // setFilter(["added_at","desc"]);
+                break;
+            case "Rating":
+                
+                break;
+            case "Oldest":
+                setFilter(["added_at","asc"]);
+                
+                break;
+            default: 
+                setFilter(["added_at","desc"]);
+        }
+    }
 
     return (
         <div className={styles.tag_filter_container}>
@@ -57,6 +90,14 @@ export default function TagFilter({setTag,tag}) {
                     <button className={styles.tag_btn} onClick={handleSearch}>Search</button>
                     <AiOutlineSearch className={styles.tag_search} onClick={handleSearch}/>
 
+                </div>
+
+                <div className={styles.sort_by}>
+                    <Select
+                        onChange={handleFilter}
+                        options={orderList}
+                        defaultValue={orderList[0]}
+                    />
                 </div>
             </div>
             

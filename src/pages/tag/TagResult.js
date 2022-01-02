@@ -4,10 +4,9 @@ import QuestionList from "../../components/QuestionList";
 import { useCollection } from "../../hooks/useCollection";
 import { useGlobalState } from "state-pool";
 
-export default function TagResult({tag}) {
+export default function TagResult({tag,document}) {
     const [popularMode, setPopularMode] = useState(true);
     const [resultString, setresultString] = useState("");
-    const {document,error} = useCollection(["questions"]);
     const [categories, setCategories] = useGlobalState("tag");
     // const [filterDoc, setFilterDoc] = useState([]);
     
@@ -45,9 +44,7 @@ export default function TagResult({tag}) {
     if(!filterQuestion){
         return <div>Loading...</div>
     }
-    if(error){
-        return <div>{error}</div>
-    }
+    
     return (
         <div className="result_container">
             {popularMode && 
@@ -55,7 +52,7 @@ export default function TagResult({tag}) {
                 Popular tags...
                     <div className="popular_tags">
                         {categories.map((item)=>(
-                            <Link to={`/tag/${item.value}`}>
+                            <Link to={`/tag/${item.value}`} key={item.value}>
                                 <div>{item.value}</div>
                             </Link>
                         ))}

@@ -12,7 +12,7 @@ export const useDocument =(collections,id)=>{
     const [error, setError] = useState(null);
 
     useEffect(()=>{
-        console.log("I keep running in document");
+        console.log("I keep running in onSnapShot document");
         const ref = doc(collection(db,collections),id);
 
         // real time listener
@@ -29,7 +29,10 @@ export const useDocument =(collections,id)=>{
             console.log(err.message);
             setError(err.message);
         })
-        return()=>{unsub()};
+        return()=>{
+            unsub();
+            console.log("unmount");
+        };
 
     },[])
 
