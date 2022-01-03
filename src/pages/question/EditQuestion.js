@@ -117,12 +117,18 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                         allowOutsideClick: false,
                     })
                     Swal.showLoading();
+
+                let tagList=[];
+                //get tag value
+                tag.forEach(item=>{
+                    tagList.push(item.value);
+                })
                 
                 // user input as object
                 const question_object={
                     question_title: title,
                     question_description: des,
-                    question_tag: tag,
+                    question_tag: tagList,
                     question_image_name:imageName,
                     question_image_url:"",
                     edited_at: Timestamp.now(),

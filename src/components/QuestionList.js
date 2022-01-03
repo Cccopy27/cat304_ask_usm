@@ -9,9 +9,26 @@ export default function QuestionList({questions}) {
             {questions.length === 0 && <p>No questions available!</p>}
             {questions.map(question => (
                 <Link className={styles.question_item}to={`/question/${question.id}`} key={question.id}>
-                    <h4>{question.question_title}</h4>
-                    <div>{question.question_description}</div>
-                    <span> added {formatDistanceToNow(question.added_at.toDate(),{addSuffix:true})}</span>
+                    <div className={styles.left_part}>
+
+                    </div>
+                    <div className={styles.right_part}>
+                        <div className={styles.upper_part}>
+                            <h4 className={styles.question_title}>
+                                {question.question_title}
+                            </h4>
+                            <span className={styles.question_span}> 
+                                added {formatDistanceToNow(question.added_at.toDate(),{addSuffix:true})}
+                            </span>
+                        </div>
+                        <div className={styles.tag}>
+                            {question.question_tag.map(item=>(
+                                <span className={styles.tag_item}>{item}</span>
+                            ))}
+                        </div>
+                        
+                    </div>
+                   
                 </Link>
             ))}
             
