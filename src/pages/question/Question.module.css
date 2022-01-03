@@ -122,7 +122,7 @@
     font-size: large;
     max-width: 910px;
     word-wrap: break-word;
-    background-color: #f5ffff;
+    background-color: #f5fafa;
     border-radius: 5px;
     padding: 10px;
 }
@@ -176,4 +176,15 @@
 .tag:hover{
     cursor: pointer;
     color: rgb(176, 255, 225);
+}
+
+.tagicon{
+    font-size: 25px;
+    margin-right: 20px;
+    color: rgb(19, 89, 110);
+}
+
+.peopleIcon{
+    font-size: 22px;
+    padding-top: 5px;
 }

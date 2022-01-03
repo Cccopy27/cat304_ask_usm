@@ -9,7 +9,7 @@ import {storage} from "../../firebase/config";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import Select from "react-select";
 import { useGlobalState } from "state-pool";
-
+import {AiOutlineTag,AiOutlineUser} from "react-icons/ai";
 export default function EditQuestion({document,editMode,setEditMode}) {
     
     const {updateDocument,response} = useFirestore(["questions"]);
@@ -117,12 +117,18 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                         allowOutsideClick: false,
                     })
                     Swal.showLoading();
+
+                let tagList=[];
+                //get tag value
+                tag.forEach(item=>{
+                    tagList.push(item.value);
+                })
                 
                 // user input as object
                 const question_object={
                     question_title: title,
                     question_description: des,
-                    question_tag: tag,
+                    question_tag: tagList,
                     question_image_name:imageName,
                     question_image_url:"",
                     edited_at: Timestamp.now(),
@@ -222,6 +228,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                                         className={styles.question_title}
                                         ref={textAreaTitle}
                                         // type="text"
+                                        maxLength={74}
                                         required
                                         onChange={e=>{settitle(e.target.value)}}
                                         value={title}
@@ -241,7 +248,9 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                                         </p>}
                                         
                                         <p className={styles.question_subTitle_author}>
-                                            Created by: {document.created_by}
+                                            <AiOutlineUser className={styles.peopleIcon}/>
+                                            
+                                            {document.created_by}
                                         </p>
                                     </div>
                                     <div className={styles.question_subTitle_right}>
@@ -259,7 +268,9 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                             
                     <div className={styles.question_bottom}>
                         <div className={styles.tag_container}>
-                            <p className={styles.tag_name}>Tags: </p>
+                            <p className={styles.tag_name}>
+                                <AiOutlineTag className={styles.tagicon}/>
+                            </p>
                             <Select
                                 className={styles.tag}
                                 onChange={(option)=>settag(option)}

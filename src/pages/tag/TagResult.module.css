@@ -1,0 +1,51 @@
+.popular_tags{
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
+}
+
+.tags{
+    padding: 10px;
+    margin: 20px;
+    width: 225px;
+    height: 100px;
+    background-color: rgb(236, 236, 176);
+    text-decoration: none;
+    border: 1px solid rgba(99, 99, 99, 0.2);
+    border-radius: 15px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.tags:hover{
+    border: 1px solid rgb(92, 92, 9);
+    color: rgb(157, 165, 172);
+}
+
+.tag_value{
+    font-size: 20px;
+    margin: 0px;
+    color: rgb(102, 102, 102);
+
+}
+
+.tag_name{
+    color: rgb(102, 102, 102);
+
+}
+
+.result_header{
+    font-weight: 400;
+    font-size: 25px;
+    margin-left: 10px;
+    color: #9DAAF2;
+    
+}
+
+.question_title{
+    margin-bottom: 10px;
+}
+
+.Tagspan{
+    font-weight: 400;
+    font-size: 20px;
+}
