@@ -36,7 +36,7 @@ export default function QuestionFilter({setFilter}) {
         
         <div className={styles.question_header}>
             <div className={styles.question_filter}>
-                <h2 className={styles.question_header_title}>All Questions</h2>
+                <h2 className={styles.question_header_title}>All Results</h2>
                 {/* <div className={styles.question_tags}>Tags</div> */}
 
                 <div className={styles.question_sort}>
@@ -48,7 +48,7 @@ export default function QuestionFilter({setFilter}) {
                 </div>
             </div>
             <div className={styles.question_add}>
-                <button className={styles.question_add_btn} onClick={handleAddQuestion}>Ask Something</button>
+                <button className={styles.question_add_btn} onClick={handleAddQuestion}>Add Something</button>
             </div>
 
         </div>

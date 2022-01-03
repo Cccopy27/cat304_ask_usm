@@ -12,6 +12,7 @@ import EditQuestion from "./EditQuestion";
 import AddComment from "../comment/AddComment";
 import CommentSection from "../comment/CommentSection";
 import { writeBatch,doc,collection, getDocs } from "firebase/firestore";
+import {AiOutlineTag,AiOutlineUser} from "react-icons/ai";
 
 export default function Question() {
     // get id from param
@@ -150,7 +151,8 @@ export default function Question() {
                                     }
                                     
                                     <p className={styles.question_subTitle_author}>
-                                        Created by: {document.created_by}
+                                        <AiOutlineUser className={styles.peopleIcon}/>
+                                        {document.created_by}
                                     </p>
                                 </div>
                                 <div className={styles.question_subTitle_right}>
@@ -164,7 +166,9 @@ export default function Question() {
                     
                     <div className={styles.question_bottom}>
                         <div className={styles.question_tag_big_container}>
-                        <p className={styles.question_subTitle_tags}>Tags:</p>
+                        <p className={styles.question_subTitle_tags}>
+                            <AiOutlineTag className={styles.tagicon}/>
+                        </p>
                             <div className={styles.question_tag_container}>
                             {document.question_tag.map(tag=>(
                             <span className={styles.tag} key={tag}>{tag}</span>

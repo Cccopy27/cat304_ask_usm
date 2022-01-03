@@ -6,7 +6,7 @@ export default function QuestionList({questions}) {
     
     return (
         <div className={styles.question_list}>
-            {questions.length === 0 && <p>No questions available!</p>}
+            {questions.length === 0 && <p>No result...</p>}
             {questions.map(question => (
                 <Link className={styles.question_item}to={`/question/${question.id}`} key={question.id}>
                     <div className={styles.left_part}>

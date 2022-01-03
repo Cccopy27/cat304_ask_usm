@@ -147,3 +147,15 @@
 .tag{
     flex: 15;
 }
+
+.tagicon{
+    font-size: 25px;
+    margin-right: 20px;
+    color: rgb(19, 89, 110);
+
+}
+
+.peopleIcon{
+    font-size: 22px;
+    padding-top: 5px;
+}

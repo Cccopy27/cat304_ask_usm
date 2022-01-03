@@ -114,14 +114,15 @@ export default function AddQuestion() {
             
             <div className={styles.add_question_form_container}>
                 <div className={styles.add_question_header}>
-                    <p className={styles.add_question_title_header}>Ask something</p>
+                    <p className={styles.add_question_title_header}>Add something</p>
                 </div>
                 <form className={styles.add_question_form} ref={formInput}>
                     <label className={styles.add_question_title}>
-                        <span className={styles.span_title}>Question title:</span>
+                        <span className={styles.span_title}>Title:</span>
                         <input
                         required
                         // ref={titleRef}
+                        maxLength={74}
                         type="text"
                         className={`${styles.input_style} ${styles.add_title_input}`}
                         onChange={e => {settitle(e.target.value)}}
@@ -131,7 +132,7 @@ export default function AddQuestion() {
                     </label>
 
                     <label className={styles.add_question_tag}>
-                        <span className={styles.span_title}>Question Tags:</span>
+                        <span className={styles.span_title}>Tags:</span>
                         <Select
                             onChange={(option)=>settag(option)}
                             options={categories}
@@ -141,7 +142,7 @@ export default function AddQuestion() {
                     </label>
 
                     <label className={styles.add_question_des}>
-                        <span className={styles.span_title}>Question description:</span>
+                        <span className={styles.span_title}>Description:</span>
                         <textarea 
                         className={`${styles.add_question_des_input} ${styles.input_style}`}
                         required
