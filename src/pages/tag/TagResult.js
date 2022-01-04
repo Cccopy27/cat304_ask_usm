@@ -67,7 +67,7 @@ export default function TagResult({tag,document}) {
             {!popularMode && 
                 <div >
                     <div className={styles.question_title}>
-                        Results related to  
+                        {filterQuestion.length} Results related to  
                         <span className={styles.result_header}>{resultString}</span>
                     </div>
                     

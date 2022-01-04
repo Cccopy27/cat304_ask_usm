@@ -9,6 +9,6 @@
 .content{
     grid-area: content;
     /* height: auto; */
-    height: 2000px;
+    /* height: 2000px; */
     /* overflow: auto; */
 }
