@@ -60,7 +60,6 @@ export default function TagResult({tag,document}) {
                             <Link className={styles.tags}to={`/tag/${item.value}`} key={item.value}>
                                 <p className={styles.tag_value}>{item.value}</p>
                                 <p className={styles.tag_name}>Results: </p>
-                                <p className={styles.tag_name}>Views: </p>
                             </Link>
                         ))}
                     </div>
