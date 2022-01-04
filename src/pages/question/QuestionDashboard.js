@@ -25,7 +25,7 @@ export default function QuestionDashboard () {
     useEffect(()=>{
 
         // fetchRef.current;
-        console.log(filter);
+        // console.log(filter);
 
         // fetch data again with sort by filter
         const getDataFilter=async()=>{

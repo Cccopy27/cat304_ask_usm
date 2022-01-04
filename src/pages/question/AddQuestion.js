@@ -59,7 +59,7 @@ export default function AddQuestion() {
                         edited_at:"",
                         created_by:""
                     }
-                    console.log(question_object);
+                    // console.log(question_object);
                     //add to database
                     await addDocument(question_object,image,"question");
                     setloading(false);

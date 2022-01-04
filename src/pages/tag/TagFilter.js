@@ -23,7 +23,7 @@ export default function TagFilter({setTag,tag, setFilter}) {
     // output result
     const handleSearch = (e)=>{
         e.preventDefault();
-        console.log(tag);
+        // console.log(tag);
         //check valid
         if(tempTag.length !== 0){
             let paramURL = "/tag/";

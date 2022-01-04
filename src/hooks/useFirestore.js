@@ -83,7 +83,7 @@ export const useFirestore=(collections)=>{
                             // update doc imgURL
                             updateDoc(doc(collection_Ref,addedDocument.id), changes(imgURL))
                             .then(()=>{
-                                console.log(imgURL);
+                                // console.log(imgURL);
 
                             })
                         })
@@ -120,6 +120,7 @@ export const useFirestore=(collections)=>{
     // if put into question storage, pass string storage
     const updateDocument= async(id, updates, image, uploadPathName)=>{
         dispatch({type: "IS_PENDING"});
+        console.log(updates);
 
         try{
             const updatedoc = await updateDoc(doc(collection_Ref,id), updates);
@@ -138,7 +139,7 @@ export const useFirestore=(collections)=>{
                         }
                     }  
                 }
-                console.log("enter");
+                // console.log("enter");
                 // convert filelist to array to user array method
                 const image_arr = Array.from(image);
                 // upload photo to storage firebase to get its photo URL

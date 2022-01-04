@@ -36,7 +36,13 @@ export default function EditQuestion({document,editMode,setEditMode}) {
             if(document){
                 settitle(document.question_title);
                 setdes(document.question_description);
-                settag(document.question_tag); 
+                // settag(document.question_tag); 
+                // settag([]);
+                let tempTagArr = [];
+                document.question_tag.forEach(tagsss=>{
+                    tempTagArr.push({label:tagsss, value:tagsss})
+                })
+                settag(tempTagArr);
                 // get picture
                 if( document.question_image_url){
                     await document.question_image_url.forEach(item=>{
@@ -67,7 +73,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
             tempArray2.push(tempObj);
         });
         setDefaultSelector(tempArray2);
-        
+
     }, [document,editMode]);
     
     // textarea grow
@@ -99,6 +105,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
         setImageURL(newImageURLs);
     },[image]);
 
+
     // save changes
     const handleSave=(e)=>{
         e.preventDefault();
@@ -120,13 +127,15 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                     Swal.showLoading();
 
                 let tagList=[];
-                //get tag value
+
                 tag.forEach(item=>{
                     tagList.push(item.value);
                 })
+
                 
                 // user input as object
                 const question_object={
+                    // hihi:"hih",
                     question_title: title,
                     question_description: des,
                     question_tag: tagList,
@@ -157,9 +166,10 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                     })
                 }
                 
+                console.log(question_object);
     
                 //update  database
-                await updateDocument(document.id,question_object,image,"question");
+                await updateDocument(document.id,question_object,image,"questions");
                 setLoading(false);
     
                 if(!response.error){
@@ -174,7 +184,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                     setEditMode(false);
                 }
                 else{
-                    console.log("something wrong");
+                    console.log(response.error);
                     Swal.fire({
                         icon:"error",
                         title:"Something wrong",
