@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import styles from "./QuestionList.module.css";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import ReactPaginate from 'react-paginate';
 
 export default function QuestionList({questions}) {
     
