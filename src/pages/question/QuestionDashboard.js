@@ -82,9 +82,9 @@ export default function QuestionDashboard () {
                 {/* {error && <p>Something went wrong... {error}</p>} */}
                 {!filterDoc && <p>Loading...</p>}
                 {!defaultMode && filterDoc && 
-                <div>
+                <div className={styles.search_bar}>
                     Search result for  
-                    <span> {result}</span>
+                    <span className={styles.result}> {result}</span>
                 </div>
                     }
                 {filterDoc && <QuestionList questions={filterDoc}/>}

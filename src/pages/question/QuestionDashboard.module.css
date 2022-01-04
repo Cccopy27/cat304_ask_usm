@@ -11,3 +11,15 @@
     margin-left: 100px;
     margin-right: 100px;
 }
+
+.search_bar{
+    /* margin-top: 5px; */
+    margin-bottom: 10px;
+}
+
+.result{
+    font-weight: 400;
+    font-size: 25px;
+    margin-left: 10px;
+    color: #9DAAF2;
+}

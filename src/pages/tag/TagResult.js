@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import QuestionList from "../../components/QuestionList";
 import { useCollection } from "../../hooks/useCollection";
 import { useGlobalState } from "state-pool";
+import styles from "./TagResult.module.css";
 
 export default function TagResult({tag,document}) {
     const [popularMode, setPopularMode] = useState(true);
@@ -46,22 +47,30 @@ export default function TagResult({tag,document}) {
     }
     
     return (
-        <div className="result_container">
+        <div className={styles.result_container}>
             {popularMode && 
-                <div className="result_header">
-                Popular tags...
-                    <div className="popular_tags">
+                <div>
+                    <span className={styles.Tagspan}>
+                        Popular tags...
+                    </span>
+                    <div className={styles.popular_tags}>
                         {categories.map((item)=>(
-                            <Link to={`/tag/${item.value}`} key={item.value}>
-                                <div>{item.value}</div>
+                            <Link className={styles.tags}to={`/tag/${item.value}`} key={item.value}>
+                                <p className={styles.tag_value}>{item.value}</p>
+                                <p className={styles.tag_name}>Results: </p>
+                                <p className={styles.tag_name}>Views: </p>
                             </Link>
                         ))}
                     </div>
                 </div>
             }
             {!popularMode && 
-                <div className="result_header">
-                    Question related to {resultString}
+                <div >
+                    <div className={styles.question_title}>
+                        Results related to  
+                        <span className={styles.result_header}>{resultString}</span>
+                    </div>
+                    
                     <QuestionList questions={filterQuestion}/>
                 </div>
             }

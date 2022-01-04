@@ -102,7 +102,7 @@ export default function TagFilter({setTag,tag, setFilter}) {
             </div>
             
             <div className={styles.question_add}>
-                <button className={styles.question_add_btn} onClick={handleAddQuestion} >Ask Something</button>
+                <button className={styles.question_add_btn} onClick={handleAddQuestion} >Add Something</button>
             </div>
         </div>
     )
