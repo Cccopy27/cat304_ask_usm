@@ -83,7 +83,7 @@ export default function QuestionDashboard () {
                 {!filterDoc && <p>Loading...</p>}
                 {!defaultMode && filterDoc && 
                 <div className={styles.search_bar}>
-                    Search result for  
+                   {filterDoc.length} Search result for  
                     <span className={styles.result}> {result}</span>
                 </div>
                     }
