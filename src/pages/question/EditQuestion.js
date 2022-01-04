@@ -135,7 +135,6 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                 
                 // user input as object
                 const question_object={
-                    // hihi:"hih",
                     question_title: title,
                     question_description: des,
                     question_tag: tagList,

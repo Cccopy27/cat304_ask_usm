@@ -156,7 +156,7 @@
     margin: 5px 5px;
 }
 
-.question_subTitle_time, .question_subTitle_author, .question_subTitle_tags, .question_subTitle_edit{
+.question_subTitle_time, .question_subTitle_author, .question_subTitle_tags, .question_subTitle_edit,.view{
     font-weight: 300;
 }
 
@@ -188,4 +188,20 @@
 .peopleIcon{
     font-size: 22px;
     padding-top: 5px;
+}
+
+.question_view{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: 300;
+    margin-right: 20px;
+    min-width: 100px;
+
+}
+
+.eye{
+    color: rgb(19, 89, 110);
+    font-size: 20px;
+    margin-right: 5px;
 }

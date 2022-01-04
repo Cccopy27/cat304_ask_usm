@@ -12,20 +12,43 @@ import EditQuestion from "./EditQuestion";
 import AddComment from "../comment/AddComment";
 import CommentSection from "../comment/CommentSection";
 import { writeBatch,doc,collection, getDocs } from "firebase/firestore";
-import {AiOutlineTag,AiOutlineUser} from "react-icons/ai";
+import {AiOutlineTag,AiOutlineUser,AiOutlineEye} from "react-icons/ai";
+import { increment } from "firebase/firestore";
 
 export default function Question() {
     // get id from param
     const {id} = useParams();
-    const {error, document} = useDocument("questions",id);
+    const [change,setChange] = useState(0);
+    const {error, document} = useDocument("questions",id,setChange);
     const {deleteDocument } = useFirestore(["questions"]);
     const navigate = useNavigate();
     // const [loading,setLoading] = useState(false);
     const [editMode, setEditMode] = useState(false);
+    const {updateDocument,response} = useFirestore(["questions"]);
 
     useEffect(() => {
-        window.scrollTo(0,0);  
-    }, [document]);
+        // only update view 1
+        if(document && change === 1 && !localStorage.getItem(document.id)){
+            // console.log(change,"document");
+            updateDocument(document.id,{view:increment(1)});
+            if(response.error){
+                console.log(response.error);
+            }
+
+            // update local storage to prevent user reload page to increase view
+            // only after 30s it will increase view again
+            localStorage.setItem(document.id,true);
+            const clearStorage = () =>{
+                localStorage.removeItem(document.id);
+            }
+            setTimeout(clearStorage, 30000);
+
+        } 
+    }, [document,change]);
+
+    useEffect(()=>{
+        window.scrollTo(0,0); 
+    },[])
 
     // delete question
     const handleDelete=(e)=>{
@@ -140,6 +163,11 @@ export default function Question() {
                             </div>
                             <div className={styles.question_subTitle}>
                                 <div className={styles.question_subTitle_left}>
+                                    <p className={styles.question_view}>
+                                        <AiOutlineEye className={styles.eye}/>
+                                        {document.view}
+                                        
+                                    </p>
                                     <p className={styles.question_subTitle_time}>  
                                         Added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
                                     </p>

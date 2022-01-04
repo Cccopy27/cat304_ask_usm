@@ -18,7 +18,7 @@ export default function QuestionFilter({setFilter}) {
                 setFilter(["added_at","desc"]);
                 break;
             case "View": 
-                // setFilter(["added_at","desc"]);
+                setFilter(["view","desc"]);
                 break;
             case "Rating":
                 

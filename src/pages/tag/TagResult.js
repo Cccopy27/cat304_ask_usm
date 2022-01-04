@@ -4,11 +4,13 @@ import QuestionList from "../../components/QuestionList";
 import { useCollection } from "../../hooks/useCollection";
 import { useGlobalState } from "state-pool";
 import styles from "./TagResult.module.css";
+import { useFirestore } from "../../hooks/useFirestore";
 
 export default function TagResult({tag,document}) {
     const [popularMode, setPopularMode] = useState(true);
     const [resultString, setresultString] = useState("");
     const [categories, setCategories] = useGlobalState("tag");
+    // const [document,response] = useDocument("record");
     // const [filterDoc, setFilterDoc] = useState([]);
     
     useEffect(()=>{
@@ -58,7 +60,6 @@ export default function TagResult({tag,document}) {
                             <Link className={styles.tags}to={`/tag/${item.value}`} key={item.value}>
                                 <p className={styles.tag_value}>{item.value}</p>
                                 <p className={styles.tag_name}>Results: </p>
-                                <p className={styles.tag_name}>Views: </p>
                             </Link>
                         ))}
                     </div>

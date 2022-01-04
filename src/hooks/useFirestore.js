@@ -120,7 +120,6 @@ export const useFirestore=(collections)=>{
     // if put into question storage, pass string storage
     const updateDocument= async(id, updates, image, uploadPathName)=>{
         dispatch({type: "IS_PENDING"});
-        console.log(updates);
 
         try{
             const updatedoc = await updateDoc(doc(collection_Ref,id), updates);

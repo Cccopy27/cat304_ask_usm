@@ -7,7 +7,8 @@ import { collection,doc,onSnapshot } from "firebase/firestore";
 // pass [ questions,"questions_id",comment]
 
 // id = id of document u wan to fetch
-export const useDocument =(collections,id)=>{
+// change used to detect auth changing (optional)
+export const useDocument =(collections,id,setChange)=>{
     const [document, setDocument] = useState(null);
     const [error, setError] = useState(null);
 
@@ -17,6 +18,7 @@ export const useDocument =(collections,id)=>{
 
         // real time listener
         const unsub = onSnapshot(ref, (snapshot)=>{
+            setChange(prevCount => prevCount + 1);
             if(snapshot.data()){
                 setDocument({...snapshot.data(),id: snapshot.id});
                 setError(null);
