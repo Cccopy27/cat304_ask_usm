@@ -35,7 +35,8 @@ export default function EditQuestion({document,editMode,setEditMode}) {
         const getData=async()=>{
             if(document){
                 settitle(document.question_title);
-                setdes(document.question_description); 
+                setdes(document.question_description);
+                settag(document.question_tag); 
                 // get picture
                 if( document.question_image_url){
                     await document.question_image_url.forEach(item=>{
