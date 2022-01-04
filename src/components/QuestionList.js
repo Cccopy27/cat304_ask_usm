@@ -4,7 +4,10 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import ReactPaginate from 'react-paginate';
 import { useState, useEffect } from "react";
 
+
 export default function QuestionList({questions}) {
+
+    // update view when user click in
     const Items=({questions})=>{
         return(
             <div className={styles.question_list}>

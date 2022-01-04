@@ -1,11 +1,12 @@
 import { useEffect, useState,useRef } from "react";
-import {Timestamp} from "firebase/firestore";
+import {Timestamp, increment,doc,writeBatch} from "firebase/firestore";
 import {useFirestore} from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import styles from "./AddQuestion.module.css";
 import Select from "react-select";
 import { useGlobalState } from "state-pool";
+import {db} from "../../firebase/config";
 
 export default function AddQuestion() {
     const [title, settitle] = useState("");
@@ -22,6 +23,7 @@ export default function AddQuestion() {
     const {addDocument, response} = useFirestore(["questions"]);
     const navigate = useNavigate();
     const [categories, setCategories] = useGlobalState("tag");
+    const [batchErr,setBatchErr] = useState(false);
 
     // when user submit the form
     const handleSubmit=(e)=>{
@@ -41,10 +43,14 @@ export default function AddQuestion() {
                         allowOutsideClick: false,
                     })
                     Swal.showLoading();
+
+                    // const tagObj={}
+
                     let tagList=[];
                     //get tag value
                     tag.forEach(item=>{
                         tagList.push(item.value);
+                        // tagObj[item.value] = increment(1)
                     })
                 
                     // user input as object
@@ -60,12 +66,25 @@ export default function AddQuestion() {
                         created_by:""
                     }
                     // console.log(question_object);
+
+
                     //add to database
                     await addDocument(question_object,image,"question");
-                    setloading(false);
-                    
+
+                    // update tag amount question
+                    const batch = writeBatch(db);
+
+                    tagList.forEach(item=>{
+                        batch.update(doc(db,"record",item),{question:increment(1)})
+                    })
+                    await batch.commit().then(
+                        setloading(false)
+                    ).catch(err=>{
+                        setBatchErr(err);
+                    });
+
                     // no error
-                    if(!response.error){
+                    if(!response.error && !batchErr){
                         settag([]);
                         settitle("");
                         setdes("");
