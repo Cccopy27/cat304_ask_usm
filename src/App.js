@@ -9,10 +9,8 @@ import Question from './pages/question/Question';
 import TagDashboard from './pages/tag/TagDashboard';
 import TagResult from './pages/tag/TagResult';
 import {store} from "state-pool";
-// update tag purpose
-import { db } from "../src/firebase/config"
-import { writeBatch,doc } from "firebase/firestore";
-
+import { updateDoc, doc,collection } from 'firebase/firestore';
+import { db } from './firebase/config';
 // categories
 const categories = [
   {value: "MyCsd", label: "MyCsd"},
@@ -60,8 +58,6 @@ const categories = [
   {value: "Counselling", label: "Counselling"},
   {value: "Gossip", label: "Gossip"},
 
-  {value: "RST", label: "RST"},
-
   {value: "Club", label: "Club"},
   {value: "News", label: "News"},
 
@@ -77,16 +73,18 @@ const categories = [
   
 ];
 // update tag purpose // do not delete
+// new categories
+// const newCategories = [
 
-// const batch = writeBatch (db);
-
-// categories.forEach(category=>{
-//   const tagRef = doc(db, "tag",category.value);
-//   batch.set(tagRef, {question_amount:0});
+// ]
+// const newList = {}
+// newCategories.forEach(item=>{
+//   const newValue = item.value;
+//   newList[newValue] = 0;
 // })
 
-// // Commit the batch
-// batch.commit();
+// updateDoc(doc(collection(db,"record"),"tag"), newList);
+
 
 // question order list
 const orderList=[

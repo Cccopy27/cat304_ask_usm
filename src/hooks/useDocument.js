@@ -18,7 +18,10 @@ export const useDocument =(collections,id,setChange)=>{
 
         // real time listener
         const unsub = onSnapshot(ref, (snapshot)=>{
-            setChange(prevCount => prevCount + 1);
+            if(setChange !== undefined){
+                setChange(prevCount => prevCount + 1);
+
+            }
             if(snapshot.data()){
                 setDocument({...snapshot.data(),id: snapshot.id});
                 setError(null);
