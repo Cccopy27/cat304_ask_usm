@@ -21,6 +21,7 @@ export default function AddQuestion() {
     const titleRef = useRef();
     const desRef = useRef();
     const {addDocument, response} = useFirestore(["questions"]);
+    const {updateDocument} = useFirestore(["record"]);
     const navigate = useNavigate();
     const [categories, setCategories] = useGlobalState("tag");
     const [batchErr,setBatchErr] = useState(false);
@@ -70,18 +71,15 @@ export default function AddQuestion() {
 
                     //add to database
                     await addDocument(question_object,image,"question");
-
                     // update tag amount question
-                    const batch = writeBatch(db);
+
+
+                    const updateObj = {};
 
                     tagList.forEach(item=>{
-                        batch.update(doc(db,"record",item),{question:increment(1)})
+                        updateObj[item] = increment(1);
                     })
-                    await batch.commit().then(
-                        setloading(false)
-                    ).catch(err=>{
-                        setBatchErr(err);
-                    });
+                    await updateDocument("tag",updateObj);
 
                     // no error
                     if(!response.error && !batchErr){

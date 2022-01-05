@@ -5,13 +5,38 @@ import { useCollection } from "../../hooks/useCollection";
 import { useGlobalState } from "state-pool";
 import styles from "./TagResult.module.css";
 import { useFirestore } from "../../hooks/useFirestore";
+import { useDocument } from "../../hooks/useDocument";
 
 export default function TagResult({tag,document}) {
     const [popularMode, setPopularMode] = useState(true);
     const [resultString, setresultString] = useState("");
-    const [categories, setCategories] = useGlobalState("tag");
-    // const [document,response] = useDocument("record");
+    const [categories, setCategories] = useState([]);
+    const {document:document2, error} = useDocument("record","tag");
+    
     // const [filterDoc, setFilterDoc] = useState([]);
+    
+    // display popular tag
+    useEffect(()=>{
+        // categories.forEach(tagName=>{
+        //     const dynamicVar = 
+        //     console.log(document2[tagName]);
+        // })
+        const allTagArr = [];
+        if(document2){
+            delete document2.id;
+            for(const [key,value]of Object.entries(document2)){
+                // console.log(key,value);
+                allTagArr.push({tagName:key, value:value})
+            }
+            allTagArr.sort((a,b)=>{
+                return b.value - a.value;
+            })
+            setCategories(allTagArr.slice(0,18));
+            console.log(categories);
+        }
+        
+
+    },[document2])
     
     useEffect(()=>{
         // change mode based on tag
@@ -56,10 +81,10 @@ export default function TagResult({tag,document}) {
                         Popular tags...
                     </span>
                     <div className={styles.popular_tags}>
-                        {categories.map((item)=>(
-                            <Link className={styles.tags}to={`/tag/${item.value}`} key={item.value}>
-                                <p className={styles.tag_value}>{item.value}</p>
-                                <p className={styles.tag_name}>Results: </p>
+                        {categories&&categories.map((item)=>(
+                            <Link className={styles.tags}to={`/tag/${item.tagName}`} key={item.tagName}>
+                                <p className={styles.tag_value}>{item.tagName}</p>
+                                <p className={styles.tag_name}>Results:{item.value} </p>
                             </Link>
                         ))}
                     </div>

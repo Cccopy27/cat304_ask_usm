@@ -2,7 +2,7 @@ import styles from "./EditQuestion.module.css";
 import { useEffect, useState,useRef } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
-import {Timestamp} from "firebase/firestore";
+import {increment, Timestamp} from "firebase/firestore";
 import {useFirestore} from "../../hooks/useFirestore";
 import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
@@ -10,9 +10,13 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import Select from "react-select";
 import { useGlobalState } from "state-pool";
 import {AiOutlineTag,AiOutlineUser} from "react-icons/ai";
+import { db } from "../../firebase/config"
+import { writeBatch,doc } from "firebase/firestore";
+
 export default function EditQuestion({document,editMode,setEditMode}) {
     
     const {updateDocument,response} = useFirestore(["questions"]);
+    const {updateDocument:updateDocument2, response:response2} = useFirestore(["record"]);
     const [loading,setLoading] = useState(false);
     const [title, settitle] = useState("");
     const [des, setdes] = useState(""); 
@@ -20,6 +24,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
     const [image, setimage] = useState([]);
     const [imageURL,setImageURL] = useState([]);
     const [imageName,setImageName] = useState([]);
+    const [oldTag,setOldTag] = useState([]);
     // const [error, setError] = useState(false);
     let tempArray =[];
     const formInput = useRef();
@@ -39,9 +44,12 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                 // settag(document.question_tag); 
                 // settag([]);
                 let tempTagArr = [];
+                let tempTagArr2 = [];
                 document.question_tag.forEach(tagsss=>{
-                    tempTagArr.push({label:tagsss, value:tagsss})
+                    tempTagArr.push({label:tagsss, value:tagsss});
+                    tempTagArr2.push(tagsss);
                 })
+                setOldTag(tempTagArr2);
                 settag(tempTagArr);
                 // get picture
                 if( document.question_image_url){
@@ -164,12 +172,30 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                         });
                     })
                 }
-                
-                console.log(question_object);
     
                 //update  database
                 await updateDocument(document.id,question_object,image,"questions");
+
+                //update tag
+                // get the tag tat need to increase
+                const tagIncrease = tagList.filter(newTag => !oldTag.includes(newTag));
+                const tagDecrease = oldTag.filter(old => !tagList.includes(old));
+                console.log(tagIncrease,tagDecrease);
+                const updateObj = {};
+                tagIncrease.forEach(item=>{
+                    updateObj[item] = increment(1);
+                })
+                tagDecrease.forEach(item=>{
+                    updateObj[item] = increment(-1);
+                })
+                console.log(updateObj);
+                
+                await updateDocument2("tag",updateObj);
+                if(response2.error){
+                    console.log(response2.error);
+                }
                 setLoading(false);
+                setOldTag();
     
                 if(!response.error){
                     settag([]);

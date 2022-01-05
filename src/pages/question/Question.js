@@ -25,6 +25,8 @@ export default function Question() {
     // const [loading,setLoading] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const {updateDocument,response} = useFirestore(["questions"]);
+    const {updateDocument:updateDocument2} = useFirestore(["record"]);
+
 
     useEffect(() => {
         // only update view 1
@@ -89,7 +91,12 @@ export default function Question() {
                 })
                 const tempKey = document.id;
                 await deleteDocument(document.id);
+                const updateObj = {}
 
+                document.question_tag.forEach(tag=>{
+                    updateObj[tag] = increment(-1);
+                })
+                await updateDocument2("tag",updateObj);
                 // delete subCollection
                 const commentList = await getDocs(collection(db,"questions",tempKey,"comment"));
                 // batch declare
