@@ -11,6 +11,7 @@ import TagResult from './pages/tag/TagResult';
 import {store} from "state-pool";
 import { updateDoc, doc,collection } from 'firebase/firestore';
 import { db } from './firebase/config';
+import ContactUs from './components/ContactUs';
 // categories
 const categories = [
   {value: "MyCsd", label: "MyCsd"},
@@ -112,7 +113,7 @@ function App() {
             <Route path="/question/:id" element={<Question/>}/>
             <Route path="/tag/:result" element={<TagDashboard/>}/>
             <Route path="/question/search/:result" element={<QuestionDashboard/>}/>
-
+            <Route path="/contactus" element={<ContactUs/>}/>
       
           </Routes>
         </div>

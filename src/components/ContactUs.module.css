@@ -1,0 +1,139 @@
+.contact_us_container{
+    /* height: 800px; */
+    height: calc(100vh - 50px);
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: column;
+}
+
+.contact_form_container{
+    margin-top: 15px;
+    margin-left: 100px;
+    margin-right: 100px;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.contact_form_header{
+    margin: 20px 0px 0px 25px;
+
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.add_contact_title_header{
+    font-weight: 400;
+    font-size: 30px;
+    flex: 1;
+}
+
+
+.add_contact_form{
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    /* height: 800px; */
+    padding: 25px 25px;
+}
+
+.add_form_name_email{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.add_form_name{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.add_form_email{
+    margin-left: 50px;
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.add_form_subject{
+    margin-top: 40px;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.add_form_message{
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+}
+
+.span_title{
+    font-size: 20px;
+    font-family: "Roboto Slab", serif !important;
+    /* font-family: 'Courier New', Courier, monospace !important; */
+}
+
+.input_style{
+    font-weight: 300;
+    margin-top: 10px;
+    /* background-color: aqua; */
+    /* margin-left: 15px; */
+    /* width: 70%; */
+    font-size: 20px;
+    border: none;
+    /* width: 770px !important; */
+    /* padding: 10px 10px; */
+    background-color: transparent;
+    border-bottom: 1px solid rgb(165, 165, 165);
+}
+
+.input_style:focus{
+    outline: none;
+    border-bottom: 1px solid rgb(80, 156, 255);
+}
+
+.add_name_input,.add_email_input,.add_subject_input,.add_message_input{
+    padding: 0px;
+}
+
+.add_message_input{
+    margin: 10px 0px 0px 0px !important;
+    /* margin-top: 10px;
+    margin-left: 0px !important;
+    margin-right: 10px !important; */
+    /* padding: 10px; */
+    min-height: 150px;
+}
+
+.submit_btn{
+    align-self: center;
+    width: 400px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+
+.submit_btn{
+    align-self: center;
+    padding: 10px;
+    font-size: 17px;
+    border-radius: 20px;
+    width: 150px;
+    height: 50px;
+    background-color: #1A2238;
+    color: white;
+}
+
+.submit_btn:hover{
+    cursor: pointer;
+    color: #9DAAF2;
+}
