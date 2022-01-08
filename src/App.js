@@ -82,13 +82,13 @@ const categories = [
   {value: "Course", label: "Course"},
   {value: "Attendance", label: "Attendance"},
   {value: "Exam Results", label: "Exam Results"},
+  {value: "Relationship", label: "Relationship"},
  
 ];
 // update tag purpose // do not delete
 // new categories
 
 // const newCategories = [
-
 // ]
 // let newList = {};
 // newCategories.forEach(item=>{
