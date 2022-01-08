@@ -71,14 +71,24 @@ const categories = [
   {value: "School of Physics", label: "School of Physics"},
   {value: "School of Language", label: "School of Language"},
   {value: "School of Social Science", label: "School of Social Science"},
-  
+  {value: "Lost&Found", label: "Lost&Found"},
+  {value: "Senior", label: "Senior"},
+  {value: "Finance", label: "Finance"},
+  {value: "Vaccine", label: "Vaccine"},
+  {value: "Friend", label: "Friend"},
+  {value: "Course", label: "Course"},
+  {value: "Attendance", label: "Attendance"},
+  {value: "Exam Results", label: "Exam Results"},
 ];
 // update tag purpose // do not delete
 // new categories
 // const newCategories = [
 
 // ]
-// const newList = {}
+// const newCategories = [
+  
+// ]
+// let newList = {};
 // newCategories.forEach(item=>{
 //   const newValue = item.value;
 //   newList[newValue] = 0;
