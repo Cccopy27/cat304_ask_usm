@@ -12,6 +12,7 @@ import {store} from "state-pool";
 import { updateDoc, doc,collection } from 'firebase/firestore';
 import { db } from './firebase/config';
 import ContactUs from './components/ContactUs';
+import AdminDashboard from "./admin/AdminDashboard";
 // categories
 const categories = [
   {value: "MyCsd", label: "MyCsd"},
@@ -31,7 +32,9 @@ const categories = [
   {value: "LockDown Browser", label: "LockDown Browser"},
   {value: "Lecture", label: "Lecture"},
   {value: "Lecturer", label: "Lecturer"},
-
+  {value: "PHD", label: "PHD"},
+  {value: "Master", label: "Master"},
+  {value: "English", label: "English"},
 
   {value: "CAT Bus", label: "CAT Bus"},
   {value: "Bus A,B,C,D", label: "Bus A,B,C,D"},
@@ -79,6 +82,7 @@ const categories = [
   {value: "Course", label: "Course"},
   {value: "Attendance", label: "Attendance"},
   {value: "Exam Results", label: "Exam Results"},
+ 
 ];
 // update tag purpose // do not delete
 // new categories
@@ -122,6 +126,7 @@ function App() {
             <Route path="/tag/:result" element={<TagDashboard/>}/>
             <Route path="/question/search/:result" element={<QuestionDashboard/>}/>
             <Route path="/contactus" element={<ContactUs/>}/>
+            <Route path="/admin" element={<AdminDashboard/>}/>
       
           </Routes>
         </div>

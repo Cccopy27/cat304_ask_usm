@@ -23,7 +23,10 @@ export default function Navbar() {
                 </li>
                 <li className={styles.contactus}>
                     <NavLink to = "/contactus">Contact us</NavLink>
-                    </li>
+                </li>
+                <li className={styles.admin}>
+                    <NavLink to = "/admin">Admin</NavLink>
+                </li>
                 <li className={styles.search_container}>
                     <form onSubmit={handleSearch}>
                         <label>
