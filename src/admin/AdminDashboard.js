@@ -9,7 +9,7 @@ export default function AdminDashboard() {
     const {deleteDocument, response} = useFirestore(["contactForm"]);
     const [mode, setMode] = useState("Contact");
 
-
+    
     const handleContactCLick = (e) =>{
         e.preventDefault();
         setMode("Contact");
