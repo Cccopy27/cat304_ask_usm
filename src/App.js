@@ -32,9 +32,6 @@ const categories = [
   {value: "LockDown Browser", label: "LockDown Browser"},
   {value: "Lecture", label: "Lecture"},
   {value: "Lecturer", label: "Lecturer"},
-  {value: "PHD", label: "PHD"},
-  {value: "Master", label: "Master"},
-  {value: "English", label: "English"},
 
   {value: "CAT Bus", label: "CAT Bus"},
   {value: "Bus A,B,C,D", label: "Bus A,B,C,D"},
