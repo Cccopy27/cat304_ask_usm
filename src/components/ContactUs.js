@@ -2,6 +2,7 @@ import styles from "./ContactUs.module.css"
 import { useRef, useState } from "react"
 import Swal from "sweetalert2";
 import { useFirestore } from "../hooks/useFirestore";
+import { Timestamp } from "firebase/firestore";
 
 export default function ContactUs() {
     const formRef = useRef();
@@ -34,7 +35,8 @@ export default function ContactUs() {
                         name,
                         email,
                         subject,
-                        message
+                        message,
+                        added_at:Timestamp.now()
                     }
 
                     await addDocument(contactObj);

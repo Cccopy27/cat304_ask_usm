@@ -1,0 +1,108 @@
+.adminDashboard{
+    margin: 15px 100px 0px 100px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+
+    height: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-between; */
+    
+}
+
+.title{
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+}
+
+
+.contact_btn, .report_btn{
+    font-weight: 400;
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    flex: 1;
+}
+
+.active{
+    background-color: #4766bb;
+    color: white;
+}
+.contact_btn:hover, .report_btn:hover{
+    /* background-color: rgb(213, 255, 255); */
+    background-color: #1A2238;
+    color: white;
+
+    cursor: pointer;
+
+}
+
+.result{
+    flex: 12;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* justify-content: ; */
+    /* align-items: flex-end; */
+}
+
+.title, .result{
+    /* margin: 0px 40px; */
+}
+
+
+.singleContact{
+    /* margin: 0px 30px 30px 30px; */
+    padding: 10px 30px 10px 30px;
+    background-color: #f5fafa;
+
+    /* overflow: hidden; */
+    /* flex: 1; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(86, 157, 160);
+}
+
+.contactUp, .contactdown{
+    display: flex;
+    flex-direction:row;
+    justify-content: flex-start;
+}
+
+.contactMessage,.contactSubject,.contactName,.contactEmail{
+    width: 380px;
+    word-wrap: break-word;
+}
+
+.contactMessage,.contactEmail{
+    margin-left: 30px;
+}
+
+.contactEmail, .contactName{
+    margin-top: 15px;
+}
+
+.contactUp{
+    flex:2;
+}
+.contactdown{
+    flex: 1;
+}
+
+.contactDelBtn{
+    float: right;
+    background-color: #1A2238;
+    color: white;
+    border: none;
+}
+
+.contactDelBtn:hover{
+    cursor: pointer;
+    color: #9DAAF2; 
+}
