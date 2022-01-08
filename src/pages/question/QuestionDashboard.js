@@ -57,7 +57,7 @@ export default function QuestionDashboard () {
     // filter document using stringSimilarity module O(n)
     else{
         filterDoc = fetchData && result? fetchData.filter(item=>{
-                if(stringSimilarity.compareTwoStrings(item.question_title.toLowerCase(),result.toLowerCase() ) > 0.5){
+                if(stringSimilarity.compareTwoStrings(item.question_title.toLowerCase(),result.toLowerCase() ) > 0.2){
                     return true;
                 }
                 else{

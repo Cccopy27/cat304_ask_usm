@@ -82,11 +82,9 @@ const categories = [
 ];
 // update tag purpose // do not delete
 // new categories
+
 // const newCategories = [
 
-// ]
-// const newCategories = [
-  
 // ]
 // let newList = {};
 // newCategories.forEach(item=>{
