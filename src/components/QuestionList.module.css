@@ -1,6 +1,7 @@
 .question_list {
     display: flex;
     flex-direction: column;
+    height: 1000px;
 }
 
 .question_item{
@@ -92,8 +93,8 @@
 }
 
 .paginateBar{
-    top: 1230px;
-    position: absolute;
+    /* top: 1230px; */
+    /* position: absolute; */
     margin-left: 10px;
     padding-left: 0px;
     display: flex;

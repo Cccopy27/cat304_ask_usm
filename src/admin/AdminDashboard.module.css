@@ -3,7 +3,7 @@
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 
-    height: 900px;
+    height: 1200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -105,4 +105,60 @@
 .contactDelBtn:hover{
     cursor: pointer;
     color: #9DAAF2; 
+}
+
+
+.paginateBar{
+    top: 1210px;
+    /* position: absolute; */
+    /* left: 40px; */
+    margin-left: 10px;
+    padding-left: 0px;
+    display: flex;
+    flex-direction: row;
+    max-width: 785px;
+    /* height: 20px; */
+    justify-content: flex-start;
+    align-items: center;
+    align-self: flex-start;
+    /* background-color: #9DAAF2; */
+}
+
+.paginateBar li{
+    /* padding: 10px; */
+    list-style: none;
+    /* font-size: 30px; */
+}
+
+.paginateBar li:first-child{
+    border-left: 0.5px solid #9DAAF2;
+    /* border-top-left-radius: 5px; */
+}
+
+
+.page_link{
+    padding: 15px 10px;
+    /* font-size: 20px; */
+    /* margin: 0px; */
+}
+
+.page_item:hover,.active,.active.page_item{
+    background-color: #1A2238;
+    cursor: pointer;
+    color: white;
+
+}
+
+
+.page_item{
+    /* margin: 0.5px; */
+    /* border: 0.5px solid #1A2238; */
+    border-top: 0.5px solid #9DAAF2;
+    border-bottom: 0.5px solid #9DAAF2;
+    border-right: 0.5px solid #9DAAF2;
+    padding: 5px;
+    /* margin: 10px; */
+    font-size: 15px;
+    font-weight: 300;
+    color: #1A2238;
 }

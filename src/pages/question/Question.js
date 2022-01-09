@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import EditQuestion from "./EditQuestion";
 import AddComment from "../comment/AddComment";
 import CommentSection from "../comment/CommentSection";
-import { writeBatch,doc,collection, getDocs } from "firebase/firestore";
+import { writeBatch,doc,collection, getDocs, Timestamp } from "firebase/firestore";
 import {AiOutlineTag,AiOutlineUser,AiOutlineEye,AiOutlineClose} from "react-icons/ai";
 import {MdReportProblem} from "react-icons/md";
 import { increment } from "firebase/firestore";
@@ -169,32 +169,37 @@ export default function Question() {
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
             
-        }).then(async()=>{
-            Swal.fire({
-                title:"Now Loading...",
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-            })
-            Swal.showLoading();
-            const reportObj={
-                message: prob,
-                question: id,
-                report_user_id: "",
+        }).then(async(result)=>{
+
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title:"Now Loading...",
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+                Swal.showLoading();
+                const reportObj={
+                    message: prob,
+                    question: id,
+                    report_user_id: "",
+                    added_at:Timestamp.now(),
+                }
+
+                await addDocument(reportObj);
+
+                if(!ReportResponse.error){
+                    setProb("");                
+                    Swal.fire('Report successful !', '', 'success');
+                    setShowReportModal(false);
+                }else{
+                    console.log(ReportResponse.error);
+                    Swal.fire('Something wrong...', '', 'error');
+                }
             }
-
-            await addDocument(reportObj);
-
-            if(!ReportResponse.error){
-                setProb("");                
-                Swal.fire('Report successful !', '', 'success');
-                setShowReportModal(false);
-            }else{
-                console.log(ReportResponse.error);
-                Swal.fire('Something wrong...', '', 'error');
-            }
-        })
-        // setShowReportModal(false);
-
+            else if(result.isDenied){
+                Swal.fire('Nothing happen', '', 'info')
+            }}
+        )
     }
     if(error){
         return <div>{error}</div>
