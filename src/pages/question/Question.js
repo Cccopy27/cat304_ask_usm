@@ -12,8 +12,11 @@ import EditQuestion from "./EditQuestion";
 import AddComment from "../comment/AddComment";
 import CommentSection from "../comment/CommentSection";
 import { writeBatch,doc,collection, getDocs } from "firebase/firestore";
-import {AiOutlineTag,AiOutlineUser,AiOutlineEye} from "react-icons/ai";
+import {AiOutlineTag,AiOutlineUser,AiOutlineEye,AiOutlineClose} from "react-icons/ai";
+import {MdReportProblem} from "react-icons/md";
 import { increment } from "firebase/firestore";
+import { useComponentVisible } from "../../hooks/useComponentVisible";
+import { async } from "@firebase/util";
 
 export default function Question() {
     // get id from param
@@ -26,7 +29,9 @@ export default function Question() {
     const [editMode, setEditMode] = useState(false);
     const {updateDocument,response} = useFirestore(["questions"]);
     const {updateDocument:updateDocument2} = useFirestore(["record"]);
-
+    const [prob, setProb] = useState("");
+    const {Comref, isComponentVisible:showReportModal, setIsComponentVisible:setShowReportModal} = useComponentVisible(false);
+    const {addDocument, response:ReportResponse} = useFirestore(["report"]);
 
     useEffect(() => {
         // only update view 1
@@ -135,12 +140,8 @@ export default function Question() {
             }
           })
     };
-    if(error){
-        return <div>{error}</div>
-    };
-    if(!document){
-        return <div>Loading...</div>
-    };
+
+    
 
     // set edit mode to false
     const handleEdit=()=>{
@@ -154,6 +155,58 @@ export default function Question() {
 
     }
 
+    //report
+    const handleReport = (e) =>{
+        e.preventDefault();
+        setShowReportModal(true);
+    }
+
+    const handleReportSubmit = (e) => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Are you sure?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+            
+        }).then(async()=>{
+            Swal.fire({
+                title:"Now Loading...",
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+            })
+            Swal.showLoading();
+            const reportObj={
+                message: prob,
+                question: id,
+                report_user_id: "",
+            }
+
+            await addDocument(reportObj);
+
+            if(!ReportResponse.error){
+                setProb("");                
+                Swal.fire('Report successful !', '', 'success');
+                setShowReportModal(false);
+            }else{
+                console.log(ReportResponse.error);
+                Swal.fire('Something wrong...', '', 'error');
+            }
+        })
+        // setShowReportModal(false);
+
+    }
+    if(error){
+        return <div>{error}</div>
+    };
+    if(!document){
+        return <div>Loading...</div>
+    };
+
+    
+    
+    
+
 
     return (
         <div>
@@ -163,6 +216,10 @@ export default function Question() {
                         <div className={styles.question_top}>
                             <div className={styles.question_header}>
                                 <p className={styles.question_title}>{document.question_title}</p>
+                                <div className={styles.questoin_report}>
+                                    <MdReportProblem className={styles.question_report} onClick={handleReport}/>
+                                    <span className={styles.report_span}>Click to Report</span>
+                                </div>
                                 <div className={styles.question_add}>
                                     <button className={styles.question_add_btn} onClick={handleAddQuestion}>Add Something</button>
                                 </div>
@@ -224,6 +281,25 @@ export default function Question() {
                 {!editMode && <AddComment question_id={document.id}/>}
                 {!editMode && <CommentSection question_id={document.id}/>}
             </div>
+            {showReportModal && <div className={styles.report_modal_container} ref={Comref}>
+                <form className={styles.report_modal_form}>
+                    <div className={styles.report_modal_top}>
+                        <p className={styles.report_modal_span}> Report Form </p>
+                        <AiOutlineClose className={styles.report_modal_close} onClick={()=>{setShowReportModal(false)}}/>
+                    </div>
+                    <label className={styles.report_modal_form_prob}>
+                        <span className={styles.report_modal_form_prob_span}>What is the problem?</span>
+                        <textarea 
+                        className={styles.report_modal_form_prob_textarea}
+                        required
+                        value={prob}
+                        onChange={(e)=>{setProb(e.target.value)}}
+                        />
+                    </label>
+                    <p className={styles.report_modal_info}>Only admin know your report content </p>
+                    <button className={styles.report_modal_button} onClick={handleReportSubmit}>Submit</button>
+                </form>
+            </div>}
                 
         </div>
     )

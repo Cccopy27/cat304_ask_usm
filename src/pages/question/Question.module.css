@@ -205,3 +205,112 @@
     font-size: 20px;
     margin-right: 5px;
 }
+
+.question_report_btn{
+    background-color: transparent;
+    border: none;
+}
+
+.question_report_btn:hover{
+    cursor: pointer;
+}
+
+.question_report{
+    font-size: 30px;
+    flex: 1;
+    padding-left: 30px;
+
+}
+
+.question_report:hover{
+    cursor: pointer;
+    
+}
+
+.report_span{
+    position: fixed;
+    top: 130px;
+    left: 955px;
+    /* visibility: hidden; */
+    display: none;
+}
+
+.question_report:hover ~ .report_span{
+    /* visibility: show; */
+    display: block;
+}
+
+.report_modal_container{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    border: 1px solid black;
+    transform: translate(-50%, -50%);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+}
+
+.report_modal_form{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    height: 300px;
+    padding: 0px 20px 10px 20px;
+}
+
+.report_modal_top{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.report_modal_span{
+    flex: 24;
+}
+.report_modal_close{
+    font-size: 25px;
+    flex: 1;
+}
+
+.report_modal_close:hover{
+    cursor: pointer;
+}
+
+.report_modal_form_prob{
+    flex: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.report_modal_form_prob_span{
+    flex:1;
+}
+.report_modal_form_prob_textarea{
+    padding:10px;
+    flex: 5;
+    width: 800px;
+}
+
+.report_modal_form_prob_textarea:hover{
+    /* border: none; */
+    outline: none;
+}
+
+.report_modal_button{
+    width: 60px;
+    align-self: center;
+    background-color: #1A2238;
+    border: none;
+    color: white;
+    padding: 5px;
+}
+
+.report_modal_button:hover{
+    cursor: pointer;
+    color: #9DAAF2;
+
+}
