@@ -4,6 +4,7 @@ import { useState } from "react";
 import EditSubComment from "./EditSubComment";
 import { useFirestore } from "../../hooks/useFirestore";
 import Swal from "sweetalert2";
+import {AiOutlineUser} from "react-icons/ai";
 
 export default function SubComment({subComment,item, question_id, comment_id}) {
     const [editMode, setEditMode] = useState(false);
@@ -74,7 +75,8 @@ export default function SubComment({subComment,item, question_id, comment_id}) {
                 <div className={styles.subComment_container}>
                     <div className={styles.subComment}>
                         <span className={styles.content}>{item.content}</span>
-                        <span className={styles.created_by}> created by{item.created_by}</span>
+                        <AiOutlineUser className={styles.created_by_icon}/>
+                        <span className={styles.created_by}> username{item.created_by}</span>
                         {item.edited_at && 
                             <span className={styles.added_at}> Edited {formatDistanceToNow(item.edited_at.toDate(),{addSuffix:true})}</span>
                         }

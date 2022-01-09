@@ -11,6 +11,8 @@ import TagResult from './pages/tag/TagResult';
 import {store} from "state-pool";
 import { updateDoc, doc,collection } from 'firebase/firestore';
 import { db } from './firebase/config';
+import ContactUs from './components/ContactUs';
+import AdminDashboard from "./admin/AdminDashboard";
 // categories
 const categories = [
   {value: "MyCsd", label: "MyCsd"},
@@ -30,7 +32,6 @@ const categories = [
   {value: "LockDown Browser", label: "LockDown Browser"},
   {value: "Lecture", label: "Lecture"},
   {value: "Lecturer", label: "Lecturer"},
-
 
   {value: "CAT Bus", label: "CAT Bus"},
   {value: "Bus A,B,C,D", label: "Bus A,B,C,D"},
@@ -70,14 +71,23 @@ const categories = [
   {value: "School of Physics", label: "School of Physics"},
   {value: "School of Language", label: "School of Language"},
   {value: "School of Social Science", label: "School of Social Science"},
-  
+  {value: "Lost&Found", label: "Lost&Found"},
+  {value: "Senior", label: "Senior"},
+  {value: "Finance", label: "Finance"},
+  {value: "Vaccine", label: "Vaccine"},
+  {value: "Friend", label: "Friend"},
+  {value: "Course", label: "Course"},
+  {value: "Attendance", label: "Attendance"},
+  {value: "Exam Results", label: "Exam Results"},
+  {value: "Relationship", label: "Relationship"},
+ 
 ];
 // update tag purpose // do not delete
 // new categories
-// const newCategories = [
 
+// const newCategories = [
 // ]
-// const newList = {}
+// let newList = {};
 // newCategories.forEach(item=>{
 //   const newValue = item.value;
 //   newList[newValue] = 0;
@@ -112,7 +122,8 @@ function App() {
             <Route path="/question/:id" element={<Question/>}/>
             <Route path="/tag/:result" element={<TagDashboard/>}/>
             <Route path="/question/search/:result" element={<QuestionDashboard/>}/>
-
+            <Route path="/contactus" element={<ContactUs/>}/>
+            <Route path="/admin" element={<AdminDashboard/>}/>
       
           </Routes>
         </div>

@@ -104,13 +104,6 @@
     /* font-family: 'Courier New', Courier, monospace !important; */
 }
 
-.submit_btn{
-    align-self: center;
-    width: 400px;
-    padding: 10px;
-    font-size: 20px;
-}
-
 .image_preview_contaier{
     flex: 1;
     display: flex;
@@ -127,6 +120,8 @@
 }
 
 .submit_btn{
+    align-self: center;
+    padding: 10px;
     font-size: 17px;
     border-radius: 20px;
     width: 150px;

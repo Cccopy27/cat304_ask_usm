@@ -34,9 +34,14 @@
     align-items: center;
 }
 
-.comment_author{
-    margin-left: 20px;
+.comment_author,.comment_author_icon{
     color:#3ab0c5
+}
+
+.comment_author_icon{
+    font-size: 15px;
+    margin-left: 20px;
+    margin-right: 5px;
 }
 
 .btn{
