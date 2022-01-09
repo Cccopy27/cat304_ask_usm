@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 import { useFirestore } from "../../hooks/useFirestore";
+import {AiOutlineUser} from "react-icons/ai";
 
 export default function Comment({comment, question_id}) {
     const [editMode,setEditMode] = useState(false);
@@ -80,8 +81,10 @@ export default function Comment({comment, question_id}) {
                                 <p className={styles.comment_edit}>Edited       {formatDistanceToNow(comment.edited_at.toDate(),{addSuffix:true})}
                                 </p>
                             }
-                            
-                            <p className={styles.comment_author}>Added by {comment.created_by}</p>
+                            <AiOutlineUser className={styles.comment_author_icon}/> 
+                            <p className={styles.comment_author}>
+                                username{comment.created_by}
+                            </p>
                         </div>
                         
                         <div className={styles.btn}>

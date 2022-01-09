@@ -26,28 +26,61 @@ export default function AdminDashboard() {
 
     const handleDeleteContact = (e,id) =>{
         e.preventDefault();
-        deleteDocument(id)
-        .then(()=>{
-            Swal.fire("Deleted!","","success");
+        Swal.fire({
+            title: 'Are you sure?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then(async(result)=>{
+            if(result.isConfirmed){
+                Swal.fire({
+                    title:"Now Loading...",
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+                Swal.showLoading();
+                await deleteDocument(id)
+                .then(()=>{
+                    Swal.fire("Deleted!","","success");
+                })
+                .catch((err)=>{
+                    console.log(err);
+                    Swal.fire("Failed!","","success");
+        
+                });
+            }
         })
-        .catch((err)=>{
-            console.log(err);
-            Swal.fire("Failed!","","success");
-
-        });
+        
     }
 
     const handleDeleteReport = (e,id) =>{
         e.preventDefault();
-        deleteDocumentReport(id)
-        .then(()=>{
-            Swal.fire("Deleted!","","success");
-        })
-        .catch((err)=>{
-            console.log(err);
-            Swal.fire("Failed!","","success");
+        Swal.fire({
+            title: 'Are you sure?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then(async(result)=>{
+            if(result.isConfirmed){
+                Swal.fire({
+                    title:"Now Loading...",
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+                Swal.showLoading();
+                await deleteDocumentReport(id)
+                    .then(()=>{
+                        Swal.fire("Deleted!","","success");
+                    })
+                    .catch((err)=>{
+                        console.log(err);
+                        Swal.fire("Failed!","","success");
 
-        });
+                    });
+            }
+        })
+
+        
     }
 
     const Items =({currItem})=>{

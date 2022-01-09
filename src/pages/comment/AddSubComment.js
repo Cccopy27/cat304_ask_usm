@@ -16,7 +16,6 @@ export default function AddSubComment({question_id, comment_id}) {
         e.preventDefault();
 
         if(subCommentRef.current.checkValidity()){
-            
             // new reply
             const newSubComment={
                 id:Timestamp.now().seconds,

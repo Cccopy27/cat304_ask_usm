@@ -20,7 +20,12 @@ export default function AddComment({question_id}) {
 
         // make sure form is not empty
         if(formInput.current.checkValidity()){
-
+            Swal.fire({
+                title:"Now Loading...",
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+            })
+            Swal.showLoading();
             // comment to add to database
             const commentObj = {
                 comments,
