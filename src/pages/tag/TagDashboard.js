@@ -10,15 +10,15 @@ import { useCollection } from "../../hooks/useCollection";
 
 export default function TagDashboard() {
     const [filter, setFilter] = useState(["added_at","desc"]);
-    const {document,error} = useCollection(["questions"],"",filter);
+    // const {document,error} = useCollection(["questions"],"",filter);
     const [fetchData, setFetchData] = useState();
     const {result} = useParams();
     const [tag,setTag]=  useState([]);
 
     // update fetch data when document exist
-    useEffect(()=>{
-        setFetchData(document);
-    },[document])
+    // useEffect(()=>{
+    //     setFetchData(document);
+    // },[document])
 
 
     // update tag when page navigation

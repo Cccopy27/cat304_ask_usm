@@ -7,20 +7,30 @@ import { useParams } from "react-router-dom";
 import stringSimilarity from "string-similarity";
 import { db } from "../../firebase/config";
 import { collection ,onSnapshot, query, where,orderBy,getDocs } from "firebase/firestore";
+import { async } from "@firebase/util";
 
 export default function QuestionDashboard () {
     // default order = latest
     const [filter,setFilter] = useState(["added_at","desc"]);
-    const {document, error} = useCollection(["questions"],null,filter);
+    // const {document, error} = useCollection(["questions"],null,filter);
     const [fetchData, setFetchData] = useState();
     const [defaultMode, setDefaultMode] = useState(true);
     const {result} = useParams();    
     let filterDoc = "";
 
+    // useEffect(async()=>{
+    //     const querySnapshot = await getDocs(collection(db, "questions"));
+    //     let result = [];
+    //     querySnapshot.forEach((doc) => {
+
+    //         result.push({...doc.data(), id:doc.id});
+    //     });
+    //     setFetchData(result)
+    // },[])
     // update fetch data when document exist
-    useEffect(()=>{
-        setFetchData(document);
-    },[document])
+    // useEffect(()=>{
+    //     setFetchData(document);
+    // },[document])
     
     useEffect(()=>{
 
@@ -31,7 +41,6 @@ export default function QuestionDashboard () {
         const getDataFilter=async()=>{
             const ref = query(collection(db, "questions"), orderBy(...filter));
             let results= [];
-            console.log("I keep running in get collections");
             const querySnapShot = await getDocs(ref);
     
             querySnapShot.forEach((doc)=>{
@@ -57,12 +66,12 @@ export default function QuestionDashboard () {
     // filter document using stringSimilarity module O(n)
     else{
         filterDoc = fetchData && result? fetchData.filter(item=>{
-                if(stringSimilarity.compareTwoStrings(item.question_title.toLowerCase(),result.toLowerCase() ) > 0.2){
-                    return true;
-                }
-                else{
-                    return false;
-                }
+            if(stringSimilarity.compareTwoStrings(item.question_title.toLowerCase(),result.toLowerCase() ) > 0.2){
+                return true;
+            }
+            else{
+                return false;
+            }
             
         }):null;
     }
