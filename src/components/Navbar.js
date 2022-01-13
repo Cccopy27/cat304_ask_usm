@@ -8,7 +8,7 @@ import { useLogout } from "../hooks/useLogout";
 export default function Navbar() {
     const navigate = useNavigate();
     const [search,setSearch] = useState("");
-    const { logout } = useLogout();
+    const { logout, isPending } = useLogout();
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -48,8 +48,9 @@ export default function Navbar() {
                 <li className={styles.login}>
                     <NavLink to = "/login">Log in</NavLink>
                 </li>
-                <li onClick={logout}>
-                    logout
+                <li>
+                    {!isPending && <button onClick={logout}>Logout</button>}
+                    {isPending && <button disabled>Logging out...</button>}  
                 </li>
             </ul>    
         </nav>

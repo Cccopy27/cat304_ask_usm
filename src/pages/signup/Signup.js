@@ -1,14 +1,15 @@
-import { useState } from 'react'
-import { useSignup } from '../../hooks/useSignup'
+import { useState } from 'react';
+import { useSignup } from '../../hooks/useSignup';
 
 export default function Signup() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const { error, signup } = useSignup()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const { signup, isPending, error } = useSignup();
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    signup(email, password)
+    e.preventDefault();
+    signup(email, password, username);
   }
   
   return (
@@ -33,7 +34,17 @@ export default function Signup() {
             value={password}
           />
         </label>
-        <button>sign up</button>
+        <label>
+          <span>username:</span>
+          <input
+            required
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+          />
+        </label>
+        {!isPending && <button>Sign up</button>}
+        {isPending && <button disabled>loading</button>}
         {error && <p>{error}</p>}
       </form>
     </div>

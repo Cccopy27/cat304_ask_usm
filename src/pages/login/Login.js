@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import { useLogin } from '../../hooks/useLogin'
+import { useState } from 'react';
+import { useLogin } from '../../hooks/useLogin';
 
 export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const { error, login } = useLogin()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { login, isPending, error } = useLogin();
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    login(email, password)
+    e.preventDefault();
+    login(email, password);
   }
   
   return (
@@ -33,8 +33,9 @@ export default function Login() {
             value={password}
           />
         </label>
-        <button>log in</button>
-        {error && <p>{error}</p>}
+        {!isPending && <button>Login</button>}
+        {isPending && <button disabled>loading</button>}
+        {error && <div>{error}</div>}
       </form>
     </div>
   )
