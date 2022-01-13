@@ -8,6 +8,8 @@ import Rightbar from './components/Rightbar';
 import Question from './pages/question/Question';
 import TagDashboard from './pages/tag/TagDashboard';
 import TagResult from './pages/tag/TagResult';
+import Login from './pages/login/Login';
+import Signup from './pages/signup/Signup';
 import {store} from "state-pool";
 import { updateDoc, doc,collection, setDoc } from 'firebase/firestore';
 import { db } from './firebase/config';
@@ -114,7 +116,8 @@ function App() {
             <Route path="/question/search/:result" element={<QuestionDashboard/>}/>
             <Route path="/contactus" element={<ContactUs/>}/>
             <Route path="/admin" element={<AdminDashboard/>}/>
-      
+            <Route path="/signup" element={<Signup/>}/>
+            <Route path="/login" element={<Login/>}/>
           </Routes>
         </div>
       

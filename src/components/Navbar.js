@@ -3,10 +3,12 @@ import styles from "./Navbar.module.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import {useState } from "react";
+import { useLogout } from "../hooks/useLogout";
 
 export default function Navbar() {
     const navigate = useNavigate();
     const [search,setSearch] = useState("");
+    const { logout } = useLogout();
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -46,7 +48,9 @@ export default function Navbar() {
                 <li className={styles.login}>
                     <NavLink to = "/login">Log in</NavLink>
                 </li>
-                
+                <li onClick={logout}>
+                    logout
+                </li>
             </ul>    
         </nav>
     )
