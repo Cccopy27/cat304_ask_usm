@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './components/Navbar';
-import {Routes,Route, BrowserRouter} from "react-router-dom";
+import {Routes,Route, BrowserRouter, Navigate} from "react-router-dom";
 import Sidebar from './components/Sidebar';
 import QuestionDashboard from './pages/question/QuestionDashboard';
 import AddQuestion from './pages/question/AddQuestion';
@@ -15,6 +15,8 @@ import { updateDoc, doc,collection, setDoc } from 'firebase/firestore';
 import { db } from './firebase/config';
 import ContactUs from './components/ContactUs';
 import AdminDashboard from "./admin/AdminDashboard";
+import { useAuthContext } from "./hooks/useAuthContext";
+
 // categories
 const categories = [
   {value: "MyCsd", label: "MyCsd"},
@@ -101,27 +103,41 @@ store.setState("tag",categories);
 store.setState("order",orderList);
 
 function App() {
+  const { user, authIsReady } = useAuthContext()
+  
   return (
     <div className="App">
-      <BrowserRouter>
-        <Navbar/>
-        <Sidebar/>
-        <Rightbar/>
-        <div className='content'>
-          <Routes>
-            <Route path="/question" element={<QuestionDashboard/>}/>
-            <Route path="/addquestion" element={<AddQuestion/>}/>
-            <Route path="/question/:id" element={<Question/>}/>
-            <Route path="/tag/:result" element={<TagDashboard/>}/>
-            <Route path="/question/search/:result" element={<QuestionDashboard/>}/>
-            <Route path="/contactus" element={<ContactUs/>}/>
-            <Route path="/admin" element={<AdminDashboard/>}/>
-            <Route path="/signup" element={<Signup/>}/>
-            <Route path="/login" element={<Login/>}/>
-          </Routes>
-        </div>
-      
-      </BrowserRouter>
+      {authIsReady && (
+        <BrowserRouter>
+          <Navbar/>
+          <Sidebar/>
+          <Rightbar/>
+          <div className='content'>
+            <Routes>
+              {user && <Route path="/question" element={<QuestionDashboard/>}/>}
+
+              {user && <Route path="/addquestion" element={<AddQuestion/>}/>}
+
+              {user && <Route path="/question/:id" element={<Question/>}/>}
+
+              {user && <Route path="/tag/:result" element={<TagDashboard/>}/>}
+
+              {user && <Route path="/question/search/:result" element={<QuestionDashboard/>}/>}
+
+              {user && <Route path="/contactus" element={<ContactUs/>}/>}
+
+              {user && <Route path="/admin" element={<AdminDashboard/>}/>}
+
+              {!user && <Route path="/signup" element={<Signup/>}/>}
+              {user && <Route path="/signup" element={<Navigate to="/dashboard" />} />}
+
+              {!user && <Route path="/login" element={<Login/>}/>}
+              {user && <Route path="/login" element={<Navigate to="/dashboard" />} />}
+
+            </Routes>
+          </div>
+        </BrowserRouter>
+      )}
       
     </div>
   );
