@@ -31,89 +31,96 @@ export default function AddQuestion() {
     // when user submit the form
     const handleSubmit=(e)=>{
         e.preventDefault();
-        if(formInput.current.checkValidity()){
-            Swal.fire({
-                title: 'Are you sure?',
-                showDenyButton: true,
-                confirmButtonText: 'Yes',
-                denyButtonText: `No`,
-              }).then(async(result) => {
-                if (result.isConfirmed) {
-                    setloading(true);
-                    Swal.fire({
-                        title:"Now Loading...",
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                    })
-                    Swal.showLoading();
 
-                    // const tagObj={}
-
-                    let tagList=[];
-                    //get tag value
-                    tag.forEach(item=>{
-                        tagList.push(item.value);
-                        // tagObj[item.value] = increment(1)
-                    })
-                
-                    // user input as object
-                    const question_object={
-                        question_title: title,
-                        question_description: des,
-                        question_tag: tagList,
-                        question_image_name:imageName,
-                        question_image_url:"",
-                        // question_comments:[],
-                        added_at: Timestamp.now(),
-                        edited_at:"",
-                        created_by:user.uid,
-                    }
-                    // console.log(question_object);
-
-
-                    //add to database
-                    await addDocument(question_object,image,"question");
-                    // update tag amount question
-
-
-                    const updateObj = {};
-
-                    tagList.forEach(item=>{
-                        updateObj[item] = increment(1);
-                    })
-                    await updateDocument("tag",updateObj);
-
-                    // no error
-                    if(!response.error && !batchErr){
-                        settag([]);
-                        settitle("");
-                        setdes("");
-                        setimage([]);
-                        setImageURLs([]);
-                        formInput.current.reset();
-                        Swal.fire('Uploaded!', '', 'success')
-                        navigate("/question");
-                    }
-                    // got error
-                    else{
-                        console.log("something wrong");
-                        Swal.fire({
-                            icon:"error",
-                            title:"Something wrong",
-                            showConfirmButton: true,
-                        })
-                    }
-                } else if (result.isDenied) {
-                  Swal.fire('Nothing happen...', '', 'info')
-                }
-              })
+        if (!user) {
+            Swal.fire('Please login to add something', '', 'warning')
         }
         else{
-            Swal.fire({
-                title:"Make sure the form is completed!",
-                showConfirmButton: true,
-            })
+            if(formInput.current.checkValidity()){
+                Swal.fire({
+                    title: 'Are you sure?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `No`,
+                  }).then(async(result) => {
+                    if (result.isConfirmed) {
+                        setloading(true);
+                        Swal.fire({
+                            title:"Now Loading...",
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                        })
+                        Swal.showLoading();
+    
+                        // const tagObj={}
+    
+                        let tagList=[];
+                        //get tag value
+                        tag.forEach(item=>{
+                            tagList.push(item.value);
+                            // tagObj[item.value] = increment(1)
+                        })
+                    
+                        // user input as object
+                        const question_object={
+                            question_title: title,
+                            question_description: des,
+                            question_tag: tagList,
+                            question_image_name:imageName,
+                            question_image_url:"",
+                            // question_comments:[],
+                            added_at: Timestamp.now(),
+                            edited_at:"",
+                            created_by:user.uid,
+                        }
+                        // console.log(question_object);
+    
+    
+                        //add to database
+                        await addDocument(question_object,image,"question");
+                        // update tag amount question
+    
+    
+                        const updateObj = {};
+    
+                        tagList.forEach(item=>{
+                            updateObj[item] = increment(1);
+                        })
+                        await updateDocument("tag",updateObj);
+    
+                        // no error
+                        if(!response.error && !batchErr){
+                            settag([]);
+                            settitle("");
+                            setdes("");
+                            setimage([]);
+                            setImageURLs([]);
+                            formInput.current.reset();
+                            Swal.fire('Uploaded!', '', 'success')
+                            navigate("/question");
+                        }
+                        // got error
+                        else{
+                            console.log("something wrong");
+                            Swal.fire({
+                                icon:"error",
+                                title:"Something wrong",
+                                showConfirmButton: true,
+                            })
+                        }
+                    } else if (result.isDenied) {
+                      Swal.fire('Nothing happen...', '', 'info')
+                    }
+                  })
+            }
+            else{
+                Swal.fire({
+                    title:"Make sure the form is completed!",
+                    showConfirmButton: true,
+                })
+            }
         }
+        
     }
 
     // preview image

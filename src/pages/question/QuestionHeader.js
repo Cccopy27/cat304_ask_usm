@@ -2,14 +2,23 @@ import styles from "./QuestionHeader.module.css";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { useGlobalState } from "state-pool";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import Swal from "sweetalert2";
 
 export default function QuestionFilter({setFilter}) {
     const [orderList, setorderList] = useGlobalState("order");
-
+    const {user} = useAuthContext();
+    
     const navigate = useNavigate();
     // navigate to add question
     const handleAddQuestion = (e) =>{
-        navigate("/addquestion");
+        e.preventDefault();
+        if (!user) {
+            Swal.fire("Please login to add something","","warning");
+        }
+        else{
+            navigate("/addquestion");
+        }
     }
 
     const handleFilter=(options)=>{

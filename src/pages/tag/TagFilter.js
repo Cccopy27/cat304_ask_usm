@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function TagFilter({setTag,tag, setFilter}) {
     const [categories, setCategories] = useGlobalState("tag");
@@ -14,10 +15,17 @@ export default function TagFilter({setTag,tag, setFilter}) {
     const [tempTag, setTempTag] = useState(tag);
     const tagRef = useRef();
     const {result} = useParams();
+    const {user} = useAuthContext();
 
     // navigate to add question
     const handleAddQuestion = (e) =>{
-        navigate("/addquestion");
+        e.preventDefault();
+        if (!user) {
+            Swal.fire("Please login to add something","","warning");
+        }
+        else{
+            navigate("/addquestion");            
+        }
     }
   
     // output result

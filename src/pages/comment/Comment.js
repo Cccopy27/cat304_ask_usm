@@ -8,6 +8,7 @@ import {storage} from "../../firebase/config";
 import { useFirestore } from "../../hooks/useFirestore";
 import {AiOutlineUser} from "react-icons/ai";
 import { useDocument } from "../../hooks/useDocument";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function Comment({comment, question_id}) {
     const [editMode,setEditMode] = useState(false);
@@ -15,6 +16,8 @@ export default function Comment({comment, question_id}) {
     const {deleteDocument} = useFirestore(["questions",question_id,"comment"]);
     const {document, error} = useDocument("users",comment.created_by);
     const [userName, setUserName] = useState(null);
+    const {user} = useAuthContext();
+
     useEffect(() => {
         if (document) {
             setUserName(document.displayName);
@@ -95,15 +98,15 @@ export default function Comment({comment, question_id}) {
                             
                         </div>
                         
+                        {user && (user.uid === comment.created_by) &&
                         <div className={styles.btn}>
                             {!loading && <button className={styles.btnEdit}onClick={handleEdit}>Edit</button>}
                             {!loading && <button className={styles.btnDelete}onClick={handleDelete}>Delete</button>}
                             {loading && <button className={styles.btnEdit} disabled onClick={handleEdit}>Edit</button>}
                             {loading && <button className={styles.btnDelete}disabled onClick={handleDelete}>Delete</button>}
                         </div>
-                        
-                    </div>
-                    
+                        }                  
+                    </div>  
                 </div>
             }
             {comment && <EditComment document={comment} editMode={editMode} setEditMode={setEditMode} question_id={question_id}/>}

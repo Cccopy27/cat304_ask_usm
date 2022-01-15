@@ -17,6 +17,7 @@ import {MdReportProblem} from "react-icons/md";
 import { increment } from "firebase/firestore";
 import { useComponentVisible } from "../../hooks/useComponentVisible";
 import { async } from "@firebase/util";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function Question() {
     // get id from param
@@ -33,6 +34,7 @@ export default function Question() {
     const {Comref, isComponentVisible:showReportModal, setIsComponentVisible:setShowReportModal} = useComponentVisible(false);
     const {addDocument, response:ReportResponse} = useFirestore(["report"]);
     const [userName, setUserName] = useState(null);
+    const {user} = useAuthContext();
 
     useEffect(() => {
         // only update view 1
@@ -163,8 +165,12 @@ export default function Question() {
     // add question
     const handleAddQuestion=(e)=>{
         e.preventDefault();
-        navigate("/addquestion");
-
+        if (!user) {
+            Swal.fire("Please login to add something","","warning");
+        }
+        else{
+            navigate("/addquestion");
+        }
     }
 
     //report
@@ -264,12 +270,15 @@ export default function Question() {
                                         <span className={styles.peopleName}>{userName}</span>
                                     </p>
                                 </div>
+                                {user && (user.uid === document.created_by) && 
                                 <div className={styles.question_subTitle_right}>
                                     <button className={styles.editBtn}onClick={handleEdit}>Edit</button>
                                     <button className={styles.deleteBtn}
                                     onClick={handleDelete}>Delete</button>
                                     
                                 </div>
+                                }
+                                
                             </div>
                         </div>
                     
@@ -294,7 +303,7 @@ export default function Question() {
                     
                 </div>
                 }
-                <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode}/>
+                <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode} displayName={userName}/>
                 {!editMode && <AddComment question_id={document.id}/>}
                 {!editMode && <CommentSection question_id={document.id}/>}
             </div>

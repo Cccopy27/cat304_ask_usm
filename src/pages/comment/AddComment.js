@@ -20,53 +20,60 @@ export default function AddComment({question_id}) {
     const handleSubmit=async(e)=>{
         e.preventDefault();
 
-        // make sure form is not empty
-        if(formInput.current.checkValidity()){
-            Swal.fire({
-                title:"Now Loading...",
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-            })
-            Swal.showLoading();
-            // comment to add to database
-            const commentObj = {
-                comments,
-                created_by:user.uid,
-                added_at:Timestamp.now(),
-                edited_at:"",
-                comment_image_name:imageName,
-                comment_image_url:"",
-                subComment:"",
-            }
-            
-            // add document
-            await addDocument(commentObj,image,"comment");
-
-            // got error
-            if(response.error){
-                console.log("something wrong");
-                // alert user
-                Swal.fire({
-                    icon:"error",
-                    title:"Something wrong",
-                    showConfirmButton: true,
-                })
-            }
-            else{
-                // alert user
-                Swal.fire('Added!', '', 'success');
-                // clear input
-                setComments("");
-                setimage([]);
-                setImageURLs([]);
-                setImageName([]);
-                // hide add comment button
-                setFocusMode(false);
-            }
-        }else{
-            // alert user
-            Swal.fire('Write Something!', '', 'info');  
+        if (!user) {
+            Swal.fire('Please login to add comment',"","info");
         }
+        else{
+            // make sure form is not empty
+            if(formInput.current.checkValidity()){
+                Swal.fire({
+                    title:"Now Loading...",
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+                Swal.showLoading();
+                // comment to add to database
+                const commentObj = {
+                    comments,
+                    created_by:user.uid,
+                    added_at:Timestamp.now(),
+                    edited_at:"",
+                    comment_image_name:imageName,
+                    comment_image_url:"",
+                    subComment:"",
+                }
+                
+                // add document
+                await addDocument(commentObj,image,"comment");
+
+                // got error
+                if(response.error){
+                    console.log("something wrong");
+                    // alert user
+                    Swal.fire({
+                        icon:"error",
+                        title:"Something wrong",
+                        showConfirmButton: true,
+                    })
+                }
+                else{
+                    // alert user
+                    Swal.fire('Added!', '', 'success');
+                    // clear input
+                    setComments("");
+                    setimage([]);
+                    setImageURLs([]);
+                    setImageName([]);
+                    // hide add comment button
+                    setFocusMode(false);
+                }
+            }else{
+                // alert user
+                Swal.fire('Write Something!', '', 'info');  
+            }
+        }
+
+        
     }
 
     // preview image

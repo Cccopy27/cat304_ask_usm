@@ -6,6 +6,7 @@ import { useFirestore } from "../../hooks/useFirestore";
 import Swal from "sweetalert2";
 import {AiOutlineUser} from "react-icons/ai";
 import { useDocument } from "../../hooks/useDocument";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function SubComment({subComment,item, question_id, comment_id}) {
     const [editMode, setEditMode] = useState(false);
@@ -13,6 +14,7 @@ export default function SubComment({subComment,item, question_id, comment_id}) {
     const [loading,setLoading] = useState(false);
     const {document, error} = useDocument("users",item.created_by);
     const [userName, setUserName] = useState(null);
+    const {user}  = useAuthContext();
 
     // edit mode = on
     const handleEdit=(e)=>{
@@ -95,11 +97,12 @@ export default function SubComment({subComment,item, question_id, comment_id}) {
                         
                         
                     </div>
+                    {user && user.uid === item.created_by && 
                     <div className={styles.btn_group}>
                         <button className={styles.edit_btn} onClick={handleEdit}>Edit</button>
                         <button className={styles.delete_btn} onClick={handleDelete}>Delete</button>
                     </div>
-                        
+                    }      
                 </div> 
             }
             {editMode && <EditSubComment item={item} editMode={editMode} setEditMode={setEditMode} question_id={question_id} comment_id={comment_id} subComment={subComment}/>}
