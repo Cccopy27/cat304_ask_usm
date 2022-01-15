@@ -11,8 +11,7 @@ export default function QuestionList({questions}) {
     const Items=({questions})=>{
         return(
             <div className={styles.question_list}>
-
-                {!questions && <p>No result...</p>}
+                
                 {questions && questions.map(question => (
                     <Link className={styles.question_item}to={`/question/${question.id}`} key={question.id}>
                         <div className={styles.left_part}>
@@ -85,6 +84,9 @@ export default function QuestionList({questions}) {
         );
     }
     return (
+        <>
+            {questions.length === 0 && <p>No result...</p>}
             <PaginatedItems itemsPerPage={7} />    
+        </>
     )
 }
