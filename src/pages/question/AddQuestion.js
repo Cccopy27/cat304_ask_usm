@@ -7,6 +7,7 @@ import styles from "./AddQuestion.module.css";
 import Select from "react-select";
 import { useGlobalState } from "state-pool";
 import {db} from "../../firebase/config";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function AddQuestion() {
     const [title, settitle] = useState("");
@@ -25,6 +26,7 @@ export default function AddQuestion() {
     const navigate = useNavigate();
     const [categories, setCategories] = useGlobalState("tag");
     const [batchErr,setBatchErr] = useState(false);
+    const {user} = useAuthContext();
 
     // when user submit the form
     const handleSubmit=(e)=>{
@@ -64,7 +66,7 @@ export default function AddQuestion() {
                         // question_comments:[],
                         added_at: Timestamp.now(),
                         edited_at:"",
-                        created_by:""
+                        created_by:user.uid,
                     }
                     // console.log(question_object);
 

@@ -1,40 +1,47 @@
 import styles from "./Comment.module.css";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EditComment from "./EditComment";
 import Swal from "sweetalert2";
 import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 import { useFirestore } from "../../hooks/useFirestore";
 import {AiOutlineUser} from "react-icons/ai";
+import { useDocument } from "../../hooks/useDocument";
 
 export default function Comment({comment, question_id}) {
     const [editMode,setEditMode] = useState(false);
     const[loading,setLoading] = useState(false);
     const {deleteDocument} = useFirestore(["questions",question_id,"comment"]);
-
+    const {document, error} = useDocument("users",comment.created_by);
+    const [userName, setUserName] = useState(null);
+    useEffect(() => {
+        if (document) {
+            setUserName(document.displayName);
+        }
+    }, [document])
     // edit mode on
-    const handleEdit= (e)=>{
+    const handleEdit = (e) => {
         e.preventDefault();
         setEditMode(true);
     };
 
     // delete comment
-    const handleDelete= (e)=>{
+    const handleDelete = (e) => {
         e.preventDefault();
         // alert user
-        Swal.fire({
+        Swal.fire ({
             title: 'Do you want to delete this comment?',
             showDenyButton: true,
             confirmButtonText: 'Delete',
             denyButtonText: `Don't delete`,
             
-          }).then(async(result) => {
+          }).then (async(result) => {
               // delete
             if (result.isConfirmed) {
                 // loading
                 setLoading(true);
-                Swal.fire({
+                Swal.fire ({
                     title:"Now Loading...",
                     allowEscapeKey: false,
                     allowOutsideClick: false,
@@ -43,14 +50,14 @@ export default function Comment({comment, question_id}) {
 
                 // delete storage image
                 // loop each image
-                comment.comment_image_name.forEach(image_name=>{
+                comment.comment_image_name.forEach (image_name => {
                     // Create a reference to the file to delete
                     const desertRef = ref(storage, `comment/${comment.id}/${image_name}`);
                     // Delete the file
-                    deleteObject(desertRef).then(() => {
+                    deleteObject(desertRef).then( () => {
                         // File deleted successfully
 
-                    }).catch((error) => {
+                    }).catch( (error) => {
                         console.log(error);
                     // Uh-oh, an error occurred!
                     });
@@ -72,7 +79,7 @@ export default function Comment({comment, question_id}) {
                 <div className={styles.comment_container}> 
                     <p className={styles.comments}>{comment.comments}</p>
                     <div className={styles.image_container}></div>
-                    {comment.comment_image_url && comment.comment_image_url.map(imageSrc=>
+                    {comment.comment_image_url && comment.comment_image_url.map(imageSrc =>
                         <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image_preview"/>)}
                     <div className={styles.comment_bottom}>
                         <div className={styles.comment_left}>
@@ -81,10 +88,11 @@ export default function Comment({comment, question_id}) {
                                 <p className={styles.comment_edit}>Edited       {formatDistanceToNow(comment.edited_at.toDate(),{addSuffix:true})}
                                 </p>
                             }
-                            <AiOutlineUser className={styles.comment_author_icon}/> 
-                            <p className={styles.comment_author}>
-                                username{comment.created_by}
-                            </p>
+                                <AiOutlineUser className={styles.comment_author_icon}/> 
+                                <p className={styles.comment_author}>
+                                    {userName}
+                                </p>
+                            
                         </div>
                         
                         <div className={styles.btn}>

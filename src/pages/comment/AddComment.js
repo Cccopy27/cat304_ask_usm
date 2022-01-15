@@ -3,7 +3,7 @@ import styles from "./AddComment.module.css";
 import { useFirestore } from "../../hooks/useFirestore";
 import { Timestamp } from "firebase/firestore";
 import Swal from "sweetalert2";
-
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function AddComment({question_id}) {
     const [comments, setComments] = useState("");
@@ -14,6 +14,8 @@ export default function AddComment({question_id}) {
     // const [loading,setLoading] = useState(false);
     const {addDocument, response} = useFirestore(["questions",question_id,"comment"]);
     const formInput = useRef();
+    const {user} = useAuthContext();
+
     // submit comment
     const handleSubmit=async(e)=>{
         e.preventDefault();
@@ -29,7 +31,7 @@ export default function AddComment({question_id}) {
             // comment to add to database
             const commentObj = {
                 comments,
-                created_by:"",
+                created_by:user.uid,
                 added_at:Timestamp.now(),
                 edited_at:"",
                 comment_image_name:imageName,

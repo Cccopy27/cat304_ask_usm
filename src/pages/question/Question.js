@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import EditQuestion from "./EditQuestion";
 import AddComment from "../comment/AddComment";
 import CommentSection from "../comment/CommentSection";
-import { writeBatch,doc,collection, getDocs, Timestamp } from "firebase/firestore";
+import { writeBatch,doc,collection, getDocs, Timestamp,getDoc } from "firebase/firestore";
 import {AiOutlineTag,AiOutlineUser,AiOutlineEye,AiOutlineClose} from "react-icons/ai";
 import {MdReportProblem} from "react-icons/md";
 import { increment } from "firebase/firestore";
@@ -32,6 +32,7 @@ export default function Question() {
     const [prob, setProb] = useState("");
     const {Comref, isComponentVisible:showReportModal, setIsComponentVisible:setShowReportModal} = useComponentVisible(false);
     const {addDocument, response:ReportResponse} = useFirestore(["report"]);
+    const [userName, setUserName] = useState(null);
 
     useEffect(() => {
         // only update view 1
@@ -56,6 +57,17 @@ export default function Question() {
     useEffect(()=>{
         window.scrollTo(0,0); 
     },[])
+
+    useEffect(async() => {
+        // get user name for question when successful fetch question data
+        if (document) {
+            const docRef = doc(db, "users", document.created_by);
+            const docSnap = await getDoc(docRef);
+            setUserName(docSnap.data().displayName);
+        }
+
+
+    },[document])
 
     // delete question
     const handleDelete=(e)=>{
@@ -249,7 +261,7 @@ export default function Question() {
                                     
                                     <p className={styles.question_subTitle_author}>
                                         <AiOutlineUser className={styles.peopleIcon}/>
-                                        {document.created_by}
+                                        <span className={styles.peopleName}>{userName}</span>
                                     </p>
                                 </div>
                                 <div className={styles.question_subTitle_right}>
