@@ -137,10 +137,10 @@ function App() {
               {user && <Route path="/admin" element={<AdminDashboard/>}/>}
 
               {!user && <Route path="/signup" element={<Signup/>}/>}
-              {user && <Route path="/signup" element={<Navigate to="/dashboard" />} />}
+              {user && <Route path="/signup" element={<Navigate to="/home" />} />}
 
               {!user && <Route path="/login" element={<Login/>}/>}
-              {user && <Route path="/login" element={<Navigate to="/dashboard" />} />}
+              {user && <Route path="/login" element={<Navigate to="/home" />} />}
 
               {user && <Route path="/user" element={<UserDashboard/>}/>}
               {user && <Route path="/user/:result" element={<UserDashboard/>}/>}
