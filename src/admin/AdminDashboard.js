@@ -7,10 +7,11 @@ import { useState, useRef, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
 
 export default function AdminDashboard() {
-    const {document,error} = useCollection(["contactForm"],null,["added_at","desc"]);
-    const {document:reportDoc,error:reportDocError} = useCollection(["report"],null,["added_at","desc"]);
+    const {document,error, loading:loadingForm} = useCollection(["contactForm"],null,["added_at","desc"]);
+    const {document:reportDoc,error:reportDocError, loading:loadingReport} = useCollection(["report"],null,["added_at","desc"]);
     const {deleteDocument, response} = useFirestore(["contactForm"]);
     const {deleteDocument:deleteDocumentReport, response:responseReport} = useFirestore(["report"]);
+    // const [loading, setLoading] = useState(false);
 
     const [mode, setMode] = useState("Contact");
 
@@ -178,10 +179,11 @@ export default function AdminDashboard() {
 
     return (
         <div className={styles.adminDashboard}>
-            <div className={styles.title}>
+            {!loadingForm && !loadingReport && <div className={styles.title}>
                     <button className={mode==="Contact"? `${styles.contact_btn} ${styles.active}`:styles.contact_btn} onClick={handleContactCLick} >Message</button>
                     <button className={mode==="Report"? `${styles.report_btn} ${styles.active}`:styles.report_btn} onClick={handleReportCLick} >Report</button>
-            </div>
+            </div>}
+            {loadingForm && loadingReport && <div>Loading</div>}
             {(reportDoc || document) && <PaginatedItems itemsPerPage={9} /> } 
             {(!reportDoc && !document) && <div>no document</div> }              
         </div>

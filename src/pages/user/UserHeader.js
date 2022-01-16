@@ -9,7 +9,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import Select from "react-select";
 
 export default function UserHeader( {setFilter} ) {
-    const [userName, setUserName] = useState(null);
+    const [userName, setUserName] = useState("");
     const [orderList, setorderList] = useGlobalState("order");
     const navigate = useNavigate();
     const {user} = useAuthContext();
@@ -37,18 +37,14 @@ export default function UserHeader( {setFilter} ) {
             setUserName(null);
             navigate(paramURL);
 
-        }
-        else{
-            Swal.fire('Invalid username', '', 'error');
-        }
-        
+        } 
     }
 
     // reset input when changing pages
-    useEffect(()=>{
+    // useEffect(()=>{
 
-        setUserName(null);
-    },[result]);
+    //     setUserName("");
+    // },[result]);
 
     const handleFilter=(options)=>{
         switch(options.value){

@@ -39,6 +39,7 @@ export default function Question() {
     useEffect(() => {
         // only update view 1
         if(document && change === 1 && !localStorage.getItem(document.id)){
+            Swal.showLoading();
             // console.log(change,"document");
             updateDocument(document.id,{view:increment(1)});
             if(response.error){
@@ -52,6 +53,7 @@ export default function Question() {
                 localStorage.removeItem(document.id);
             }
             setTimeout(clearStorage, 30000);
+            Swal.close();
 
         } 
     }, [document,change]);
@@ -63,9 +65,11 @@ export default function Question() {
     useEffect(async() => {
         // get user name for question when successful fetch question data
         if (document) {
+            Swal.showLoading();
             const docRef = doc(db, "users", document.created_by);
             const docSnap = await getDoc(docRef);
             setUserName(docSnap.data().displayName);
+            Swal.close();
         }
 
 
@@ -222,19 +226,12 @@ export default function Question() {
     if(error){
         return <div>{error}</div>
     };
-    if(!document){
-        return <div>Loading...</div>
-    };
-
-    
-    
-    
-
 
     return (
         <div>
             <div className={styles.question_container}>
-                {!editMode && 
+                {!document && <div>Loading</div>}
+                {!editMode && document && 
                     <div className={styles.question_details}>
                         <div className={styles.question_top}>
                             <div className={styles.question_header}>
@@ -305,9 +302,9 @@ export default function Question() {
                     
                 </div>
                 }
-                <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode} displayName={userName}/>
-                {!editMode && <AddComment question_id={document.id}/>}
-                {!editMode && <CommentSection question_id={document.id}/>}
+                {document && <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode} displayName={userName}/>}
+                {document && !editMode && <AddComment question_id={document.id}/>}
+                {document && !editMode && <CommentSection question_id={document.id}/>}
             </div>
             {showReportModal && <div className={styles.report_modal_container} ref={Comref}>
                 <form className={styles.report_modal_form}>

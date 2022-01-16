@@ -157,7 +157,8 @@
 }
 
 .my_question_btn{
-    background-color:#ffface;  
+    background-color:#fffaced7;  
+
     
     /* color: white; */
     margin-bottom: 30px;
@@ -169,8 +170,11 @@
 }
 
 .my_question_btn:hover{
+    background-color:#ffface;  
+
     /* color: #9DAAF2;   */
-    background-color: rgb(255, 255, 192);
+    /* background-color: rgb(255, 255, 192); */
+    /* color: greenyellow; */
 
 }
 
