@@ -1,5 +1,7 @@
 .rightbar_container{
-    background-color: rgb(197, 197, 94);
+    /* background-color: rgb(197, 197, 94); */
+    background-color: #1A2238;
+
     grid-area: rightbar;
     display: flex;
     justify-content: center;
@@ -8,34 +10,159 @@
 .rightbar_content{
     flex: 1;
     align-self: center;
-    width: 200px;
-    min-height: 500px;
+    width: 250px;
+    /* min-height: 500px; */
     position: fixed;
     top:50px;
     display: flex;
     flex-direction: column;
-    margin: 30px 30px;
+    margin: 20px 20px;
     justify-content: space-between;
 }
 
-.rightbar_content div{
-    margin-top: 30px;
-}
-
-.rightbar_content1{
+.bookmark_container{
     background-color: white;
-    text-align: center;
-    flex: 1;
-}
 
-.rightbar_content2{
-    background-color: white;
-    text-align: center;
     flex: 5;
 }
 
-.rightbar_content3{
-    background-color: white;
-    text-align: center;
+.my_question{
+    margin-top: 10px;
     flex: 1;
+}
+
+.bookmark_container{
+    display: flex;
+    flex-direction: column;
+    flex: 4;
+}
+
+.bookmark_title{
+    /* background-color: white; */
+    margin: 5px 10px;
+    position: relative;
+    text-align: center;
+}
+.bookmark_word{
+    /* justify-self: flex-end; */
+    /* align-self: flex-end; */
+    font-size: 20px;
+}
+
+.bookmark_edit{
+    position: absolute;
+    margin-left: 20px;
+    margin-top: 5px;
+    border: none;
+    color: white;
+    background-color: #1A2238;
+    ;
+    /* margin-left: 20px; */
+    /* float: right; */
+}
+
+.bookmark_edit:hover{
+    cursor: pointer;
+    color: #9DAAF2;  
+    
+}
+
+.bookmark_content{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    /* justify-content: center; */
+}
+
+.bookmark_content div{
+    margin: 5px 0px;
+}
+
+.bookmark_tag{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bookmark_tag_title{
+    width: 100%;
+    border-bottom: 1px solid black;
+    font-weight: 400;
+    font-size: 15px;
+    text-align: center;
+    padding: 5px;
+}
+
+.user{
+    flex: 1;
+}
+
+
+
+.bookmark_ul{
+    padding: 0px;
+    margin: 0px;
+}
+
+.bookmark_ul li{
+    padding: 5px 0px;
+    margin: 5px 0px;
+    text-align: center;
+    width: 200px;
+    /* width: 100%; */
+    /* background-color: aqua; */
+    list-style: none;
+    font-weight: 300;
+    font-size: 15px;
+
+}
+
+.bookmark_ul li:hover{
+    border: none;
+    background-color: rgb(235, 235, 235);
+    cursor: pointer;
+}
+
+.viewmore{
+    color: #9DAAF2;  
+    font-weight: 300;
+}
+
+.viewmore{
+    cursor: pointer; 
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+
+}
+
+.viewmore:hover{
+    color: #1A2238;
+}
+
+.my_question{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    /* margin-top: 10px; */
+    /* align-items: center; */
+}
+
+.my_question_btn{
+    background-color:#ffface;  
+    
+    /* color: white; */
+    margin-bottom: 30px;
+    border: none;
+    width: 100%;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px 0px;
+}
+
+.my_question_btn:hover{
+    /* color: #9DAAF2;   */
+    background-color: rgb(255, 255, 192);
+
 }
