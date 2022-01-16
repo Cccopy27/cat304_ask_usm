@@ -336,12 +336,12 @@ export default function RightBar() {
                             <span className={styles.bookmark_tag_title}>Tag</span>
                             <ul className={styles.bookmark_ul}>
                                 {loading && <div>Loading</div>}
-                                {userBookMarkTagTop5 && userBookMarkTagTop5.map(item => (
+                                {!loading && userBookMarkTagTop5 && userBookMarkTagTop5.map(item => (
                                     <Link key={item.tagName} to={`/tag/${item.tagName}`} className={styles.bookmark_edit_link}>
                                         <li>{item.tagName}</li>
                                     </Link>
                                 ))}
-                                {userBookMarkTagTop5.length === 0 && <span className={styles.light_font}>Empty</span>}
+                                {!loading && userBookMarkTagTop5 && userBookMarkTagTop5.length === 0 && <span className={styles.light_font}>Empty</span>}
                             </ul>
                             {userBookMarkTag && userBookMarkTag.length > 5 && <span className={styles.viewmore} onClick={() => {setShowModalBookmark(true)}}> + View more</span>}
                             
@@ -355,7 +355,7 @@ export default function RightBar() {
                                         <li>{item.userName}</li>
                                     </Link>
                                 ))}
-                                {!loading && userBookMarkUserTop5.length === 0 && <span className={styles.light_font}>Empty</span>}
+                                {!loading && userBookMarkUserTop5 && userBookMarkUserTop5.length === 0 && <span className={styles.light_font}>Empty</span>}
                             </ul>
                             {userBookMarkUser && userBookMarkUser.length > 5 && <span className={styles.viewmore} onClick={() => {setShowModalBookmark(true)}}> + View more</span>}
 
