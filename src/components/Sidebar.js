@@ -26,6 +26,9 @@ export default function Sidebar() {
                             <li className={styles.club}>
                                 <NavLink to = "/tag/Event">Event</NavLink>
                             </li>
+                            <li className={styles.club}>
+                                <NavLink to = "/user">User</NavLink>
+                            </li>
                         </ul>
                     </nav>
                 </div>

@@ -15,6 +15,8 @@ import { updateDoc, doc,collection, setDoc } from 'firebase/firestore';
 import { db } from './firebase/config';
 import ContactUs from './components/ContactUs';
 import AdminDashboard from "./admin/AdminDashboard";
+import UserDashboard from './pages/user/UserDashboard';
+
 // categories
 const categories = [
   {value: "MyCsd", label: "MyCsd"},
@@ -125,6 +127,9 @@ function App() {
             <Route path="/admin" element={<AdminDashboard/>}/>
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/user" element={<UserDashboard/>}/>
+            <Route path="/user/:result" element={<UserDashboard/>}/>
+
           </Routes>
         </div>
       
