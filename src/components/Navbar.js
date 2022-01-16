@@ -24,7 +24,7 @@ export default function Navbar() {
         }
     }, [user])
 
-
+    // console.log(user.displayName);
     return (
         <nav className={styles.navbar_horizontal}>
             <ul>
@@ -40,9 +40,11 @@ export default function Navbar() {
                 <li className={styles.contactus}>
                     <NavLink to = "/contactus">Contact us</NavLink>
                 </li>
+                {user && user.displayName === "admin" &&
                 <li className={styles.admin}>
                     <NavLink to = "/admin">Admin</NavLink>
-                </li>
+                </li>}
+                
                 {user && 
                     <li className={styles.search_container}>
                         <form onSubmit={handleSearch}>

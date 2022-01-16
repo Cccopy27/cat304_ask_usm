@@ -5,6 +5,7 @@ import { useCollection } from "../hooks/useCollection";
 import Swal from "sweetalert2";
 import { useState, useRef, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function AdminDashboard() {
     const {document,error, loading:loadingForm} = useCollection(["contactForm"],null,["added_at","desc"]);
@@ -14,6 +15,7 @@ export default function AdminDashboard() {
     // const [loading, setLoading] = useState(false);
 
     const [mode, setMode] = useState("Contact");
+    const {user} = useAuthContext();
 
     const handleContactCLick = (e) =>{
         e.preventDefault();
@@ -179,13 +181,15 @@ export default function AdminDashboard() {
 
     return (
         <div className={styles.adminDashboard}>
-            {!loadingForm && !loadingReport && <div className={styles.title}>
+
+            {user && user.displayName === "admin" && !loadingForm && !loadingReport && <div className={styles.title}>
                     <button className={mode==="Contact"? `${styles.contact_btn} ${styles.active}`:styles.contact_btn} onClick={handleContactCLick} >Message</button>
                     <button className={mode==="Report"? `${styles.report_btn} ${styles.active}`:styles.report_btn} onClick={handleReportCLick} >Report</button>
             </div>}
-            {loadingForm && loadingReport && <div>Loading</div>}
-            {(reportDoc || document) && <PaginatedItems itemsPerPage={9} /> } 
-            {(!reportDoc && !document) && <div>no document</div> }              
+            {user && user.displayName === "admin" && loadingForm && loadingReport && <div>Loading</div>}
+            {user && user.displayName === "admin" && (reportDoc || document) && <PaginatedItems itemsPerPage={9} /> } 
+            {user && user.displayName === "admin" && (!reportDoc && !document) && <div>no document</div> }  
+            {user && user.displayName !== "admin" && <div>You do not have this permission</div>}            
         </div>
     )
 }
