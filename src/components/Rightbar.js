@@ -45,7 +45,10 @@ export default function RightBar() {
             const unsub = onSnapshot(docRef, (doc) => {
                 setUserBookMarkTag(doc.data().bookmark_tag);
                 setUserBookMarkUser(doc.data().bookmark_user);
+                console.log(userBookMarkTag);
+                console.log(userBookMarkUser);
             })
+          
             setLoading(false);
 
             return()=>{
@@ -102,7 +105,7 @@ export default function RightBar() {
         else{
             setUserBookMarkUserTop5(userBookMarkUser);
         }
-    },[ userBookMarkUser ])
+    },[ userBookMarkUser, userBookMarkTag ])
 
 
 
@@ -341,7 +344,7 @@ export default function RightBar() {
                                         <li>{item.tagName}</li>
                                     </Link>
                                 ))}
-                                {!loading && userBookMarkTagTop5 && userBookMarkTagTop5.length === 0 && <span className={styles.light_font}>Empty</span>}
+                                {!loading && ((userBookMarkTagTop5&& userBookMarkTagTop5.length === 0 )||userBookMarkTagTop5 === undefined )&& <span className={styles.light_font}>Empty</span>}
                             </ul>
                             {userBookMarkTag && userBookMarkTag.length > 5 && <span className={styles.viewmore} onClick={() => {setShowModalBookmark(true)}}> + View more</span>}
                             
@@ -355,7 +358,7 @@ export default function RightBar() {
                                         <li>{item.userName}</li>
                                     </Link>
                                 ))}
-                                {!loading && userBookMarkUserTop5 && userBookMarkUserTop5.length === 0 && <span className={styles.light_font}>Empty</span>}
+                                {!loading && ((userBookMarkUserTop5 && userBookMarkUserTop5.length === 0)|| userBookMarkUserTop5 === undefined) && <span className={styles.light_font}>Empty</span>}
                             </ul>
                             {userBookMarkUser && userBookMarkUser.length > 5 && <span className={styles.viewmore} onClick={() => {setShowModalBookmark(true)}}> + View more</span>}
 
