@@ -284,17 +284,19 @@ export default function Question() {
                     
                     <div className={styles.question_bottom}>
                         <div className={styles.question_tag_big_container}>
-                        <p className={styles.question_subTitle_tags}>
-                            <AiOutlineTag className={styles.tagicon}/>
-                        </p>
+                            <p className={styles.question_subTitle_tags}>
+                                <AiOutlineTag className={styles.tagicon}/>
+                            </p>
                             <div className={styles.question_tag_container}>
-                            {document.question_tag.map(tag=>(
-                            <span className={styles.tag} key={tag}>{tag}</span>
-                        ))}
+                                {document.question_tag.map(tag=>(
+                                <span className={styles.tag} key={tag}>{tag}</span>
+                            ))}
                             </div>
                         </div>
                         
-                        
+                        <div className={styles.question_type_container}>
+                            <span className={styles.question_type}>{document.question_type.value}</span>
+                        </div>
                         <p className={styles.question_des}>{document.question_description}</p>
                         {document.question_image_url && document.question_image_url.map(imageSrc=>
                             <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}

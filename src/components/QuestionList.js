@@ -26,11 +26,17 @@ export default function QuestionList({questions}) {
                                     added {formatDistanceToNow(question.added_at.toDate(),{addSuffix:true})}
                                 </span>
                             </div>
-                            <div className={styles.tag}>
-                                {question.question_tag.map(item=>(
-                                    <span className={styles.tag_item}>{item}</span>
-                                ))}
+                            <div className={styles.lower_part}>
+                                <div className={styles.tag}>
+                                    {question.question_tag.map(item=>(
+                                        <span className={styles.tag_item}>{item}</span>
+                                    ))}
+                                </div>
+                                <div className={styles.question_type}>
+                                    <span className={styles.question_type_item}>{question.question_type.value}</span>
+                                </div>
                             </div>
+                            
                             
                         </div>
                     

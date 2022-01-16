@@ -33,8 +33,11 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
     const textAreaTitle = useRef();
     const navigate = useNavigate();
     const [categories,setCategories] = useGlobalState("tag");
+    const [questionType, setQuestionType] = useGlobalState("questionType");
     const [defaultSelector, setDefaultSelector] = useState([]);
+    const [defaultSelectorType, setDefaultSelectorType] = useState(null);
     const {user} = useAuthContext();
+    const [questionTypeInput, setQuestionTypeInput] = useState(null);
 
     // set all document value to current input field
     useEffect(() => {
@@ -44,6 +47,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
             if(document){
                 settitle(document.question_title);
                 setdes(document.question_description);
+                setQuestionTypeInput(document.question_type.value);
                 // settag(document.question_tag); 
                 // settag([]);
                 let tempTagArr = [];
@@ -84,6 +88,11 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
             tempArray2.push(tempObj);
         });
         setDefaultSelector(tempArray2);
+        const tempObj2 = {
+            label:questionTypeInput,
+            value:questionTypeInput,
+        }
+        setDefaultSelectorType(tempObj2);
 
     }, [document,editMode]);
     
@@ -157,6 +166,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                         question_image_name:imageName,
                         question_image_url:"",
                         edited_at: Timestamp.now(),
+                        question_type: questionTypeInput,
                     }
                     // if user use back old image
                     if(image.length === 0){
@@ -326,7 +336,14 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                             />
                         </div>
                         
-
+                        <div className={styles.question_type_container}>
+                            <Select
+                                className={styles.question_type}
+                                onChange={(option)=>setQuestionTypeInput(option)}
+                                options={questionType}
+                                defaultValue={defaultSelectorType}
+                            />    
+                        </div>
                         <label className={styles.add_question_des}>
                             <textarea 
                             className={styles.question_des}

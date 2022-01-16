@@ -25,8 +25,10 @@ export default function AddQuestion() {
     const {updateDocument} = useFirestore(["record"]);
     const navigate = useNavigate();
     const [categories, setCategories] = useGlobalState("tag");
+    const [questionType, setQuestionType] = useGlobalState("questionType")
     const [batchErr,setBatchErr] = useState(false);
     const {user} = useAuthContext();
+    const [questionTypeInput, setQuestionTypeInput] = useState(null);
 
     // when user submit the form
     const handleSubmit=(e)=>{
@@ -36,7 +38,7 @@ export default function AddQuestion() {
             Swal.fire('Please login to add something', '', 'warning')
         }
         else{
-            if(formInput.current.checkValidity()){
+            if(formInput.current.checkValidity() && tag.length !== 0 && questionTypeInput != null){
                 Swal.fire({
                     title: 'Are you sure?',
                     showDenyButton: true,
@@ -72,6 +74,7 @@ export default function AddQuestion() {
                             added_at: Timestamp.now(),
                             edited_at:"",
                             created_by:user.uid,
+                            question_type:questionTypeInput
                         }
                         // console.log(question_object);
     
@@ -165,6 +168,15 @@ export default function AddQuestion() {
                             isMulti
                         />
                         {/* add tag here  */}
+                    </label>
+
+                    <label className={styles.add_question_tag}>
+                        <span className={styles.span_title}>Type:</span>
+                        <Select
+                            onChange={(option)=>setQuestionTypeInput(option)}
+                            options={questionType}
+                            defaultValue={{label: "Question",value:"Question"}}
+                        />
                     </label>
 
                     <label className={styles.add_question_des}>

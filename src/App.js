@@ -71,6 +71,11 @@ const categories = [
  
 ];
 
+const questionType = [
+  {value:"Question", label: "Question"},
+  {value:"Non-Question", label: "Non-Question"}
+]
+
 categories.sort((a,b) => a.value.localeCompare(b.value));
 // update tag purpose // do not delete
 // new categories
@@ -99,6 +104,8 @@ const orderList=[
 // set global variable tag
 store.setState("tag",categories);
 store.setState("order",orderList);
+store.setState("questionType",questionType);
+
 
 function App() {
   return (
