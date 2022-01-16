@@ -2,16 +2,38 @@ import styles from "./Signup.module.css";
 
 import { useState } from 'react';
 import { useSignup } from '../../hooks/useSignup';
+import { useCollection } from "../../hooks/useCollection";
 
 export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const { signup, isPending, error } = useSignup();
+  const {document, loading, error:userNameError} = useCollection(["users"]);
+  const [customErr, setCustomErr] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(email, password, username);
+    let repeat = false;
+    // check username to avoid repeat
+    if (userNameError) {
+      setCustomErr("Something went wrong")
+    }
+    else{
+      document.forEach (userName => {
+        if (userName.displayName === username) {
+          repeat = true;
+        }
+      })
+      if (!repeat){
+        signup(email, password, username);
+        setCustomErr('');
+      }
+      else {
+        setCustomErr("Username already taken, please try another username")
+      }
+    }
+    
   }
   
   return (
@@ -48,6 +70,7 @@ export default function Signup() {
         {!isPending && <button>Sign up</button>}
         {isPending && <button disabled>loading</button>}
         {error && <p>{error}</p>}
+        {customErr && <p>{customErr}</p>}
       </form>
     </div>
   )
