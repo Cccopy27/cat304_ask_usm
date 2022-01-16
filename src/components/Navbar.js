@@ -29,7 +29,10 @@ export default function Navbar() {
         <nav className={styles.navbar_horizontal}>
             <ul>
                 <li className={styles.mainpage}>
-                    <NavLink to = "/">ASK@USM</NavLink>
+                    <span>ASK@</span>
+                    <span></span>
+                    <span className={styles.orange}>USM</span>
+                    
                 </li>
                 <li className={styles.aboutus}>
                     <NavLink to = "/aboutus">About Us</NavLink>
@@ -40,19 +43,21 @@ export default function Navbar() {
                 <li className={styles.admin}>
                     <NavLink to = "/admin">Admin</NavLink>
                 </li>
-                <li className={styles.search_container}>
-                    <form onSubmit={handleSearch}>
-                        <label>
-                            <input
-                            type="text"
-                            placeholder="Search keywords..."
-                            value={search}
-                            onChange={e=>{setSearch(e.target.value)}}
-                            />
-                            <AiOutlineSearch className={styles.search_btn} onClick={handleSearch}/>
-                        </label>
-                    </form>
-                </li>
+                {user && 
+                    <li className={styles.search_container}>
+                        <form onSubmit={handleSearch}>
+                            <label>
+                                <input
+                                type="text"
+                                placeholder="Search keywords..."
+                                value={search}
+                                onChange={e=>{setSearch(e.target.value)}}
+                                />
+                                <AiOutlineSearch className={styles.search_btn} onClick={handleSearch}/>
+                            </label>
+                        </form>
+                    </li>
+                }  
 
                 {user && (
                     <>
