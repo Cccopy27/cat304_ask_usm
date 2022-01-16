@@ -43,10 +43,10 @@ export default function RightBar() {
             setLoading(true);
             const docRef = doc(db, "users", user.uid);
             const unsub = onSnapshot(docRef, (doc) => {
-                setUserBookMarkTag(doc.data().bookmark_tag);
-                setUserBookMarkUser(doc.data().bookmark_user);
-                console.log(userBookMarkTag);
-                console.log(userBookMarkUser);
+                if (doc.data().bookmark_tag && doc.data().bookmark_user) {
+                    setUserBookMarkTag(doc.data().bookmark_tag);
+                    setUserBookMarkUser(doc.data().bookmark_user);
+                }
             })
           
             setLoading(false);
