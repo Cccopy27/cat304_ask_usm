@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import {useState } from "react";
+import { useState, useEffect } from "react";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -17,6 +17,12 @@ export default function Navbar() {
         setSearch("");
         navigate(`/question/search/${search}`);
     }
+
+    useEffect(() => {
+        if (!user) {
+            navigate("/login")
+        }
+    }, [user])
 
 
     return (

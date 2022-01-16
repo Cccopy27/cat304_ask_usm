@@ -118,8 +118,8 @@ function App() {
       {authIsReady && (
         <BrowserRouter>
           <Navbar/>
-          <Sidebar/>
-          <Rightbar/>
+          {user && <Sidebar/>}
+          {user && <Rightbar/> }
           <div className='content'>
             <Routes>
               {user && <Route path="/question" element={<QuestionDashboard/>}/>}
