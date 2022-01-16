@@ -4,11 +4,13 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import {useState } from "react";
 import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function Navbar() {
     const navigate = useNavigate();
     const [search,setSearch] = useState("");
     const { logout, isPending } = useLogout();
+    const { user } = useAuthContext();
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -42,16 +44,28 @@ export default function Navbar() {
                         </label>
                     </form>
                 </li>
-                <li className={styles.signup}>
-                    <NavLink to = "/signup">Sign up</NavLink>
-                </li>
-                <li className={styles.login}>
-                    <NavLink to = "/login">Log in</NavLink>
-                </li>
-                <li>
-                    {!isPending && <button onClick={logout}>Logout</button>}
-                    {isPending && <button disabled>Logging out...</button>}  
-                </li>
+
+                {user && (
+                    <>
+                        <li className={styles.logout}>
+                            <NavLink to = "/login" onClick={logout}>Logout</NavLink>
+                        </li>
+                        <li className={styles.username}>
+                            <span>Hi {user.displayName}</span>
+                        </li>
+                    </>
+                )}
+                
+                {!user && (
+                    <>
+                        <li className={styles.signup}>
+                            <NavLink to = "/signup">Sign up</NavLink>
+                        </li>
+                        <li className={styles.login}>
+                            <NavLink to = "/login">Log in</NavLink>
+                        </li>
+                    </>
+                )}
             </ul>    
         </nav>
     )

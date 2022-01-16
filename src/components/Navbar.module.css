@@ -19,7 +19,7 @@
     margin-right: 30px;
 }
 
-.navbar_horizontal .login, .navbar_horizontal .signup{
+.navbar_horizontal .login, .navbar_horizontal .signup, .navbar_horizontal .logout, .navbar_horizontal .username{
     float:right;
 }
 

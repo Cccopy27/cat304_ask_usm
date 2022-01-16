@@ -1,3 +1,5 @@
+import styles from "./Login.module.css";
+
 import { useState } from 'react';
 import { useLogin } from '../../hooks/useLogin';
 
@@ -13,8 +15,8 @@ export default function Login() {
   
   return (
     <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 className={styles["login-caption"]}>Login</h2>
+      <form className={styles["login-form"]} onSubmit={handleSubmit}>
         <label>
           <span>email:</span>
           <input
