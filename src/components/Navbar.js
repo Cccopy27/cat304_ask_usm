@@ -22,6 +22,9 @@ export default function Navbar() {
     return (
         <nav className={styles.navbar_horizontal}>
             <ul>
+                <li className={styles.mainpage}>
+                    <NavLink to = "/">ASK@USM</NavLink>
+                </li>
                 <li className={styles.aboutus}>
                     <NavLink to = "/aboutus">About Us</NavLink>
                 </li>

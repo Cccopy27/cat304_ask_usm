@@ -12,7 +12,7 @@
 }
 
 .aboutus{
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 .aboutus, .contactus{
@@ -72,4 +72,8 @@
 .search_btn:hover{
     cursor: pointer;
     color: #9DAAF2;
+}
+
+.mainpage{
+    margin-left: 25px;
 }

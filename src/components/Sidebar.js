@@ -7,9 +7,9 @@ export default function Sidebar() {
                 <div className={styles.sidebar_content}>
                     <nav className={styles.sidebar_links}>
                         <ul className={styles.sidebar_ul}>
-                            <li className={styles.mainpage}>
+                            {/* <li className={styles.mainpage}>
                                 <NavLink to = "/">ASK@USM</NavLink>
-                            </li>
+                            </li> */}
                             <li className={styles.home}>
                                 <NavLink to = "/home">Home</NavLink>
                             </li>
