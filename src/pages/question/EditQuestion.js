@@ -47,7 +47,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
             if(document){
                 settitle(document.question_title);
                 setdes(document.question_description);
-                setQuestionTypeInput(document.question_type.value);
+                setQuestionTypeInput(document.question_type);
                 // settag(document.question_tag); 
                 // settag([]);
                 let tempTagArr = [];
@@ -89,8 +89,8 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
         });
         setDefaultSelector(tempArray2);
         const tempObj2 = {
-            label:questionTypeInput,
-            value:questionTypeInput,
+            label:document.question_type.value,
+            value:document.question_type.value,
         }
         setDefaultSelectorType(tempObj2);
 

@@ -28,7 +28,7 @@ export default function AddQuestion() {
     const [questionType, setQuestionType] = useGlobalState("questionType")
     const [batchErr,setBatchErr] = useState(false);
     const {user} = useAuthContext();
-    const [questionTypeInput, setQuestionTypeInput] = useState(null);
+    const [questionTypeInput, setQuestionTypeInput] = useState({value:"Question",label:"Question"});
 
     // when user submit the form
     const handleSubmit=(e)=>{

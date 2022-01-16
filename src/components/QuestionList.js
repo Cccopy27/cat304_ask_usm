@@ -22,9 +22,15 @@ export default function QuestionList({questions}) {
                                 <h4 className={styles.question_title}>
                                     {question.question_title}
                                 </h4>
-                                <span className={styles.question_span}> 
-                                    added {formatDistanceToNow(question.added_at.toDate(),{addSuffix:true})}
-                                </span>
+                                <div className={styles.question_up_right}>
+                                    <span className={styles.question_span}> 
+                                        added {formatDistanceToNow(question.added_at.toDate(),{addSuffix:true})}
+                                    </span>
+                                    <span className={styles.question_type}>
+                                        {question.question_type.value}
+                                    </span>
+                                </div>
+                                
                             </div>
                             <div className={styles.lower_part}>
                                 <div className={styles.tag}>
@@ -32,9 +38,7 @@ export default function QuestionList({questions}) {
                                         <span className={styles.tag_item}>{item}</span>
                                     ))}
                                 </div>
-                                <div className={styles.question_type}>
-                                    <span className={styles.question_type_item}>{question.question_type.value}</span>
-                                </div>
+                                
                             </div>
                             
                             
