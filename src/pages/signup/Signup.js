@@ -3,6 +3,8 @@ import styles from "./Signup.module.css";
 import { useState } from 'react';
 import { useSignup } from '../../hooks/useSignup';
 import { useCollection } from "../../hooks/useCollection";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -11,6 +13,7 @@ export default function Signup() {
   const { signup, isPending, error } = useSignup();
   const {document, loading, error:userNameError} = useCollection(["users"]);
   const [customErr, setCustomErr] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,6 +31,8 @@ export default function Signup() {
       if (!repeat){
         signup(email, password, username);
         setCustomErr('');
+        Swal.fire("Account created, please proceed to login","","success");
+        navigate("/login");
       }
       else {
         setCustomErr("Username already taken, please try another username")

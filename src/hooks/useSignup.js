@@ -5,6 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { db, auth } from "../firebase/config";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc} from "firebase/firestore";
+import Swal from "sweetalert2";
 
 export const useSignup = () => {
   const [isCancelled, setIsCancelled] = useState(false)
@@ -25,7 +26,7 @@ export const useSignup = () => {
       const docRef = doc(db, 'users', auth.currentUser.uid)
       updateProfile(auth.currentUser, { displayName: username });
       setDoc((docRef), { displayName: username });
-      dispatch({ type: 'LOGIN', payload: res.user });
+      // dispatch({ type: 'LOGIN', payload: res.user });
 
         if (!isCancelled) {
           setIsPending(false)
