@@ -12,8 +12,9 @@ import { useGlobalState } from "state-pool";
 import {AiOutlineTag,AiOutlineUser} from "react-icons/ai";
 import { db } from "../../firebase/config"
 import { writeBatch,doc } from "firebase/firestore";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function EditQuestion({document,editMode,setEditMode}) {
+export default function EditQuestion({document,editMode,setEditMode,displayName}) {
     
     const {updateDocument,response} = useFirestore(["questions"]);
     const {updateDocument:updateDocument2, response:response2} = useFirestore(["record"]);
@@ -32,7 +33,12 @@ export default function EditQuestion({document,editMode,setEditMode}) {
     const textAreaTitle = useRef();
     const navigate = useNavigate();
     const [categories,setCategories] = useGlobalState("tag");
+    const [questionType, setQuestionType] = useGlobalState("questionType");
     const [defaultSelector, setDefaultSelector] = useState([]);
+    const [defaultSelectorType, setDefaultSelectorType] = useState(null);
+    const {user} = useAuthContext();
+    const [questionTypeInput, setQuestionTypeInput] = useState(null);
+
     // set all document value to current input field
     useEffect(() => {
         window.scrollTo(0,0);
@@ -41,6 +47,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
             if(document){
                 settitle(document.question_title);
                 setdes(document.question_description);
+                setQuestionTypeInput(document.question_type);
                 // settag(document.question_tag); 
                 // settag([]);
                 let tempTagArr = [];
@@ -81,6 +88,11 @@ export default function EditQuestion({document,editMode,setEditMode}) {
             tempArray2.push(tempObj);
         });
         setDefaultSelector(tempArray2);
+        const tempObj2 = {
+            label:document.question_type.value,
+            value:document.question_type.value,
+        }
+        setDefaultSelectorType(tempObj2);
 
     }, [document,editMode]);
     
@@ -117,115 +129,123 @@ export default function EditQuestion({document,editMode,setEditMode}) {
     // save changes
     const handleSave=(e)=>{
         e.preventDefault();
-        if(formInput.current.checkValidity()){
-            Swal.fire({
-                title: 'Do you want to save the changes?',
-                showDenyButton: true,
-                // showCancelButton: true,
-                confirmButtonText: 'Yes',
-                // denyButtonText: `Don't save`,
-              }).then(async(result) => {
-                if (result.isConfirmed) {
-                    setLoading(true);
-                    Swal.fire({
-                        title:"Now Loading...",
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                    })
-                    Swal.showLoading();
-
-                let tagList=[];
-
-                tag.forEach(item=>{
-                    tagList.push(item.value);
-                })
-
-                
-                // user input as object
-                const question_object={
-                    question_title: title,
-                    question_description: des,
-                    question_tag: tagList,
-                    question_image_name:imageName,
-                    question_image_url:"",
-                    edited_at: Timestamp.now(),
-                    created_by:""
-                }
-                // if user use back old image
-                if(image.length === 0){
-                    question_object.question_image_url = document.question_image_url;
-                }
-
-                // if user upload new image
-                // delete all image from storage
-                if(image.length !== 0){
-                    document.question_image_name.forEach(image_name=>{
-                        // Create a reference to the file to delete
-                        const desertRef = ref(storage, `question/${document.id}/${image_name}`);
-                        // Delete the file
-                        deleteObject(desertRef).then(() => {
-                            // File deleted successfully
-    
-                        }).catch((error) => {
-                            console.log(error);
-                        // Uh-oh, an error occurred!
-                        });
-                    })
-                }
-    
-                //update  database
-                await updateDocument(document.id,question_object,image,"questions");
-
-                //update tag
-                // get the tag tat need to increase
-                const tagIncrease = tagList.filter(newTag => !oldTag.includes(newTag));
-                const tagDecrease = oldTag.filter(old => !tagList.includes(old));
-                console.log(tagIncrease,tagDecrease);
-                const updateObj = {};
-                tagIncrease.forEach(item=>{
-                    updateObj[item] = increment(1);
-                })
-                tagDecrease.forEach(item=>{
-                    updateObj[item] = increment(-1);
-                })
-                console.log(updateObj);
-                
-                await updateDocument2("tag",updateObj);
-                if(response2.error){
-                    console.log(response2.error);
-                }
-                setLoading(false);
-                setOldTag();
-    
-                if(!response.error){
-                    settag([]);
-                    settitle("");
-                    setdes("");
-                    setimage([]);
-                    setImageURL([]);
-                    formInput.current.reset();
-                    Swal.fire('Saved!', '', 'success');
-                    navigate(`/question/${document.id}`);
-                    setEditMode(false);
-                }
-                else{
-                    console.log(response.error);
-                    Swal.fire({
-                        icon:"error",
-                        title:"Something wrong",
-                        showConfirmButton: true,
-                    })
-                }
-
-                }
-              })
+        if (!user) {
+            Swal.fire("Please login to edit","","warning");
         }
         else{
-            Swal.fire({
-                title:"Make sure the form is completed!",
-                showConfirmButton: true,
-            })
+            e.preventDefault();
+            if(formInput.current.checkValidity()){
+                Swal.fire({
+                    title: 'Do you want to save the changes?',
+                    showDenyButton: true,
+                    // showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    // denyButtonText: `Don't save`,
+                }).then(async(result) => {
+                    if (result.isConfirmed) {
+                        setLoading(true);
+                        Swal.fire({
+                            title:"Now Loading...",
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                        })
+                        Swal.showLoading();
+
+                    let tagList=[];
+
+                    tag.forEach(item=>{
+                        tagList.push(item.value);
+                    })
+
+                    
+                    // user input as object
+                    const question_object={
+                        question_title: title,
+                        question_description: des,
+                        question_tag: tagList,
+                        question_image_name:imageName,
+                        question_image_url:"",
+                        edited_at: Timestamp.now(),
+                        question_type: questionTypeInput,
+                    }
+                    // if user use back old image
+                    if(image.length === 0){
+                        question_object.question_image_url = document.question_image_url;
+                    }
+
+                    // if user upload new image
+                    // delete all image from storage
+                    if(image.length !== 0){
+                        document.question_image_name.forEach(image_name=>{
+                            // Create a reference to the file to delete
+                            const desertRef = ref(storage, `question/${document.id}/${image_name}`);
+                            // Delete the file
+                            deleteObject(desertRef).then(() => {
+                                // File deleted successfully
+        
+                            }).catch((error) => {
+                                console.log(error);
+                            // Uh-oh, an error occurred!
+                            });
+                        })
+                    }
+        
+                    //update  database
+                    await updateDocument(document.id,question_object,image,"questions");
+
+                    //update tag
+                    // get the tag tat need to increase
+                    const tagIncrease = tagList.filter(newTag => !oldTag.includes(newTag));
+                    const tagDecrease = oldTag.filter(old => !tagList.includes(old));
+                    console.log(tagIncrease,tagDecrease);
+                    const updateObj = {};
+                    tagIncrease.forEach(item=>{
+                        updateObj[item] = increment(1);
+                    })
+                    tagDecrease.forEach(item=>{
+                        updateObj[item] = increment(-1);
+                    })
+                    console.log(updateObj);
+                    
+                    await updateDocument2("tag",updateObj);
+                    if(response2.error){
+                        console.log(response2.error);
+                    }
+                    setLoading(false);
+                    setOldTag();
+        
+                    if(!response.error){
+                        settag([]);
+                        settitle("");
+                        setdes("");
+                        setimage([]);
+                        setImageURL([]);
+                        formInput.current.reset();
+                        Swal.fire('Saved!', '', 'success');
+                        navigate(`/question/${document.id}`);
+                        setEditMode(false);
+                    }
+                    else{
+                        console.log(response.error);
+                        Swal.fire({
+                            icon:"error",
+                            title:"Something wrong",
+                            showConfirmButton: true,
+                        })
+                    }
+
+                    }
+                })
+            }
+            else{
+                Swal.fire({
+                    title:"Make sure the form is completed!",
+                    showConfirmButton: true,
+                })
+            }
         }
+
+        
     }
 
     const handleCancel = (e) =>{ 
@@ -286,7 +306,7 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                                         <p className={styles.question_subTitle_author}>
                                             <AiOutlineUser className={styles.peopleIcon}/>
                                             
-                                            {document.created_by}
+                                            {displayName}
                                         </p>
                                     </div>
                                     <div className={styles.question_subTitle_right}>
@@ -316,7 +336,14 @@ export default function EditQuestion({document,editMode,setEditMode}) {
                             />
                         </div>
                         
-
+                        <div className={styles.question_type_container}>
+                            <Select
+                                className={styles.question_type}
+                                onChange={(option)=>setQuestionTypeInput(option)}
+                                options={questionType}
+                                defaultValue={defaultSelectorType}
+                            />    
+                        </div>
                         <label className={styles.add_question_des}>
                             <textarea 
                             className={styles.question_des}

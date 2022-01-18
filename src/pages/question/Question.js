@@ -11,12 +11,13 @@ import Swal from "sweetalert2";
 import EditQuestion from "./EditQuestion";
 import AddComment from "../comment/AddComment";
 import CommentSection from "../comment/CommentSection";
-import { writeBatch,doc,collection, getDocs, Timestamp } from "firebase/firestore";
+import { writeBatch,doc,collection, getDocs, Timestamp,getDoc } from "firebase/firestore";
 import {AiOutlineTag,AiOutlineUser,AiOutlineEye,AiOutlineClose} from "react-icons/ai";
 import {MdReportProblem} from "react-icons/md";
 import { increment } from "firebase/firestore";
 import { useComponentVisible } from "../../hooks/useComponentVisible";
 import { async } from "@firebase/util";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function Question() {
     // get id from param
@@ -32,10 +33,13 @@ export default function Question() {
     const [prob, setProb] = useState("");
     const {Comref, isComponentVisible:showReportModal, setIsComponentVisible:setShowReportModal} = useComponentVisible(false);
     const {addDocument, response:ReportResponse} = useFirestore(["report"]);
+    const [userName, setUserName] = useState(null);
+    const {user} = useAuthContext();
 
     useEffect(() => {
         // only update view 1
         if(document && change === 1 && !localStorage.getItem(document.id)){
+            Swal.showLoading();
             // console.log(change,"document");
             updateDocument(document.id,{view:increment(1)});
             if(response.error){
@@ -49,6 +53,7 @@ export default function Question() {
                 localStorage.removeItem(document.id);
             }
             setTimeout(clearStorage, 30000);
+            Swal.close();
 
         } 
     }, [document,change]);
@@ -56,6 +61,19 @@ export default function Question() {
     useEffect(()=>{
         window.scrollTo(0,0); 
     },[])
+
+    useEffect(async() => {
+        // get user name for question when successful fetch question data
+        if (document) {
+            Swal.showLoading();
+            const docRef = doc(db, "users", document.created_by);
+            const docSnap = await getDoc(docRef);
+            setUserName(docSnap.data().displayName);
+            Swal.close();
+        }
+
+
+    },[document])
 
     // delete question
     const handleDelete=(e)=>{
@@ -151,8 +169,12 @@ export default function Question() {
     // add question
     const handleAddQuestion=(e)=>{
         e.preventDefault();
-        navigate("/addquestion");
-
+        if (!user) {
+            Swal.fire("Please login to add something","","warning");
+        }
+        else{
+            navigate("/addquestion");
+        }
     }
 
     //report
@@ -204,19 +226,12 @@ export default function Question() {
     if(error){
         return <div>{error}</div>
     };
-    if(!document){
-        return <div>Loading...</div>
-    };
-
-    
-    
-    
-
 
     return (
         <div>
             <div className={styles.question_container}>
-                {!editMode && 
+                {!document && <div>Loading</div>}
+                {!editMode && document && 
                     <div className={styles.question_details}>
                         <div className={styles.question_top}>
                             <div className={styles.question_header}>
@@ -249,31 +264,36 @@ export default function Question() {
                                     
                                     <p className={styles.question_subTitle_author}>
                                         <AiOutlineUser className={styles.peopleIcon}/>
-                                        {document.created_by}
+                                        <span className={styles.peopleName}>{userName}</span>
                                     </p>
                                 </div>
+                                {user && ((user.uid === document.created_by) || (user.uid === "ZuYyHrRcx3bVYqhCIp4ZB6U1gve2")) && 
                                 <div className={styles.question_subTitle_right}>
                                     <button className={styles.editBtn}onClick={handleEdit}>Edit</button>
                                     <button className={styles.deleteBtn}
                                     onClick={handleDelete}>Delete</button>
                                     
                                 </div>
+                                }
+                                
                             </div>
                         </div>
                     
                     <div className={styles.question_bottom}>
                         <div className={styles.question_tag_big_container}>
-                        <p className={styles.question_subTitle_tags}>
-                            <AiOutlineTag className={styles.tagicon}/>
-                        </p>
+                            <p className={styles.question_subTitle_tags}>
+                                <AiOutlineTag className={styles.tagicon}/>
+                            </p>
                             <div className={styles.question_tag_container}>
-                            {document.question_tag.map(tag=>(
-                            <span className={styles.tag} key={tag}>{tag}</span>
-                        ))}
+                                {document.question_tag.map(tag=>(
+                                <span className={styles.tag} key={tag}>{tag}</span>
+                            ))}
                             </div>
                         </div>
                         
-                        
+                        <div className={styles.question_type_container}>
+                            <span className={styles.question_type}>{document.question_type.value}</span>
+                        </div>
                         <p className={styles.question_des}>{document.question_description}</p>
                         {document.question_image_url && document.question_image_url.map(imageSrc=>
                             <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
@@ -282,9 +302,9 @@ export default function Question() {
                     
                 </div>
                 }
-                <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode}/>
-                {!editMode && <AddComment question_id={document.id}/>}
-                {!editMode && <CommentSection question_id={document.id}/>}
+                {document && <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode} displayName={userName}/>}
+                {document && !editMode && <AddComment question_id={document.id}/>}
+                {document && !editMode && <CommentSection question_id={document.id}/>}
             </div>
             {showReportModal && <div className={styles.report_modal_container} ref={Comref}>
                 <form className={styles.report_modal_form}>

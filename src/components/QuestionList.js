@@ -11,8 +11,7 @@ export default function QuestionList({questions}) {
     const Items=({questions})=>{
         return(
             <div className={styles.question_list}>
-
-                {!questions && <p>No result...</p>}
+                
                 {questions && questions.map(question => (
                     <Link className={styles.question_item}to={`/question/${question.id}`} key={question.id}>
                         <div className={styles.left_part}>
@@ -23,15 +22,25 @@ export default function QuestionList({questions}) {
                                 <h4 className={styles.question_title}>
                                     {question.question_title}
                                 </h4>
-                                <span className={styles.question_span}> 
-                                    added {formatDistanceToNow(question.added_at.toDate(),{addSuffix:true})}
-                                </span>
+                                <div className={styles.question_up_right}>
+                                    <span className={styles.question_span}> 
+                                        added {formatDistanceToNow(question.added_at.toDate(),{addSuffix:true})}
+                                    </span>
+                                    <span className={styles.question_type}>
+                                        {question.question_type.value}
+                                    </span>
+                                </div>
+                                
                             </div>
-                            <div className={styles.tag}>
-                                {question.question_tag.map(item=>(
-                                    <span className={styles.tag_item}>{item}</span>
-                                ))}
+                            <div className={styles.lower_part}>
+                                <div className={styles.tag}>
+                                    {question.question_tag.map(item=>(
+                                        <span className={styles.tag_item}>{item}</span>
+                                    ))}
+                                </div>
+                                
                             </div>
+                            
                             
                         </div>
                     
@@ -85,6 +94,9 @@ export default function QuestionList({questions}) {
         );
     }
     return (
+        <>
+            {questions.length === 0 && <p>No result...</p>}
             <PaginatedItems itemsPerPage={7} />    
+        </>
     )
 }

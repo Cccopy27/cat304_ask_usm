@@ -8,7 +8,7 @@ import { collection ,onSnapshot, query, where,orderBy } from "firebase/firestore
 export const useCollection=(collections, queries2,orderBy2)=>{
     const [document, setDocument] = useState(null);
     const [error, setError] = useState(null)
-
+    const [loading, setLoading] = useState(false);
     // useref to prevent infinite loop
     // _quries is an array and it is different on every function call
     // const queries = useRef(queries2).current;
@@ -16,7 +16,7 @@ export const useCollection=(collections, queries2,orderBy2)=>{
     // const orderBys = useRef(orderBy2).current;
     
     useEffect(()=>{
-
+        setLoading(true);
         let ref = collection(db, ...collections);
         if(queries2){
             ref = query(ref,where(...queries2));
@@ -35,9 +35,11 @@ export const useCollection=(collections, queries2,orderBy2)=>{
             //update state
             setDocument(results);
             setError(null);
+            setLoading(false);
         },(error)=>{
             console.log(error);
-            setError(error.message)
+            setError(error.message);
+            setLoading(false);
         })
 
         //handle unmount
@@ -47,5 +49,5 @@ export const useCollection=(collections, queries2,orderBy2)=>{
         }
     },[])
 
-    return{document, error};
+    return{document, error, loading};
 }

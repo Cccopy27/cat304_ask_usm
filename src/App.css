@@ -2,7 +2,7 @@
     display: grid;
     grid-template-rows: 120px, calc(100vh - 120px);
     grid-template-columns: 20vh 5fr 1.5fr;
-    grid-template-areas: "sidebar navbar navbar"
+    grid-template-areas: "navbar navbar navbar"
                          "sidebar content rightbar";
 }
 

@@ -1,5 +1,4 @@
-import styles from "./TagFilter.module.css";
-import Select from "react-select";
+import styles from "./UserHeader.module.css";
 import { useState,useRef, useEffect } from "react";
 import { useGlobalState } from "state-pool";
 import { useNavigate } from "react-router-dom";
@@ -7,15 +6,14 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import Select from "react-select";
 
-export default function TagFilter({setTag,tag, setFilter}) {
-    const [categories, setCategories] = useGlobalState("tag");
+export default function UserHeader( {setFilter} ) {
+    const [userName, setUserName] = useState("");
     const [orderList, setorderList] = useGlobalState("order");
     const navigate = useNavigate();
-    const [tempTag, setTempTag] = useState(tag);
-    const tagRef = useRef();
-    const {result} = useParams();
     const {user} = useAuthContext();
+    const {result} = useParams();
 
     // navigate to add question
     const handleAddQuestion = (e) =>{
@@ -27,39 +25,26 @@ export default function TagFilter({setTag,tag, setFilter}) {
             navigate("/addquestion");            
         }
     }
-  
+
     // output result
     const handleSearch = (e)=>{
         e.preventDefault();
         // console.log(tag);
         //check valid
-        if(tempTag.length !== 0){
-            let paramURL = "/tag/";
-            // change tag format to only value
-            setTag(tempTag.map(item=>{
-                paramURL+=item.value+"&";
-                return item.value;
-            }))
-    
-            // remove last &
-            paramURL = paramURL.substring(0,paramURL.length-1);
-            setTag([]);
-            setTempTag([]);
+        if(userName){
+            const paramURL = `/user/${userName}`;
+
+            setUserName(null);
             navigate(paramURL);
-        }
-        else{
-            Swal.fire('Make sure at least one tag was selected', '', 'info');
-        }
-        
+
+        } 
     }
 
     // reset input when changing pages
-    useEffect(()=>{
-        // reset form
-        tagRef.current.clearValue();
-        setTag([]);
-        setTempTag([]);
-    },[result]);
+    // useEffect(()=>{
+
+    //     setUserName("");
+    // },[result]);
 
     const handleFilter=(options)=>{
         switch(options.value){
@@ -82,23 +67,27 @@ export default function TagFilter({setTag,tag, setFilter}) {
     }
 
     return (
-        <div className={styles.tag_filter_container}>
-            <div className={styles.tag_filter}>
-                <h2 className={styles.tag_title}>Tags</h2>
-                <div className={styles.tag_options}>
-                    <Select
-                        ref={tagRef}
-                        onChange={(option)=>setTempTag(option)}
-                        options={categories}
-                        isMulti
-                    />
+        <div className={styles.user_filter_container}>
+            <div className={styles.user_filter}>
+                <h2 className={styles.user_title}>User</h2>
+                <form className={styles.user_options}>
+                    <label className={styles.userlabel}>
+                        <input
+                        className={styles.userInput}
+                            onChange={(e)=>setUserName(e.target.value)}
+                            value={userName}
+                            required
+                        />
+                    </label>
                     
-                </div>
-                <div className={styles.tag_btn_container}>
-                    <button className={styles.tag_btn} onClick={handleSearch}>Search</button>
-                    <AiOutlineSearch className={styles.tag_search} onClick={handleSearch}/>
+                <div className={styles.user_btn_container}>
+                    <button className={styles.user_btn} onClick={handleSearch}>Search</button>
+                    <AiOutlineSearch className={styles.user_search} onClick={handleSearch}/>
 
                 </div>
+                    
+                </form>
+                
 
                 <div className={styles.sort_by}>
                     <Select

@@ -14,6 +14,7 @@ export default function TagDashboard() {
     const [fetchData, setFetchData] = useState();
     const {result} = useParams();
     const [tag,setTag]=  useState([]);
+    const [loading, setLoading] = useState(false);
 
     // update fetch data when document exist
     // useEffect(()=>{
@@ -41,8 +42,9 @@ export default function TagDashboard() {
             //update state
             setFetchData(results);
         }
-
+        setLoading(true);
         getDataFilter();
+        setLoading(false);
         
     },[filter])
 
@@ -51,7 +53,8 @@ export default function TagDashboard() {
         <div className={styles.tagDashboard_container}>
             <TagFilter setTag={setTag} tag={tag} setFilter={setFilter}/>
             <div className={styles.TagDashboard_content}>
-                 {fetchData && <TagResult tag={tag} document={fetchData}/>}
+                 {!loading && fetchData && <TagResult tag={tag} document={fetchData}/>}
+                 {loading && <div>Loading</div>}
             </div>
         </div>
     )

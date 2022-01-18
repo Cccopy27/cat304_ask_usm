@@ -16,6 +16,7 @@ export default function QuestionDashboard () {
     const [fetchData, setFetchData] = useState();
     const [defaultMode, setDefaultMode] = useState(true);
     const {result} = useParams();    
+    const [loading, setLoading] = useState(false);
     let filterDoc = "";
 
     // useEffect(async()=>{
@@ -49,8 +50,9 @@ export default function QuestionDashboard () {
             //update state
             setFetchData(results);
         }
-
+        setLoading(true);
         getDataFilter();
+        setLoading(false);
         
     },[filter])
 
@@ -96,7 +98,8 @@ export default function QuestionDashboard () {
                     <span className={styles.result}> {result}</span>
                 </div>
                     }
-                {filterDoc && <QuestionList questions={filterDoc}/>}
+                {!loading && filterDoc && <QuestionList questions={filterDoc}/>}
+                {loading && <div>Loading</div>}
             </div>
         </div>
     )
