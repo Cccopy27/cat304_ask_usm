@@ -132,7 +132,7 @@ function App() {
 
               {user && <Route path="/question/search/:result" element={<QuestionDashboard/>}/>}
 
-              {user && <Route path="/contactus" element={<ContactUs/>}/>}
+              {<Route path="/contactus" element={<ContactUs/>}/>}
 
               {user && <Route path="/admin" element={<AdminDashboard/>}/>}
 
