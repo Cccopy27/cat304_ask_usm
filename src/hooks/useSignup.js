@@ -5,7 +5,6 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { db, auth } from "../firebase/config";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc} from "firebase/firestore";
-import Swal from "sweetalert2";
 
 export const useSignup = () => {
   const [isCancelled, setIsCancelled] = useState(false)
