@@ -97,7 +97,7 @@ export default function SubComment({subComment,item, question_id, comment_id}) {
                         
                         
                     </div>
-                    {user && user.uid === item.created_by && 
+                    {user && (user.uid === item.created_by || (user.uid === "ZuYyHrRcx3bVYqhCIp4ZB6U1gve2")) && 
                     <div className={styles.btn_group}>
                         <button className={styles.edit_btn} onClick={handleEdit}>Edit</button>
                         <button className={styles.delete_btn} onClick={handleDelete}>Delete</button>

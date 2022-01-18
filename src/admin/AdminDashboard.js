@@ -182,14 +182,14 @@ export default function AdminDashboard() {
     return (
         <div className={styles.adminDashboard}>
 
-            {user && user.displayName === "admin" && !loadingForm && !loadingReport && <div className={styles.title}>
+            {user && (user.uid === "ZuYyHrRcx3bVYqhCIp4ZB6U1gve2") && !loadingForm && !loadingReport && <div className={styles.title}>
                     <button className={mode==="Contact"? `${styles.contact_btn} ${styles.active}`:styles.contact_btn} onClick={handleContactCLick} >Message</button>
                     <button className={mode==="Report"? `${styles.report_btn} ${styles.active}`:styles.report_btn} onClick={handleReportCLick} >Report</button>
             </div>}
-            {user && user.displayName === "admin" && loadingForm && loadingReport && <div>Loading</div>}
-            {user && user.displayName === "admin" && (reportDoc || document) && <PaginatedItems itemsPerPage={9} /> } 
-            {user && user.displayName === "admin" && (!reportDoc && !document) && <div>no document</div> }  
-            {user && user.displayName !== "admin" && <div>You do not have this permission</div>}            
+            {user && (user.uid === "ZuYyHrRcx3bVYqhCIp4ZB6U1gve2") && loadingForm && loadingReport && <div>Loading</div>}
+            {user && (user.uid === "ZuYyHrRcx3bVYqhCIp4ZB6U1gve2") && (reportDoc || document) && <PaginatedItems itemsPerPage={9} /> } 
+            {user && (user.uid === "ZuYyHrRcx3bVYqhCIp4ZB6U1gve2") && (!reportDoc && !document) && <div>no document</div> }  
+            {user && (user.uid === "ZuYyHrRcx3bVYqhCIp4ZB6U1gve2") && <div>You do not have this permission</div>}            
         </div>
     )
 }

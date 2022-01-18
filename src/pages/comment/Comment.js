@@ -98,7 +98,7 @@ export default function Comment({comment, question_id}) {
                             
                         </div>
                         
-                        {user && (user.uid === comment.created_by) &&
+                        {user && ((user.uid === comment.created_by) || (user.uid === "ZuYyHrRcx3bVYqhCIp4ZB6U1gve2")) &&
                         <div className={styles.btn}>
                             {!loading && <button className={styles.btnEdit}onClick={handleEdit}>Edit</button>}
                             {!loading && <button className={styles.btnDelete}onClick={handleDelete}>Delete</button>}

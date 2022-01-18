@@ -267,7 +267,7 @@ export default function Question() {
                                         <span className={styles.peopleName}>{userName}</span>
                                     </p>
                                 </div>
-                                {user && (user.uid === document.created_by) && 
+                                {user && ((user.uid === document.created_by) || (user.uid === "ZuYyHrRcx3bVYqhCIp4ZB6U1gve2")) && 
                                 <div className={styles.question_subTitle_right}>
                                     <button className={styles.editBtn}onClick={handleEdit}>Edit</button>
                                     <button className={styles.deleteBtn}
