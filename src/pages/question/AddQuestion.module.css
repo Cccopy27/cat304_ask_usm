@@ -138,3 +138,33 @@
 .add_img_btn{
     background-color: transparent;
 }
+
+@media screen and (max-width: 400px) {
+    .add_question_form_container{
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size: 13px;
+    }
+
+    .add_question_title_header{
+        font-size: 15px;
+    }
+
+    .span_title,.input_style,.add_title_input, .span_title,.add_img_btn,.submit_btn{
+        font-size: 13px;
+    }
+
+    .submit_btn{
+        text-align: center;
+        width: 100px;
+        height: 30px;
+        padding: 5px !important;
+    }
+
+    .input_style{
+        width: 100% !important;
+    }
+
+
+    
+}

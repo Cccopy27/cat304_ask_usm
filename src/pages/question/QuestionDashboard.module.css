@@ -25,3 +25,16 @@
     margin-left: 10px;
     color: #9DAAF2;
 }
+
+@media screen and (max-width: 400px) {
+    .question_list{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .question_container{
+        height: 1150px;
+        /* overflow-y: hidden; */
+    }
+    
+}

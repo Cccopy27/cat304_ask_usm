@@ -127,7 +127,7 @@ export const useFirestore=(collections)=>{
             // handle image
             if(image){
                 const changes = (imgURL)=>{
-                    if(uploadPathName==="question"){
+                    if(uploadPathName==="questions"){
                         return {
                             question_image_url: arrayUnion(imgURL)
                         }

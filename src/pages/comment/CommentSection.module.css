@@ -33,3 +33,12 @@
 .comment_each2{
     margin:0px 20px 0px 100px;
 }
+
+@media screen and (max-width: 400px) {
+    .comment_header{
+        font-size: 15px;
+    }
+    .comment_each2{
+        margin-left: 20px;
+    }
+}

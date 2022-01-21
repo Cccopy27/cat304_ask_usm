@@ -78,3 +78,12 @@
 .comment_edit{
     margin-left: 20px;
 }
+
+@media screen and (max-width: 400px) {
+    .comments{
+        font-size: 12px;
+    }
+    .comment_container p {
+        font-size: 10px !important;
+    }
+}

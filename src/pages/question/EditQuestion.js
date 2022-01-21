@@ -178,7 +178,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                     if(image.length !== 0){
                         document.question_image_name.forEach(image_name=>{
                             // Create a reference to the file to delete
-                            const desertRef = ref(storage, `question/${document.id}/${image_name}`);
+                            const desertRef = ref(storage, `questions/${document.id}/${image_name}`);
                             // Delete the file
                             deleteObject(desertRef).then(() => {
                                 // File deleted successfully
@@ -189,6 +189,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                             });
                         })
                     }
+                    console.log(image);
         
                     //update  database
                     await updateDocument(document.id,question_object,image,"questions");
@@ -226,7 +227,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                         setEditMode(false);
                     }
                     else{
-                        console.log(response.error);
+                        console.log("hi",response.error);
                         Swal.fire({
                             icon:"error",
                             title:"Something wrong",

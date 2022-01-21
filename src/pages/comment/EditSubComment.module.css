@@ -47,3 +47,9 @@
     color: #b84d64;
     cursor: pointer;
 }
+
+@media screen and (max-width: 400px) {
+    .subComment_container p, .subComment_container span, .subComment_container , .input_style {
+        font-size: 8px !important;
+    }
+}

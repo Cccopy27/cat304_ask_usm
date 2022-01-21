@@ -62,3 +62,20 @@
     color: #9DAAF2; 
 
 }
+
+@media screen and (max-width: 400px) {
+    .sidebar_ul li{
+        font-size: 13px;
+        padding: 10px !important;
+        margin-bottom: 0px;
+    }
+
+    .sidebar{
+        max-width: 100%;
+    }
+
+    .sidebar_ul {
+        /* display: flex; */
+        flex-direction: row !important;
+    }
+}
