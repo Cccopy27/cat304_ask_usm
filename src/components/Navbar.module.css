@@ -81,3 +81,36 @@
 .orange{
     color: orange;
 }
+
+@media screen and (max-width: 400px) {
+    .aboutus{
+        display: none;
+    }
+    .aboutus, .contactus,.mainpage,.logout,.username{
+        margin: 0px;
+        font-size: 13px;
+    }
+    .username, .logout{
+        position: absolute;
+        right: 0px;
+    }
+
+    .username{
+        width: 80px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin-right: 40px;
+
+    }
+    .search_container{
+        text-align: center;
+        /* display: block; */
+        margin-left: 30px !important;
+        width: 80% !important;
+    }
+
+    .search_container input[type=text]{
+        width: 80%;
+        font-size: 13px;
+    }
+}

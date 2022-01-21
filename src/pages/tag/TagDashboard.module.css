@@ -11,3 +11,12 @@
 .TagDashboard_content{
     margin-top: 15px;
 }
+
+@media screen and (max-width: 400px) {
+    .tagDashboard_container{
+        margin-left: 10px;
+        margin-right: 10px;
+        height: 1200px;
+        /* margin-top: 5px; */
+    }
+}

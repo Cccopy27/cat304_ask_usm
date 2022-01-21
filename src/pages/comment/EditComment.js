@@ -6,7 +6,7 @@ import { Timestamp } from "firebase/firestore";
 import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
-
+import { useDocument } from "../../hooks/useDocument";
 
 export default function EditComment({document,editMode,setEditMode, question_id}) {
     const [newComment,setNewComment] = useState("");
@@ -18,7 +18,14 @@ export default function EditComment({document,editMode,setEditMode, question_id}
     const formInput = useRef();
     const {updateDocument,response} = useFirestore(["questions",question_id,"comment"]);
     const commentRef = useRef();
+    const {document:document2, error} = useDocument("users",document.created_by);
+    const [userName, setUserName] = useState(null);
 
+    useEffect(() => {
+        if (document2) {
+            setUserName(document2.displayName);
+        }
+    }, [document2])
     // show current comment 
     useEffect(() => {
         const getallData=async()=>{
@@ -186,7 +193,7 @@ export default function EditComment({document,editMode,setEditMode, question_id}
                                         <p className={styles.comment_edited}>Edited {formatDistanceToNow(document.edited_at.toDate(),{addSuffix:true})}</p>
                                     }
                                     
-                                    <p className={styles.comment_author}>Added by {document.created_by}</p>
+                                    <p className={styles.comment_author}>Added by {userName}</p>
                                 </div>
                                 
                                 <div className={styles.btn}>

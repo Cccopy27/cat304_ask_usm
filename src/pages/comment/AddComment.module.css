@@ -48,3 +48,19 @@
     color: #64b6f8;
     cursor: pointer;
 }
+
+@media screen and (max-width: 400px) {
+    .comment_container{
+        margin-left: 10px;
+        margin-right: 10px;        
+    }
+
+    .comment_textarea{
+        font-size: 13px;
+        width: 100%;
+    }
+
+    .input_style{
+        font-size: 13px;
+    }
+}

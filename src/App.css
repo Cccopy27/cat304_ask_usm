@@ -12,3 +12,12 @@
     /* height: 2000px; */
     /* overflow: auto; */
 }
+
+@media screen and (max-width: 400px) {
+    .App{
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+    }
+
+}

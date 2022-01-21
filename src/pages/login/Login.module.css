@@ -37,3 +37,11 @@
   background: #1A2238;
   color: #fff;
 }
+
+@media screen and (max-width: 400px) {
+
+
+  .login-form input{
+    max-width: 95%;
+  }
+}

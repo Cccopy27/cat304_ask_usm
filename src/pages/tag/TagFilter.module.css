@@ -90,3 +90,57 @@
     margin-left: 20px;
     /* width: 200px; */
 }
+
+@media screen and (max-width: 400px) {
+    .tag_filter{
+        display: grid;
+        grid-template-areas: "top1 top2"
+                             "btm_left btm_mid";
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        max-height: 150px;
+        row-gap: 10px;
+    }
+
+    .tag_filter_container{
+        height: 60px;
+        margin-bottom: 20px;
+    }
+
+    .tag_title{
+        font-size: 14px;
+        grid-area: "top1";
+    }
+
+    .tag_options{
+        grid-area: btm_left !important;
+    }
+
+    .tag_btn_container{
+        grid-area: btm_mid;
+        /* font-size: 10px !important; */
+        width: 80%;
+    }
+
+    .tag_btn{
+        font-size: 10px;
+    }
+    .tag_search{
+        /* color: #9DAAF2; */
+        width: 8px;
+    }
+    .question_add_btn{
+        font-size: 10px;
+    }
+
+    .sort_by{
+        grid-area: top2;
+        margin: 0px;
+        font-size: 13px;
+        width: 80%;
+    }
+    .tag_options{
+        font-size: 13px;
+        margin: 0px;
+    }
+}

@@ -137,3 +137,26 @@
     cursor: pointer;
     color: #9DAAF2;
 }
+
+@media screen and (max-width: 400px) {
+    .contact_form_container{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .contact_form_container p, .contact_form_container span ,.contact_form_container button ,.contact_form_container input{
+        font-size: 13px;
+    }
+
+    .add_form_email{
+        margin-left: 20px;
+    }
+
+    .add_contact_form{
+        max-width: 360px;
+    }
+
+    .add_subject_input, .add_message_input, .input_style{
+        width: 100% !important;
+    }
+}
