@@ -166,7 +166,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                         question_image_name:imageName,
                         question_image_url:"",
                         edited_at: Timestamp.now(),
-                        question_type: questionTypeInput,
+                        question_type: questionTypeInput.value,
                     }
                     // if user use back old image
                     if(image.length === 0){
@@ -341,7 +341,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                             <Select
                                 className={styles.question_type}
                                 onChange={(option)=>setQuestionTypeInput(option)}
-                                options={questionType}
+                                options={questionType.slice(0,2)}
                                 defaultValue={defaultSelectorType}
                             />    
                         </div>

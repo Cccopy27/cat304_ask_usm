@@ -292,7 +292,7 @@ export default function Question() {
                         </div>
                         
                         <div className={styles.question_type_container}>
-                            <span className={styles.question_type}>{document.question_type.value}</span>
+                            <span className={styles.question_type}>{document.question_type}</span>
                         </div>
                         <p className={styles.question_des}>{document.question_description}</p>
                         {document.question_image_url && document.question_image_url.map(imageSrc=>

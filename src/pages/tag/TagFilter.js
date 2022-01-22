@@ -8,15 +8,18 @@ import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function TagFilter({setTag,tag, setFilter}) {
+export default function TagFilter({setTag,tag, setFilter, setQuestionTypeFilter}) {
     const [categories, setCategories] = useGlobalState("tag");
     const [orderList, setorderList] = useGlobalState("order");
+    const [questionType, setQuestionType] = useGlobalState("questionType");
+    const [chosenQuestionType, setChosenQuestionType] = useState("");
     const navigate = useNavigate();
     const [tempTag, setTempTag] = useState(tag);
     const tagRef = useRef();
     const {result} = useParams();
     const {user} = useAuthContext();
-
+    
+    
     // navigate to add question
     const handleAddQuestion = (e) =>{
         e.preventDefault();
@@ -81,6 +84,25 @@ export default function TagFilter({setTag,tag, setFilter}) {
         }
     }
 
+    const handleQuestionType = (options) => {
+        switch(options.value) {
+            case "Question":
+                setQuestionTypeFilter(["question_type", "==", "Question"]);
+                break;
+
+            case "Non-Question":
+                setQuestionTypeFilter(["question_type", "==", "Non-Question"]);
+                break;
+
+            case "All":
+                setQuestionTypeFilter([]);
+                break;
+
+            default:
+                setQuestionTypeFilter([]);
+        }
+    }
+
     return (
         <div className={styles.tag_filter_container}>
             <div className={styles.tag_filter}>
@@ -94,6 +116,7 @@ export default function TagFilter({setTag,tag, setFilter}) {
                     />
                     
                 </div>
+                
                 <div className={styles.tag_btn_container}>
                     <button className={styles.tag_btn} onClick={handleSearch}>Search</button>
                     <AiOutlineSearch className={styles.tag_search} onClick={handleSearch}/>
@@ -105,6 +128,14 @@ export default function TagFilter({setTag,tag, setFilter}) {
                         onChange={handleFilter}
                         options={orderList}
                         defaultValue={orderList[0]}
+                    />
+                </div>
+
+                <div className={styles.question_type}>
+                    <Select
+                        onChange={handleQuestionType}
+                        options={questionType}
+                        defaultValue={{label: "All",value:"All"}}
                     />
                 </div>
             </div>

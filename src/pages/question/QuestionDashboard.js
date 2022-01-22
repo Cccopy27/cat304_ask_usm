@@ -17,6 +17,7 @@ export default function QuestionDashboard () {
     const [defaultMode, setDefaultMode] = useState(true);
     const {result} = useParams();    
     const [loading, setLoading] = useState(false);
+    const [questionTypeFilter, setQuestionTypeFilter] = useState([])
     let filterDoc = "";
 
     // useEffect(async()=>{
@@ -40,7 +41,14 @@ export default function QuestionDashboard () {
 
         // fetch data again with sort by filter
         const getDataFilter=async()=>{
-            const ref = query(collection(db, "questions"), orderBy(...filter));
+            let ref = "";
+            if (questionTypeFilter.length !== 0) {
+                console.log(2);
+                ref = query(collection(db, "questions"),where(...questionTypeFilter), orderBy(...filter));
+            }
+            else{
+                ref = query(collection(db, "questions"), orderBy(...filter));
+            }
             let results= [];
             const querySnapShot = await getDocs(ref);
     
@@ -54,7 +62,7 @@ export default function QuestionDashboard () {
         getDataFilter();
         setLoading(false);
         
-    },[filter])
+    },[filter, questionTypeFilter])
 
     useEffect(()=>{
         window.scrollTo(0,0);
@@ -88,7 +96,7 @@ export default function QuestionDashboard () {
 
     return (
         <div className ={styles.question_container}>
-            <QuestionHeader setFilter={setFilter}/>
+            <QuestionHeader setFilter={setFilter} setQuestionTypeFilter={setQuestionTypeFilter}/>
             <div className={styles.question_list}>
                 {/* {error && <p>Something went wrong... {error}</p>} */}
                 {!filterDoc && <p>Loading...</p>}
