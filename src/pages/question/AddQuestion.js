@@ -29,6 +29,9 @@ export default function AddQuestion() {
     const [batchErr,setBatchErr] = useState(false);
     const {user} = useAuthContext();
     const [questionTypeInput, setQuestionTypeInput] = useState({value:"Question",label:"Question"});
+    const [questionTypeSearch, setQuestionTypeSearch] = useState();
+    
+
 
     // when user submit the form
     const handleSubmit=(e)=>{
@@ -74,7 +77,7 @@ export default function AddQuestion() {
                             added_at: Timestamp.now(),
                             edited_at:"",
                             created_by:user.uid,
-                            question_type:questionTypeInput
+                            question_type:questionTypeInput.value
                         }
                         // console.log(question_object);
     
@@ -174,7 +177,7 @@ export default function AddQuestion() {
                         <span className={styles.span_title}>Type:</span>
                         <Select
                             onChange={(option)=>setQuestionTypeInput(option)}
-                            options={questionType}
+                            options={questionType.slice(0,2)}
                             defaultValue={{label: "Question",value:"Question"}}
                         />
                     </label>

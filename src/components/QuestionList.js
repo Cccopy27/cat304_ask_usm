@@ -27,7 +27,7 @@ export default function QuestionList({questions}) {
                                         added {formatDistanceToNow(question.added_at.toDate(),{addSuffix:true})}
                                     </span>
                                     <span className={styles.question_type}>
-                                        {question.question_type.value}
+                                        {question.question_type}
                                     </span>
                                 </div>
                                 

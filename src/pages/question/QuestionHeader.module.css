@@ -48,6 +48,11 @@
     margin-left: 60px;
 }
 
+.question_type{
+    margin-left: 60px;
+}
+
+
 @media screen and (max-width: 400px) {
     .question_header{
         margin-left: 10px;
@@ -59,8 +64,11 @@
         font-size: 14px;
     }
 
-    .question_sort{
-        margin-left: 20px;
+    .question_sort, .question_type{
+        margin-left: 5px;
+        font-size: 13px;
+        width: 100px;
+        /* height: 5px; */
         /* flex: 2; */
     }
 

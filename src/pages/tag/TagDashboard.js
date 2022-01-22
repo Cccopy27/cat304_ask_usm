@@ -10,6 +10,7 @@ import { useCollection } from "../../hooks/useCollection";
 
 export default function TagDashboard() {
     const [filter, setFilter] = useState(["added_at","desc"]);
+    const [questionTypeFilter, setQuestionTypeFilter] = useState([])
     // const {document,error} = useCollection(["questions"],"",filter);
     const [fetchData, setFetchData] = useState();
     const {result} = useParams();
@@ -31,7 +32,14 @@ export default function TagDashboard() {
     useEffect(()=>{
         // fetch data again with sort by filter
         const getDataFilter=async()=>{
-            const ref = query(collection(db, "questions"), orderBy(...filter));
+            let ref = "";
+            if (questionTypeFilter.length !== 0) {
+
+                ref = query(collection(db, "questions"),where(...questionTypeFilter), orderBy(...filter));
+            }
+            else{
+                ref = query(collection(db, "questions"),orderBy(...filter));
+            }
             let results= [];
             console.log("I keep running in get collections");
             const querySnapShot = await getDocs(ref);
@@ -46,12 +54,12 @@ export default function TagDashboard() {
         getDataFilter();
         setLoading(false);
         
-    },[filter])
+    },[filter, questionTypeFilter])
 
 
     return (
         <div className={styles.tagDashboard_container}>
-            <TagFilter setTag={setTag} tag={tag} setFilter={setFilter}/>
+            <TagFilter setTag={setTag} tag={tag} setFilter={setFilter} setQuestionTypeFilter={setQuestionTypeFilter}/>
             <div className={styles.TagDashboard_content}>
                  {!loading && fetchData && <TagResult tag={tag} document={fetchData}/>}
                  {loading && <div>Loading</div>}

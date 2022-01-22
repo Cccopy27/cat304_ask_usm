@@ -76,7 +76,8 @@ const categories = [
 
 const questionType = [
   {value:"Question", label: "Question"},
-  {value:"Non-Question", label: "Non-Question"}
+  {value:"Non-Question", label: "Non-Question"},
+  {value:"All", label: "All"}
 ]
 
 categories.sort((a,b) => a.value.localeCompare(b.value));
@@ -101,8 +102,7 @@ const orderList=[
   {value:"Latest",label:"Latest"},
   {value:"View",label:"View"},
   {value:"Rating",label:"Rating"},
-  {value:"Oldest",label:"Oldest"},
-
+  {value:"Oldest",label:"Oldest"}
 ]
 // set global variable tag
 store.setState("tag",categories);
