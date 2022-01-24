@@ -130,6 +130,7 @@ function App() {
               {user && <Route path="/question/:id" element={<Question/>}/>}
 
               {user && <Route path="/tag/:result" element={<TagDashboard/>}/>}
+              {user && <Route path="/tag" element={<TagDashboard/>}/>}
 
               {user && <Route path="/question/search/:result" element={<QuestionDashboard/>}/>}
 
@@ -146,7 +147,6 @@ function App() {
               {user && <Route path="/user" element={<UserDashboard/>}/>}
               {user && <Route path="/user/:result" element={<UserDashboard/>}/>}
 
-              {!user && <Route path="/home" element={<Signup/>}/>}
               {user && <Route path="/home" element={<Home/>}/>}
 
             </Routes>

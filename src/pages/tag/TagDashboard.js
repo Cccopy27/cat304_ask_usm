@@ -25,8 +25,12 @@ export default function TagDashboard() {
 
     // update tag when page navigation
     useEffect(() => {
-
-        setTag(result.split("&"));
+        if (result) {
+            setTag(result.split("&"));
+        }
+        else {
+            setTag("");
+        }
     }, [result]);
 
     useEffect(()=>{

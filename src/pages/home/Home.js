@@ -9,7 +9,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import Select from "react-select";
-import { startOfWeek, endOfWeek, format, startOfMonth, endOfMonth } from "date-fns";
+import { startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
 
 export default function Home() {
     const [categories, setCategories] = useState([]);
@@ -24,24 +24,18 @@ export default function Home() {
         {value: "All the Time", label:"All the Time"},
 
     ]
-    // display popular tag
+
     useEffect(()=>{
-        // categories.forEach(tagName=>{
-        //     const dynamicVar = 
-        //     console.log(document2[tagName]);
-        // })
         const allTagArr = [];
         if(document2){
             delete document2.id;
             for(const [key,value]of Object.entries(document2)){
-                // console.log(key,value);
                 allTagArr.push({tagName:key, value:value})
             }
             allTagArr.sort((a,b)=>{
                 return b.value - a.value;
             })
             setCategories(allTagArr.slice(0,18));
-            console.log(allTagArr.slice(0,18));
         }
     },[document2])
 
@@ -51,24 +45,34 @@ export default function Home() {
         const curr = new Date;
 
         if (filter.value === "This Week") {
-            q = query(questionRef, orderBy("added_at"), startAt(startOfWeek(curr)), endAt(endOfWeek(curr)),limit(5));
+            q = query(questionRef, orderBy("added_at"),startAt(startOfWeek(curr)), endAt(endOfWeek(curr)));
         }
         else if (filter.value === "This Month"){
-            q = query(questionRef, orderBy("added_at"),startAt(startOfMonth(curr)), endAt(endOfMonth(curr)), limit(5));
+            q = query(questionRef, orderBy("added_at"),startAt(startOfMonth(curr)), endAt(endOfMonth(curr)));
         }
         else{
-            q = query(questionRef, orderBy("added_at"), limit(5));
+            q = query(questionRef, orderBy("view","desc"), limit(5));
         }
 
         const querySnapShot = await getDocs(q);
+
         const tempArr = [];
         querySnapShot.forEach((doc) => {
             tempArr.push({id:doc.id, ...doc.data()});
         })
-        setPopularQuestion(tempArr);
+        if (filter.value === "This Week" || filter.value === "This Month") {
+            tempArr.sort((a,b)=>{
+                return b.view - a.view;
+            })
+            setPopularQuestion(tempArr);
+
+        } else{
+            setPopularQuestion(tempArr);
+
+        }
     }, [filter])
 
-    // add question
+
     const handleAddQuestion=(e)=>{
         e.preventDefault();
         if (!user) {
@@ -81,10 +85,13 @@ export default function Home() {
 
     return (
     <div>
+        {/* header */}
         <div>
             <span>Dashboard</span>
             <button className={styles.question_add_btn} onClick={handleAddQuestion}>Add Something</button>
         </div>
+        {(!popularQuestion || !document2) && <div>Loading...</div>}
+
         {/* popular question */}
         {popularQuestion &&
         <div>
@@ -94,14 +101,15 @@ export default function Home() {
             <Select
                 onChange={(option)=>setFilter(option)}
                 options={questionPopularSortOptions}
+                defaultValue={questionPopularSortOptions[2]}
+
             />
             <div className={styles.question_list} >
                 {popularQuestion&&<QuestionList questions={popularQuestion} dashboardMode={true} />}
             </div>
         </div>
-        
-        
         }
+
         {/* popular tag  */}
         {document2 && 
         <div>
@@ -117,7 +125,5 @@ export default function Home() {
                 ))}
             </div>
         </div>}
-
-        
     </div>)
 }
