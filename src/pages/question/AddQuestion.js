@@ -65,6 +65,7 @@ export default function AddQuestion() {
                             tagList.push(item.value);
                             // tagObj[item.value] = increment(1)
                         })
+                        const curr = new Date();
                     
                         // user input as object
                         const question_object={

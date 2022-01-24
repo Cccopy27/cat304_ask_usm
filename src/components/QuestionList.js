@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate';
 import { useState, useEffect } from "react";
 
 
-export default function QuestionList({questions}) {
+export default function QuestionList({questions, dashboardMode}) {
 
     // update view when user click in
     const Items=({questions})=>{
@@ -72,7 +72,7 @@ export default function QuestionList({questions}) {
         return (
             <>
               <Items questions={currentItems} />
-              <ReactPaginate className={styles.paginateBar}
+              {!dashboardMode && <ReactPaginate className={styles.paginateBar}
                 nextLabel="next >"
                 onPageChange={handlePageClick}
                 pageRangeDisplayed={2}
@@ -90,6 +90,7 @@ export default function QuestionList({questions}) {
                 breakLinkClassName={styles.page_link}
                 containerClassName={styles.pagination}                activeClassName={`${styles.active}`}                renderOnZeroPageCount={null}
               />
+                }
             </>
         );
     }
