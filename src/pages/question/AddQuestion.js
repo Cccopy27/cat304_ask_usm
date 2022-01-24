@@ -78,7 +78,8 @@ export default function AddQuestion() {
                             added_at: Timestamp.now(),
                             edited_at:"",
                             created_by:user.uid,
-                            question_type:questionTypeInput.value
+                            question_type:questionTypeInput.value,
+                            view:0,
                         }
                         // console.log(question_object);
     
