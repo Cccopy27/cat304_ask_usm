@@ -17,6 +17,7 @@ import ContactUs from './components/ContactUs';
 import AdminDashboard from "./admin/AdminDashboard";
 import UserDashboard from './pages/user/UserDashboard';
 import { useAuthContext } from "./hooks/useAuthContext";
+import Home from './pages/home/Home';
 
 // categories
 const categories = [
@@ -144,6 +145,9 @@ function App() {
 
               {user && <Route path="/user" element={<UserDashboard/>}/>}
               {user && <Route path="/user/:result" element={<UserDashboard/>}/>}
+
+              {!user && <Route path="/home" element={<Signup/>}/>}
+              {user && <Route path="/home" element={<Home/>}/>}
 
             </Routes>
           </div>
