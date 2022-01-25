@@ -21,7 +21,7 @@ export default function Sidebar() {
                                 <NavLink to = "/tag">Tags</NavLink>
                             </li>
                             <li className={styles.new}>
-                                <NavLink to = "/tag/News">New</NavLink>
+                                <NavLink to = "/tag/News">News</NavLink>
                             </li>
                             <li className={styles.club}>
                                 <NavLink to = "/tag/Event">Event</NavLink>
