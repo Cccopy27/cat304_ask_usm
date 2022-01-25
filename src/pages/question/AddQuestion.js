@@ -65,6 +65,7 @@ export default function AddQuestion() {
                             tagList.push(item.value);
                             // tagObj[item.value] = increment(1)
                         })
+                        const curr = new Date();
                     
                         // user input as object
                         const question_object={
@@ -77,7 +78,12 @@ export default function AddQuestion() {
                             added_at: Timestamp.now(),
                             edited_at:"",
                             created_by:user.uid,
-                            question_type:questionTypeInput.value
+                            question_type:questionTypeInput.value,
+                            view:0,
+                            upVote:0,
+                            downVote:0,
+                            upVoteList:[],
+                            downVoteList:[]
                         }
                         // console.log(question_object);
     

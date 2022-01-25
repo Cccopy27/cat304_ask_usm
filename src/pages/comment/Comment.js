@@ -9,11 +9,14 @@ import { useFirestore } from "../../hooks/useFirestore";
 import {AiOutlineUser} from "react-icons/ai";
 import { useDocument } from "../../hooks/useDocument";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import {BsCaretUp, BsCaretUpFill, BsCaretDown, BsCaretDownFill} from "react-icons/bs";
+import { increment, arrayUnion, arrayRemove } from "firebase/firestore";
 
 export default function Comment({comment, question_id}) {
     const [editMode,setEditMode] = useState(false);
     const[loading,setLoading] = useState(false);
     const {deleteDocument} = useFirestore(["questions",question_id,"comment"]);
+    const {updateDocument,response} = useFirestore(["questions",question_id,"comment"]);
     const {document, error} = useDocument("users",comment.created_by);
     const [userName, setUserName] = useState(null);
     const {user} = useAuthContext();
@@ -76,9 +79,116 @@ export default function Comment({comment, question_id}) {
             }
           })
     };
+
+    const handleUpVote = async(e) => {
+        e.preventDefault();
+
+        if (!comment.upVoteList.includes(user.uid)) {
+            let comment_object = "";
+            if (comment.downVoteList.includes(user.uid)) {
+                comment_object={
+                    upVote:increment(1),
+                    downVote:increment(-1),
+                    upVoteList:arrayUnion(user.uid),
+                    downVoteList:arrayRemove(user.uid)
+                }
+            }
+            else {
+                comment_object={
+                    upVote:increment(1),
+                    upVoteList:arrayUnion(user.uid)
+                }
+            }
+            
+            //update  database
+            await updateDocument(comment.id,comment_object);
+    
+            if (response.error){
+                Swal.fire("Something wrong","","error");
+            }
+
+        } else{
+            const comment_object = {
+                upVote:increment(-1),
+                upVoteList:arrayRemove(user.uid),
+            }
+
+            //update  database
+            await updateDocument(comment.id,comment_object);
+    
+            if (response.error){
+                Swal.fire("Something wrong","","error");
+            }
+        }
+        
+
+    }
+
+    const handleDownVote = async(e) => {
+        e.preventDefault();
+        
+        if (!comment.downVoteList.includes(user.uid)) {
+            let comment_object = "";
+            if (comment.upVoteList.includes(user.uid)) {
+                comment_object={
+                    upVote:increment(-1),
+                    downVote:increment(1),
+                    upVoteList:arrayRemove(user.uid),
+                    downVoteList:arrayUnion(user.uid)
+                }
+            }
+            else {
+                comment_object={
+                    downVote:increment(1),
+                    downVoteList:arrayUnion(user.uid)
+                }
+            }
+
+            //update  database
+            await updateDocument(comment.id,comment_object);
+
+            if (response.error){
+                Swal.fire("Something wrong","","error");
+            }
+        }
+        else {
+            const comment_object = {
+                downVote:increment(-1),
+                downVoteList:arrayRemove(user.uid),
+            }
+
+            //update  database
+            await updateDocument(comment.id,comment_object);
+    
+            if (response.error){
+                Swal.fire("Something wrong","","error");
+            }
+        }
+
+        
+    }
     return (
         <div className={styles.comment_big_container}>
             {!editMode && 
+            <div className={styles.comment_container_big}>
+                <div className={styles.vote_container}>
+                    
+                    <span className={styles.upVoteSpan}>{comment.upVote}</span>
+                    {comment.upVoteList.includes(user.uid) && 
+                        <BsCaretUpFill className={styles.upVote} onClick={(e)=>{handleUpVote(e)}}/>
+                    }
+                    {!comment.upVoteList.includes(user.uid) && 
+                        <BsCaretUp className={styles.upVote} onClick={(e)=>{handleUpVote(e)}}/>
+                    }
+                    {comment.downVoteList.includes(user.uid) && 
+                        <BsCaretDownFill className={styles.downVote} onClick={(e)=>{handleDownVote(e)}}/>
+                    }
+                    {!comment.downVoteList.includes(user.uid) && 
+                        <BsCaretDown className={styles.downVote} onClick={(e)=>{handleDownVote(e)}}/>
+                    }
+
+                    <span className={styles.downVoteSpan}>{comment.downVote}</span>
+                </div>
                 <div className={styles.comment_container}> 
                     <p className={styles.comments}>{comment.comments}</p>
                     <div className={styles.image_container}></div>
@@ -108,6 +218,8 @@ export default function Comment({comment, question_id}) {
                         }                  
                     </div>  
                 </div>
+            </div>
+                
             }
             {comment && <EditComment document={comment} editMode={editMode} setEditMode={setEditMode} question_id={question_id}/>}
         </div>

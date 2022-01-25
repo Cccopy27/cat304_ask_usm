@@ -33,7 +33,7 @@ export default function QuestionFilter({setFilter, setQuestionTypeFilter}) {
                 setFilter(["view","desc"]);
                 break;
             case "Rating":
-                
+                setFilter(["upVote","desc"])
                 break;
             case "Oldest":
                 setFilter(["added_at","asc"]);

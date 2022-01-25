@@ -21,12 +21,18 @@ export default function TagDashboard() {
     // useEffect(()=>{
     //     setFetchData(document);
     // },[document])
-
+    useEffect(()=>{
+        window.scrollTo(0,0);
+    },[])
 
     // update tag when page navigation
     useEffect(() => {
-
-        setTag(result.split("&"));
+        if (result) {
+            setTag(result.split("&"));
+        }
+        else {
+            setTag("");
+        }
     }, [result]);
 
     useEffect(()=>{

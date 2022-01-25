@@ -16,38 +16,40 @@ export default function TagResult({tag,document}) {
     // const [filterDoc, setFilterDoc] = useState([]);
     
     // display popular tag
-    useEffect(()=>{
-        // categories.forEach(tagName=>{
-        //     const dynamicVar = 
-        //     console.log(document2[tagName]);
-        // })
-        const allTagArr = [];
-        if(document2){
-            delete document2.id;
-            for(const [key,value]of Object.entries(document2)){
-                // console.log(key,value);
-                allTagArr.push({tagName:key, value:value})
-            }
-            allTagArr.sort((a,b)=>{
-                return b.value - a.value;
-            })
-            setCategories(allTagArr.slice(0,18));
-            console.log(categories);
-        }
+    // useEffect(()=>{
+    //     // categories.forEach(tagName=>{
+    //     //     const dynamicVar = 
+    //     //     console.log(document2[tagName]);
+    //     // })
+    //     const allTagArr = [];
+    //     if(document2){
+    //         delete document2.id;
+    //         for(const [key,value]of Object.entries(document2)){
+    //             // console.log(key,value);
+    //             allTagArr.push({tagName:key, value:value})
+    //         }
+    //         allTagArr.sort((a,b)=>{
+    //             return b.value - a.value;
+    //         })
+    //         setCategories(allTagArr.slice(0,18));
+    //     }
         
 
-    },[document2])
+    // },[document2])
     
     useEffect(()=>{
         // change mode based on tag
-        tag[0] === "popular" ? setPopularMode(true) : setPopularMode(false);
+        // tag[0] === "popular" ? setPopularMode(true) : setPopularMode(false);
 
         // format tag result
-        let tempString = "";
-        tag.forEach(element => {
-            tempString += element;
-        });
-        setresultString(tempString);
+        if (tag) {
+            let tempString = "";
+            tag.forEach(element => {
+                tempString += element;
+            });
+            setresultString(tempString);
+        } 
+        
 
     },[tag])
 
@@ -56,26 +58,25 @@ export default function TagResult({tag,document}) {
         let found = true;
         // loop selected tag instaed of question original tags
         for(let i = 0; i < tag.length; i++){
-            // skip tag popular
-            if(tag[i] != "popular"){
+           
                 // check exist or not the tags
                 if(!doc.question_tag.includes(tag[i])){
                     found = false;
                     break;
                 }
-            }
+            
         }
-        return found;
+        return tag.length === 0 ? false: found;
     }) : null;
 
 
     if(!filterQuestion){
-        return <div>Loading...</div>
+        return <div>No Result...</div>
     }
     
     return (
         <div className={styles.result_container}>
-            {popularMode && 
+            {/* {popularMode && 
                 <div>
                     <span className={styles.Tagspan}>
                         Popular tags...
@@ -89,8 +90,8 @@ export default function TagResult({tag,document}) {
                         ))}
                     </div>
                 </div>
-            }
-            {!popularMode && 
+            } */}
+            {
                 <div >
                     <div className={styles.question_title}>
                         {filterQuestion.length} Results related to  

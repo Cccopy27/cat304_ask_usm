@@ -7,6 +7,7 @@ import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useDocument } from "../../hooks/useDocument";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function EditComment({document,editMode,setEditMode, question_id}) {
     const [newComment,setNewComment] = useState("");
@@ -20,6 +21,7 @@ export default function EditComment({document,editMode,setEditMode, question_id}
     const commentRef = useRef();
     const {document:document2, error} = useDocument("users",document.created_by);
     const [userName, setUserName] = useState(null);
+    const {user} = useAuthContext();
 
     useEffect(() => {
         if (document2) {
@@ -86,11 +88,10 @@ export default function EditComment({document,editMode,setEditMode, question_id}
                         // user input as object
                         const comment_object={
                             comments: newComment,
-                            created_by:"",
                             edited_at:Timestamp.now(),
                             comment_image_name:imageName,
                             comment_image_url:"",
-                            subComment:document.subComment,
+                            // subComment:document.subComment,
                         }
 
                         // if user use back old image

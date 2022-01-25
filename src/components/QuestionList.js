@@ -3,9 +3,10 @@ import styles from "./QuestionList.module.css";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import ReactPaginate from 'react-paginate';
 import { useState, useEffect } from "react";
+import {BsCaretUp, BsCaretUpFill, BsCaretDown, BsCaretDownFill} from "react-icons/bs";
+import {AiOutlineEye} from "react-icons/ai";
 
-
-export default function QuestionList({questions}) {
+export default function QuestionList({questions, dashboardMode}) {
 
     // update view when user click in
     const Items=({questions})=>{
@@ -15,7 +16,25 @@ export default function QuestionList({questions}) {
                 {questions && questions.map(question => (
                     <Link className={styles.question_item}to={`/question/${question.id}`} key={question.id}>
                         <div className={styles.left_part}>
-
+                            <div className={styles.left_part_up}>
+                                <div className={styles.upVote}>
+                                    <span className={styles.upVoteSpan}>
+                                        {question.upVote} 
+                                    </span>
+                                    <BsCaretUp className={styles.arrowUp}/>
+                                </div>
+                                <div className={styles.downVote}>
+                                    <span className={styles.downVoteSpan}>
+                                        {question.downVote}  
+                                    </span>
+                                    <BsCaretDown className={styles.arrowDown}/>
+                                </div>
+                            </div>
+                            <div className={styles.left_part_down}>
+                                <span className={styles.view}>{question.view} View</span>
+                                
+                                {/* <AiOutlineEye className={styles.eye}/> */}
+                            </div>
                         </div>
                         <div className={styles.right_part}>
                             <div className={styles.upper_part}>
@@ -72,7 +91,7 @@ export default function QuestionList({questions}) {
         return (
             <>
               <Items questions={currentItems} />
-              <ReactPaginate className={styles.paginateBar}
+              {!dashboardMode && <ReactPaginate className={styles.paginateBar}
                 nextLabel="next >"
                 onPageChange={handlePageClick}
                 pageRangeDisplayed={2}
@@ -90,6 +109,7 @@ export default function QuestionList({questions}) {
                 breakLinkClassName={styles.page_link}
                 containerClassName={styles.pagination}                activeClassName={`${styles.active}`}                renderOnZeroPageCount={null}
               />
+                }
             </>
         );
     }
