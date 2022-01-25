@@ -89,8 +89,8 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
         });
         setDefaultSelector(tempArray2);
         const tempObj2 = {
-            label:document.question_type.value,
-            value:document.question_type.value,
+            label:document.question_type,
+            value:document.question_type,
         }
         setDefaultSelectorType(tempObj2);
 
@@ -166,7 +166,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                         question_image_name:imageName,
                         question_image_url:"",
                         edited_at: Timestamp.now(),
-                        question_type: questionTypeInput.value,
+                        question_type: questionTypeInput,
                     }
                     // if user use back old image
                     if(image.length === 0){
@@ -340,7 +340,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                         <div className={styles.question_type_container}>
                             <Select
                                 className={styles.question_type}
-                                onChange={(option)=>setQuestionTypeInput(option)}
+                                onChange={(option)=>setQuestionTypeInput(option.value)}
                                 options={questionType.slice(0,2)}
                                 defaultValue={defaultSelectorType}
                             />    
