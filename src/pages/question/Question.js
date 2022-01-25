@@ -13,6 +13,7 @@ import AddComment from "../comment/AddComment";
 import CommentSection from "../comment/CommentSection";
 import { writeBatch,doc,collection, getDocs, Timestamp,getDoc } from "firebase/firestore";
 import {AiOutlineTag,AiOutlineUser,AiOutlineEye,AiOutlineClose} from "react-icons/ai";
+import {BsCaretUp, BsCaretUpFill, BsCaretDown, BsCaretDownFill} from "react-icons/bs";
 import {MdReportProblem} from "react-icons/md";
 import { increment } from "firebase/firestore";
 import { useComponentVisible } from "../../hooks/useComponentVisible";
@@ -278,28 +279,35 @@ export default function Question() {
                                 
                             </div>
                         </div>
-                    
-                    <div className={styles.question_bottom}>
-                        <div className={styles.question_tag_big_container}>
-                            <p className={styles.question_subTitle_tags}>
-                                <AiOutlineTag className={styles.tagicon}/>
-                            </p>
-                            <div className={styles.question_tag_container}>
-                                {document.question_tag.map(tag=>(
-                                <span className={styles.tag} key={tag}>{tag}</span>
-                            ))}
+                        <div className={styles.question_bottom_container}>
+                            <div className={styles.question_vote_container}> 
+                                <span className={styles.upVoteSpan}>2</span>
+                                <BsCaretUp className={styles.upVote}/>
+                                <BsCaretDown className={styles.downVote}/>
+
+                                <span className={styles.downVoteSpan}>2</span>
+
+                            </div>
+                            <div className={styles.question_bottom}>
+                                <div className={styles.question_tag_big_container}>
+                                    <p className={styles.question_subTitle_tags}>
+                                        <AiOutlineTag className={styles.tagicon}/>
+                                    </p>
+                                    <div className={styles.question_tag_container}>
+                                        {document.question_tag.map(tag=>(
+                                        <span className={styles.tag} key={tag}>{tag}</span>
+                                    ))}
+                                    </div>
+                                </div>
+                                
+                                <div className={styles.question_type_container}>
+                                    <span className={styles.question_type}>{document.question_type}</span>
+                                </div>
+                                <p className={styles.question_des}>{document.question_description}</p>
+                                {document.question_image_url && document.question_image_url.map(imageSrc=>
+                                    <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
                             </div>
                         </div>
-                        
-                        <div className={styles.question_type_container}>
-                            <span className={styles.question_type}>{document.question_type}</span>
-                        </div>
-                        <p className={styles.question_des}>{document.question_description}</p>
-                        {document.question_image_url && document.question_image_url.map(imageSrc=>
-                            <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
-                    </div>
-                    
-                    
                 </div>
                 }
                 {document && <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode} displayName={userName}/>}

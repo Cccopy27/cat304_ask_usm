@@ -41,6 +41,10 @@ export default function AddComment({question_id}) {
                     comment_image_name:imageName,
                     comment_image_url:"",
                     subComment:"",
+                    upVote:0,
+                    downVote:0,
+                    upVoteList:[],
+                    downVoteList:[]
                 }
                 
                 // add document

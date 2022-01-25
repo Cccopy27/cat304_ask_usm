@@ -80,6 +80,10 @@ export default function AddQuestion() {
                             created_by:user.uid,
                             question_type:questionTypeInput.value,
                             view:0,
+                            upVote:0,
+                            downVote:0,
+                            upVoteList:[],
+                            downVoteList:[]
                         }
                         // console.log(question_object);
     

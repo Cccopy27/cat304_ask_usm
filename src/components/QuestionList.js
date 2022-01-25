@@ -3,7 +3,7 @@ import styles from "./QuestionList.module.css";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import ReactPaginate from 'react-paginate';
 import { useState, useEffect } from "react";
-
+import {BsCaretUp, BsCaretUpFill, BsCaretDown, BsCaretDownFill} from "react-icons/bs";
 
 export default function QuestionList({questions, dashboardMode}) {
 
@@ -15,7 +15,23 @@ export default function QuestionList({questions, dashboardMode}) {
                 {questions && questions.map(question => (
                     <Link className={styles.question_item}to={`/question/${question.id}`} key={question.id}>
                         <div className={styles.left_part}>
-
+                            <div className={styles.left_part_up}>
+                                <div className={styles.upVote}>
+                                    <span className={styles.upVoteSpan}>
+                                        {question.upVote} 
+                                    </span>
+                                    <BsCaretUp className={styles.arrowUp}/>
+                                </div>
+                                <div className={styles.downVote}>
+                                    <span className={styles.downVoteSpan}>
+                                        {question.downVote}  
+                                    </span>
+                                    <BsCaretDown className={styles.arrowDown}/>
+                                </div>
+                            </div>
+                            <div className={styles.left_part_down}>
+                                {question.view} view
+                            </div>
                         </div>
                         <div className={styles.right_part}>
                             <div className={styles.upper_part}>
