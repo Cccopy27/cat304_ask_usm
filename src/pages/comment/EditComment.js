@@ -88,11 +88,10 @@ export default function EditComment({document,editMode,setEditMode, question_id}
                         // user input as object
                         const comment_object={
                             comments: newComment,
-                            created_by:user.uid,
                             edited_at:Timestamp.now(),
                             comment_image_name:imageName,
                             comment_image_url:"",
-                            subComment:document.subComment,
+                            // subComment:document.subComment,
                         }
 
                         // if user use back old image

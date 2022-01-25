@@ -11,13 +11,11 @@ import Swal from "sweetalert2";
 import EditQuestion from "./EditQuestion";
 import AddComment from "../comment/AddComment";
 import CommentSection from "../comment/CommentSection";
-import { writeBatch,doc,collection, getDocs, Timestamp,getDoc } from "firebase/firestore";
+import { writeBatch,doc,collection, getDocs, Timestamp,getDoc, arrayUnion, arrayRemove,increment } from "firebase/firestore";
 import {AiOutlineTag,AiOutlineUser,AiOutlineEye,AiOutlineClose} from "react-icons/ai";
 import {BsCaretUp, BsCaretUpFill, BsCaretDown, BsCaretDownFill} from "react-icons/bs";
 import {MdReportProblem} from "react-icons/md";
-import { increment } from "firebase/firestore";
 import { useComponentVisible } from "../../hooks/useComponentVisible";
-import { async } from "@firebase/util";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function Question() {
@@ -224,6 +222,68 @@ export default function Question() {
             }}
         )
     }
+
+    const handleUpVote = async(e) => {
+        e.preventDefault();
+
+        if (!document.upVoteList.includes(user.uid)) {
+            let question_object = "";
+            if (document.downVoteList.includes(user.uid)) {
+                question_object={
+                    upVote:increment(1),
+                    downVote:increment(-1),
+                    upVoteList:arrayUnion(user.uid),
+                    downVoteList:arrayRemove(user.uid)
+                }
+            }
+            else {
+                question_object={
+                    upVote:increment(1),
+                    upVoteList:arrayUnion(user.uid)
+                }
+            }
+            
+            //update  database
+            await updateDocument(id,question_object);
+    
+            if (response.error){
+                Swal.fire("Something wrong","","error");
+            }
+        }
+        
+
+    }
+
+    const handleDownVote = async(e) => {
+        e.preventDefault();
+        
+        if (!document.downVoteList.includes(user.uid)) {
+            let question_object = "";
+            if (document.upVoteList.includes(user.uid)) {
+                question_object={
+                    upVote:increment(-1),
+                    downVote:increment(1),
+                    upVoteList:arrayRemove(user.uid),
+                    downVoteList:arrayUnion(user.uid)
+                }
+            }
+            else {
+                question_object={
+                    downVote:increment(1),
+                    downVoteList:arrayUnion(user.uid)
+                }
+            }
+
+            //update  database
+            await updateDocument(id,question_object);
+
+            if (response.error){
+                Swal.fire("Something wrong","","error");
+            }
+        }
+
+        
+    }
     if(error){
         return <div>{error}</div>
     };
@@ -281,11 +341,13 @@ export default function Question() {
                         </div>
                         <div className={styles.question_bottom_container}>
                             <div className={styles.question_vote_container}> 
-                                <span className={styles.upVoteSpan}>2</span>
-                                <BsCaretUp className={styles.upVote}/>
-                                <BsCaretDown className={styles.downVote}/>
+                                <span className={styles.upVoteSpan}>{document.upVote}</span>
+                                {document.upVoteList.includes(user.uid) && <BsCaretUpFill className={styles.upVote} onClick={(e)=>handleUpVote(e)}/>}
+                                {!document.upVoteList.includes(user.uid) &&<BsCaretUp className={styles.upVote} onClick={(e)=>handleUpVote(e)}/>}
+                                {document.downVoteList.includes(user.uid) && <BsCaretDownFill className={styles.downVote} onClick={(e)=>handleDownVote(e)}/>}
+                                {!document.downVoteList.includes(user.uid) &&<BsCaretDown className={styles.downVote} onClick={(e)=>handleDownVote(e)}/>}
 
-                                <span className={styles.downVoteSpan}>2</span>
+                                <span className={styles.downVoteSpan}>{document.downVote}</span>
 
                             </div>
                             <div className={styles.question_bottom}>

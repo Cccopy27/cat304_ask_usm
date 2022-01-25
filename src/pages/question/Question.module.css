@@ -1,7 +1,8 @@
 .image_preview{
-    height: auto;
+    /* height: 20%; */
     /* height: 200px; */
     width: 45%;
+    max-height: 300px;
     padding: 10px;
 }
 
@@ -345,7 +346,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding: 20px 0px;
 }
 
@@ -355,6 +356,11 @@
 
 .upVote, .downVote{
     font-size: 60px;
+    cursor: pointer;
+}
+
+.upVote:hover, .downVote:hover{
+    color: #3ab0c5;
 }
 
 @media screen and (max-width: 400px) {
