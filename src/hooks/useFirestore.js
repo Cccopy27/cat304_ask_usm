@@ -120,14 +120,17 @@ export const useFirestore=(collections)=>{
     // if put into question storage, pass string storage
     const updateDocument= async(id, updates, image, uploadPathName)=>{
         dispatch({type: "IS_PENDING"});
-
         try{
+            console.log("hi",uploadPathName);
+
             const updatedoc = await updateDoc(doc(collection_Ref,id), updates);
 
             // handle image
-            if(image){
+            if(image && image.length!== 0){
+                console.log("22");
                 const changes = (imgURL)=>{
                     if(uploadPathName==="questions"){
+                        console.log("check1");
                         return {
                             question_image_url: arrayUnion(imgURL)
                         }
@@ -141,17 +144,21 @@ export const useFirestore=(collections)=>{
                 // console.log("enter");
                 // convert filelist to array to user array method
                 const image_arr = Array.from(image);
+                console.log("new",image_arr);
                 // upload photo to storage firebase to get its photo URL
                 image_arr.forEach(img=>{
+                    console.log("check2");
                     // the image will store in question/question.id/image.name
                     const uploadPath = `${uploadPathName}/${id}/${img.name}`;
                     const storageRef = ref(storage, uploadPath);
 
                     uploadBytes(storageRef, img)
                     .then((storageImg) =>{
+                    console.log("check3");
                         // get image URL from storage
                         getDownloadURL(storageRef)
                         .then((imgURL)=>{
+                    console.log("check4");
                             // update doc imgURL
                             updateDoc(doc(collection_Ref,id), 
                                 changes(imgURL))
@@ -168,6 +175,7 @@ export const useFirestore=(collections)=>{
             // return updateDoc
         }
         catch(err){
+
             dispatchIfNotCancelled({type:"ERROR", payload:err.message})
             // return null
 

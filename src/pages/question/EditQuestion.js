@@ -189,7 +189,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                             });
                         })
                     }
-                    console.log(image);
+                    console.log("hi2",image);
         
                     //update  database
                     await updateDocument(document.id,question_object,image,"questions");
