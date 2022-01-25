@@ -148,6 +148,7 @@ function App() {
               {user && <Route path="/user/:result" element={<UserDashboard/>}/>}
 
               {user && <Route path="/home" element={<Home/>}/>}
+              {user && <Route path="/" element={<Home/>}/>}
 
             </Routes>
           </div>
