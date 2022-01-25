@@ -14,7 +14,7 @@ export default function Sidebar() {
                                 <NavLink to = "/home">Home</NavLink>
                             </li>
                             <li className={styles.question}>
-                                <NavLink to = "/question">Questions</NavLink>
+                                <NavLink to = "/question">Posts</NavLink>
                             </li>
                             
                             <li className={styles.tag}>
