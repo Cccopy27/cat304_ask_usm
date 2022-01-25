@@ -2,7 +2,7 @@ import styles from "./UserDashboard.module.css"
 import UserHeader from "./UserHeader"
 import QuestionList from "../../components/QuestionList"
 import { useEffect, useState } from "react";
-import UserResult from "./UserResult";
+
 import { useParams } from "react-router-dom";
 import { collection ,onSnapshot, query, where,orderBy,getDocs,doc,getDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
@@ -69,6 +69,7 @@ export default function UserDashboard() {
             <UserHeader setFilter={setFilter}/>
             <div className={styles.userdashboard}>
                 {loading && <div>Loading</div>}
+                {!loading && result && <span>Result for {result}</span>}
                  {!loading && userNameId && fetchData && <QuestionList questions={fetchData}/>}
                  {!loading && !userNameId && <div>No User Found</div>}
             </div>
