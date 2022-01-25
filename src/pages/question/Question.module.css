@@ -355,6 +355,8 @@
 }
 
 .upVote, .downVote{
+    /* stroke-width: ; */
+    /* stroke-width:0; */
     font-size: 60px;
     cursor: pointer;
 }

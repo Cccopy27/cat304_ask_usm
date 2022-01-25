@@ -5,7 +5,7 @@ import AddSubComment from "./AddSubComment";
 import Comment from "./Comment";
 
 export default function CommentSection({question_id}) {
-    const {document,error} = useCollection(["questions",question_id,"comment"]);
+    const {document,error} = useCollection(["questions",question_id,"comment"],null,["upVote","desc"]);
     
     if(error){
         return <div>{error}</div>

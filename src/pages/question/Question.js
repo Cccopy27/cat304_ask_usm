@@ -249,6 +249,17 @@ export default function Question() {
             if (response.error){
                 Swal.fire("Something wrong","","error");
             }
+        } else{
+            const question_object={
+                upVote:increment(-1),
+                upVoteList:arrayRemove(user.uid),
+            }
+            //update  database
+            await updateDocument(id,question_object);
+    
+            if (response.error){
+                Swal.fire("Something wrong","","error");
+            }
         }
         
 
@@ -272,6 +283,19 @@ export default function Question() {
                     downVote:increment(1),
                     downVoteList:arrayUnion(user.uid)
                 }
+            }
+
+            //update  database
+            await updateDocument(id,question_object);
+
+            if (response.error){
+                Swal.fire("Something wrong","","error");
+            }
+        }
+        else {
+            const question_object = {
+                downVote: increment(-1),
+                downVoteList: arrayRemove(user.uid)
             }
 
             //update  database

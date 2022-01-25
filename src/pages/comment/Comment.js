@@ -106,6 +106,19 @@ export default function Comment({comment, question_id}) {
             if (response.error){
                 Swal.fire("Something wrong","","error");
             }
+
+        } else{
+            const comment_object = {
+                upVote:increment(-1),
+                upVoteList:arrayRemove(user.uid),
+            }
+
+            //update  database
+            await updateDocument(comment.id,comment_object);
+    
+            if (response.error){
+                Swal.fire("Something wrong","","error");
+            }
         }
         
 
@@ -134,6 +147,19 @@ export default function Comment({comment, question_id}) {
             //update  database
             await updateDocument(comment.id,comment_object);
 
+            if (response.error){
+                Swal.fire("Something wrong","","error");
+            }
+        }
+        else {
+            const comment_object = {
+                downVote:increment(-1),
+                downVoteList:arrayRemove(user.uid),
+            }
+
+            //update  database
+            await updateDocument(comment.id,comment_object);
+    
             if (response.error){
                 Swal.fire("Something wrong","","error");
             }

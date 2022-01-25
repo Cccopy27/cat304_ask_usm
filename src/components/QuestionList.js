@@ -4,6 +4,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import ReactPaginate from 'react-paginate';
 import { useState, useEffect } from "react";
 import {BsCaretUp, BsCaretUpFill, BsCaretDown, BsCaretDownFill} from "react-icons/bs";
+import {AiOutlineEye} from "react-icons/ai";
 
 export default function QuestionList({questions, dashboardMode}) {
 
@@ -30,7 +31,9 @@ export default function QuestionList({questions, dashboardMode}) {
                                 </div>
                             </div>
                             <div className={styles.left_part_down}>
-                                {question.view} view
+                                <span className={styles.view}>{question.view} View</span>
+                                
+                                {/* <AiOutlineEye className={styles.eye}/> */}
                             </div>
                         </div>
                         <div className={styles.right_part}>
