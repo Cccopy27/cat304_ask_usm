@@ -3,13 +3,14 @@ import styles from "./EditSubComment.module.css";
 import { useFirestore } from "../../hooks/useFirestore";
 import { Timestamp } from "firebase/firestore";
 import Swal from "sweetalert2";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function EditSubComment({item, editMode, setEditMode, question_id, comment_id,subComment}) {
     const [newSubComment, setNewSubComment] = useState("");
     const formInput = useRef();
     const subCommentRef=useRef();
     const {updateDocument, response} = useFirestore(["questions",question_id,"comment"]);
-
+    const {user} = useAuthContext();
 
     // show current comment     
     useEffect(() => {
@@ -43,7 +44,7 @@ export default function EditSubComment({item, editMode, setEditMode, question_id
             if(formInput.current.checkValidity()){
                 const newSubCommentObj={
                     id:item.id,
-                    created_by:"",
+                    created_by:user.uid,
                     content:newSubComment,
                     // added_at:Timestamp.now(),
                     edited_at:Timestamp.now(),
