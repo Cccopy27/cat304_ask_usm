@@ -13,8 +13,8 @@ export default function Sidebar() {
                             <li className={styles.home}>
                                 <NavLink to = "/home">Home</NavLink>
                             </li>
-                            <li className={styles.question}>
-                                <NavLink to = "/question">Posts</NavLink>
+                            <li className={styles.post}>
+                                <NavLink to = "/post">Posts</NavLink>
                             </li>
                             
                             <li className={styles.tag}>

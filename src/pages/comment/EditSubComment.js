@@ -5,11 +5,11 @@ import { Timestamp } from "firebase/firestore";
 import Swal from "sweetalert2";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function EditSubComment({item, editMode, setEditMode, question_id, comment_id,subComment}) {
+export default function EditSubComment({item, editMode, setEditMode, post_id, comment_id,subComment}) {
     const [newSubComment, setNewSubComment] = useState("");
     const formInput = useRef();
     const subCommentRef=useRef();
-    const {updateDocument, response} = useFirestore(["questions",question_id,"comment"]);
+    const {updateDocument, response} = useFirestore(["posts",post_id,"comment"]);
     const {user} = useAuthContext();
 
     // show current comment     

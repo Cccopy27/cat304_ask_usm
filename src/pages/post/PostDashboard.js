@@ -1,27 +1,27 @@
 import {useEffect, useState, useRef} from "react";
-import QuestionList from "../../components/QuestionList";
-import styles from "./QuestionDashboard.module.css";
+import PostList from "../../components/PostList";
+import styles from "./PostDashboard.module.css";
 import { useCollection } from "../../hooks/useCollection";
-import QuestionHeader from "./QuestionHeader";
+import PostHeader from "./PostHeader";
 import { useParams } from "react-router-dom";
 import stringSimilarity from "string-similarity";
 import { db } from "../../firebase/config";
 import { collection ,onSnapshot, query, where,orderBy,getDocs } from "firebase/firestore";
 import { async } from "@firebase/util";
 
-export default function QuestionDashboard () {
+export default function PostDashboard () {
     // default order = latest
     const [filter,setFilter] = useState(["added_at","desc"]);
-    // const {document, error} = useCollection(["questions"],null,filter);
+    // const {document, error} = useCollection(["posts"],null,filter);
     const [fetchData, setFetchData] = useState();
     const [defaultMode, setDefaultMode] = useState(true);
     const {result} = useParams();    
     const [loading, setLoading] = useState(false);
-    const [questionTypeFilter, setQuestionTypeFilter] = useState([])
+    const [postTypeFilter, setPostTypeFilter] = useState([])
     let filterDoc = "";
 
     // useEffect(async()=>{
-    //     const querySnapshot = await getDocs(collection(db, "questions"));
+    //     const querySnapshot = await getDocs(collection(db, "posts"));
     //     let result = [];
     //     querySnapshot.forEach((doc) => {
 
@@ -42,12 +42,12 @@ export default function QuestionDashboard () {
         // fetch data again with sort by filter
         const getDataFilter=async()=>{
             let ref = "";
-            if (questionTypeFilter.length !== 0) {
+            if (postTypeFilter.length !== 0) {
                 console.log(2);
-                ref = query(collection(db, "questions"),where(...questionTypeFilter), orderBy(...filter));
+                ref = query(collection(db, "posts"),where(...postTypeFilter), orderBy(...filter));
             }
             else{
-                ref = query(collection(db, "questions"), orderBy(...filter));
+                ref = query(collection(db, "posts"), orderBy(...filter));
             }
             let results= [];
             const querySnapShot = await getDocs(ref);
@@ -62,7 +62,7 @@ export default function QuestionDashboard () {
         getDataFilter();
         setLoading(false);
         
-    },[filter, questionTypeFilter])
+    },[filter, postTypeFilter])
 
     useEffect(()=>{
         window.scrollTo(0,0);
@@ -76,7 +76,7 @@ export default function QuestionDashboard () {
     // filter document using stringSimilarity module O(n)
     else{
         filterDoc = fetchData && result? fetchData.filter(item=>{
-            if(stringSimilarity.compareTwoStrings(item.question_title.toLowerCase(),result.toLowerCase() ) > 0.2){
+            if(stringSimilarity.compareTwoStrings(item.post_title.toLowerCase(),result.toLowerCase() ) > 0.2){
                 return true;
             }
             else{
@@ -95,9 +95,9 @@ export default function QuestionDashboard () {
 
 
     return (
-        <div className ={styles.question_container}>
-            <QuestionHeader setFilter={setFilter} setQuestionTypeFilter={setQuestionTypeFilter}/>
-            <div className={styles.question_list}>
+        <div className ={styles.post_container}>
+            <PostHeader setFilter={setFilter} setPostTypeFilter={setPostTypeFilter}/>
+            <div className={styles.post_list}>
                 {/* {error && <p>Something went wrong... {error}</p>} */}
                 {!filterDoc && <p>Loading...</p>}
                 {!defaultMode && filterDoc && 
@@ -106,7 +106,7 @@ export default function QuestionDashboard () {
                     <span className={styles.result}> {result}</span>
                 </div>
                     }
-                {!loading && filterDoc && <QuestionList questions={filterDoc}/>}
+                {!loading && filterDoc && <PostList posts={filterDoc}/>}
                 {loading && <div>Loading</div>}
             </div>
         </div>

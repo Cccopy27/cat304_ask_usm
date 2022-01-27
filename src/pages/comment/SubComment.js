@@ -8,9 +8,9 @@ import {AiOutlineUser} from "react-icons/ai";
 import { useDocument } from "../../hooks/useDocument";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function SubComment({subComment,item, question_id, comment_id}) {
+export default function SubComment({subComment,item, post_id, comment_id}) {
     const [editMode, setEditMode] = useState(false);
-    const {updateDocument, response} = useFirestore(["questions",question_id,"comment"]);
+    const {updateDocument, response} = useFirestore(["posts",post_id,"comment"]);
     const [loading,setLoading] = useState(false);
     const {document, error} = useDocument("users",item.created_by);
     const [userName, setUserName] = useState(null);
@@ -105,7 +105,7 @@ export default function SubComment({subComment,item, question_id, comment_id}) {
                     }      
                 </div> 
             }
-            {editMode && <EditSubComment item={item} editMode={editMode} setEditMode={setEditMode} question_id={question_id} comment_id={comment_id} subComment={subComment}/>}
+            {editMode && <EditSubComment item={item} editMode={editMode} setEditMode={setEditMode} post_id={post_id} comment_id={comment_id} subComment={subComment}/>}
         </div>
     )
 }

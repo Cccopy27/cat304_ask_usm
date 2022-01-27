@@ -5,14 +5,14 @@ import { Timestamp } from "firebase/firestore";
 import Swal from "sweetalert2";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function AddComment({question_id}) {
+export default function AddComment({post_id}) {
     const [comments, setComments] = useState("");
     const [image, setimage] = useState([]);
     const [imageURLs,setImageURLs] = useState([]);
     const [imageName,setImageName] = useState([]);
     const [focusMode,setFocusMode] = useState(false);
     // const [loading,setLoading] = useState(false);
-    const {addDocument, response} = useFirestore(["questions",question_id,"comment"]);
+    const {addDocument, response} = useFirestore(["posts",post_id,"comment"]);
     const formInput = useRef();
     const {user} = useAuthContext();
 

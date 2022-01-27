@@ -3,7 +3,7 @@ import { useDocument } from "../../hooks/useDocument";
 import { Link } from "react-router-dom";
 import { query, orderBy, startAt, collection, limit, getDocs, Timestamp, endAt } from "firebase/firestore";
 import { db } from "../../firebase/config";
-import QuestionList from "../../components/QuestionList";
+import PostList from "../../components/PostList";
 import styles from "./Home.module.css";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import Swal from "sweetalert2";
@@ -14,11 +14,11 @@ import { startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
 export default function Home() {
     const [categories, setCategories] = useState([]);
     const {document:document2, error} = useDocument("record","tag");
-    const [popularQuestion, setPopularQuestion] = useState("");
+    const [popularPost, setPopularPost] = useState("");
     const {user} = useAuthContext();
     const navigate = useNavigate();
     const [filter, setFilter] = useState("");
-    const questionPopularSortOptions = [
+    const postPopularSortOptions = [
         {value: "This Week", label:"This Week"},
         {value: "This Month", label:"This Month"},
         {value: "All the Time", label:"All the Time"},
@@ -40,18 +40,18 @@ export default function Home() {
     },[document2])
 
     useEffect(async() => {
-        const questionRef = collection(db, "questions");
+        const postRef = collection(db, "posts");
         let q = "";
         const curr = new Date;
 
         if (filter.value === "This Week") {
-            q = query(questionRef, orderBy("added_at"),startAt(startOfWeek(curr)), endAt(endOfWeek(curr)));
+            q = query(postRef, orderBy("added_at"),startAt(startOfWeek(curr)), endAt(endOfWeek(curr)));
         }
         else if (filter.value === "This Month"){
-            q = query(questionRef, orderBy("added_at"),startAt(startOfMonth(curr)), endAt(endOfMonth(curr)));
+            q = query(postRef, orderBy("added_at"),startAt(startOfMonth(curr)), endAt(endOfMonth(curr)));
         }
         else{
-            q = query(questionRef, orderBy("view","desc"), limit(5));
+            q = query(postRef, orderBy("view","desc"), limit(5));
         }
 
         const querySnapShot = await getDocs(q);
@@ -64,22 +64,22 @@ export default function Home() {
             tempArr.sort((a,b)=>{
                 return b.view - a.view;
             })
-            setPopularQuestion(tempArr);
+            setPopularPost(tempArr);
 
         } else{
-            setPopularQuestion(tempArr);
+            setPopularPost(tempArr);
 
         }
     }, [filter])
 
 
-    const handleAddQuestion=(e)=>{
+    const handleAddPost=(e)=>{
         e.preventDefault();
         if (!user) {
             Swal.fire("Please login to add something","","warning");
         }
         else{
-            navigate("/addquestion");
+            navigate("/addpost");
         }
     }
 
@@ -88,24 +88,24 @@ export default function Home() {
         {/* header */}
         <div>
             <span>Dashboard</span>
-            <button className={styles.question_add_btn} onClick={handleAddQuestion}>Add Something</button>
+            <button className={styles.post_add_btn} onClick={handleAddPost}>Add Something</button>
         </div>
-        {(!popularQuestion || !document2) && <div>Loading...</div>}
+        {(!popularPost || !document2) && <div>Loading...</div>}
 
-        {/* popular question */}
-        {popularQuestion &&
+        {/* popular post */}
+        {popularPost &&
         <div>
             <span>
                 Popular posts...
             </span>
             <Select
                 onChange={(option)=>setFilter(option)}
-                options={questionPopularSortOptions}
-                defaultValue={questionPopularSortOptions[2]}
+                options={postPopularSortOptions}
+                defaultValue={postPopularSortOptions[2]}
 
             />
-            <div className={styles.question_list} >
-                {popularQuestion&&<QuestionList questions={popularQuestion} dashboardMode={true} />}
+            <div className={styles.post_list} >
+                {popularPost&&<PostList posts={popularPost} dashboardMode={true} />}
             </div>
         </div>
         }

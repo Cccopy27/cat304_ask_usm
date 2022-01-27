@@ -12,11 +12,11 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import {BsCaretUp, BsCaretUpFill, BsCaretDown, BsCaretDownFill} from "react-icons/bs";
 import { increment, arrayUnion, arrayRemove } from "firebase/firestore";
 
-export default function Comment({comment, question_id}) {
+export default function Comment({comment, post_id}) {
     const [editMode,setEditMode] = useState(false);
     const[loading,setLoading] = useState(false);
-    const {deleteDocument} = useFirestore(["questions",question_id,"comment"]);
-    const {updateDocument,response} = useFirestore(["questions",question_id,"comment"]);
+    const {deleteDocument} = useFirestore(["posts",post_id,"comment"]);
+    const {updateDocument,response} = useFirestore(["posts",post_id,"comment"]);
     const {document, error} = useDocument("users",comment.created_by);
     const [userName, setUserName] = useState(null);
     const {user} = useAuthContext();
@@ -221,7 +221,7 @@ export default function Comment({comment, question_id}) {
             </div>
                 
             }
-            {comment && <EditComment document={comment} editMode={editMode} setEditMode={setEditMode} question_id={question_id}/>}
+            {comment && <EditComment document={comment} editMode={editMode} setEditMode={setEditMode} post_id={post_id}/>}
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import styles from "./UserDashboard.module.css"
 import UserHeader from "./UserHeader"
-import QuestionList from "../../components/QuestionList"
+import PostList from "../../components/PostList"
 import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
@@ -42,7 +42,7 @@ export default function UserDashboard() {
 
         // fetch data again with sort by filter
         const getDataFilter=async()=>{
-            const ref = query(collection(db, "questions"), orderBy(...filter), where("created_by","==",userNameId));
+            const ref = query(collection(db, "posts"), orderBy(...filter), where("created_by","==",userNameId));
             let results= [];
             const querySnapShot = await getDocs(ref);
     
@@ -70,7 +70,7 @@ export default function UserDashboard() {
             <div className={styles.userdashboard}>
                 {loading && <div>Loading</div>}
                 {!loading && result && <span>Result for {result}</span>}
-                 {!loading && userNameId && fetchData && <QuestionList questions={fetchData}/>}
+                 {!loading && userNameId && fetchData && <PostList posts={fetchData}/>}
                  {!loading && !userNameId && <div>No User Found</div>}
             </div>
         </div>

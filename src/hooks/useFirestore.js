@@ -27,8 +27,8 @@ const firestoreReducer = (state, action)=>{
     }
 }
 // collections = the name of collection u wan to access in terms of array
-// example,want to collection(db, questions,"questions_id",comment)
-// pass [ questions,"questions_id",comment]
+// example,want to collection(db, posts,"posts_id",comment)
+// pass [ posts,"posts_id",comment]
 
 export const useFirestore=(collections)=>{
     const [response, dispatch] = useReducer(firestoreReducer, initialState);
@@ -48,16 +48,16 @@ export const useFirestore=(collections)=>{
     // document = the document or data u wan to add into
     // image (optional) = for upload image
     // uploadPath (use together with image)(optional) = upload image path
-    // if put into question storage, pass string storage
+    // if put into post storage, pass string storage
     const addDocument = async(document,image,uploadPathName)=>{
         dispatch({type:"IS_PENDING"});
         try{
             
             const addedDocument = await addDoc(collection_Ref, document);
             const changes = (imgURL)=>{
-                if(uploadPathName==="question"){
+                if(uploadPathName==="post"){
                     return {
-                        question_image_url: arrayUnion(imgURL)
+                        post_image_url: arrayUnion(imgURL)
                     }
                 }
                 else if(uploadPathName === "comment"){
@@ -72,7 +72,7 @@ export const useFirestore=(collections)=>{
                 const image_arr = Array.from(image);
                 // upload photo to storage firebase to get its photo URL
                 image_arr.forEach(img=>{
-                    // the image will store in question/question.id/image.name
+                    // the image will store in post/post.id/image.name
                     const uploadPath = `${uploadPathName}/${addedDocument.id}/${img.name}`;
                     const storageRef = ref(storage, uploadPath);
                     uploadBytes(storageRef, img)
@@ -117,7 +117,7 @@ export const useFirestore=(collections)=>{
     // updates = the changes u wan to make
     // image (optional) = for upload image
     // uploadPath (use together with image)(optional) = upload image path
-    // if put into question storage, pass string storage
+    // if put into post storage, pass string storage
     const updateDocument= async(id, updates, image, uploadPathName)=>{
         dispatch({type: "IS_PENDING"});
         try{
@@ -129,10 +129,10 @@ export const useFirestore=(collections)=>{
             if(image && image.length!== 0){
                 console.log("22");
                 const changes = (imgURL)=>{
-                    if(uploadPathName==="questions"){
+                    if(uploadPathName==="posts"){
                         console.log("check1");
                         return {
-                            question_image_url: arrayUnion(imgURL)
+                            post_image_url: arrayUnion(imgURL)
                         }
                     }
                     else if(uploadPathName === "comment"){
@@ -148,7 +148,7 @@ export const useFirestore=(collections)=>{
                 // upload photo to storage firebase to get its photo URL
                 image_arr.forEach(img=>{
                     console.log("check2");
-                    // the image will store in question/question.id/image.name
+                    // the image will store in post/post.id/image.name
                     const uploadPath = `${uploadPathName}/${id}/${img.name}`;
                     const storageRef = ref(storage, uploadPath);
 

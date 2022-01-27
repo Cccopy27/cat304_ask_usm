@@ -1,59 +1,59 @@
 import {Link} from "react-router-dom";
-import styles from "./QuestionList.module.css";
+import styles from "./PostList.module.css";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import ReactPaginate from 'react-paginate';
 import { useState, useEffect } from "react";
 import {BsCaretUp, BsCaretUpFill, BsCaretDown, BsCaretDownFill} from "react-icons/bs";
 import {AiOutlineEye} from "react-icons/ai";
 
-export default function QuestionList({questions, dashboardMode}) {
+export default function PostList({posts, dashboardMode}) {
 
     // update view when user click in
-    const Items=({questions})=>{
+    const Items=({posts})=>{
         return(
-            <div className={styles.question_list}>
+            <div className={styles.post_list}>
                 
-                {questions && questions.map(question => (
-                    <Link className={styles.question_item}to={`/question/${question.id}`} key={question.id}>
+                {posts && posts.map(post => (
+                    <Link className={styles.post_item}to={`/post/${post.id}`} key={post.id}>
                         <div className={styles.left_part}>
                             <div className={styles.left_part_up}>
                                 <div className={styles.upVote}>
                                     <span className={styles.upVoteSpan}>
-                                        {question.upVote} 
+                                        {post.upVote} 
                                     </span>
                                     <BsCaretUp className={styles.arrowUp}/>
                                 </div>
                                 <div className={styles.downVote}>
                                     <span className={styles.downVoteSpan}>
-                                        {question.downVote}  
+                                        {post.downVote}  
                                     </span>
                                     <BsCaretDown className={styles.arrowDown}/>
                                 </div>
                             </div>
                             <div className={styles.left_part_down}>
-                                <span className={styles.view}>{question.view} View</span>
+                                <span className={styles.view}>{post.view} View</span>
                                 
                                 {/* <AiOutlineEye className={styles.eye}/> */}
                             </div>
                         </div>
                         <div className={styles.right_part}>
                             <div className={styles.upper_part}>
-                                <h4 className={styles.question_title}>
-                                    {question.question_title}
+                                <h4 className={styles.post_title}>
+                                    {post.post_title}
                                 </h4>
-                                <div className={styles.question_up_right}>
-                                    <span className={styles.question_span}> 
-                                        added {formatDistanceToNow(question.added_at.toDate(),{addSuffix:true})}
+                                <div className={styles.post_up_right}>
+                                    <span className={styles.post_span}> 
+                                        added {formatDistanceToNow(post.added_at.toDate(),{addSuffix:true})}
                                     </span>
-                                    <span className={styles.question_type}>
-                                        {question.question_type}
+                                    <span className={styles.post_type}>
+                                        {post.post_type}
                                     </span>
                                 </div>
                                 
                             </div>
                             <div className={styles.lower_part}>
                                 <div className={styles.tag}>
-                                    {question.question_tag.map(item=>(
+                                    {post.post_tag.map(item=>(
                                         <span className={styles.tag_item}>{item}</span>
                                     ))}
                                 </div>
@@ -78,19 +78,19 @@ export default function QuestionList({questions, dashboardMode}) {
         useEffect(() => {
             // Fetch items from another resources.
             const endOffset = itemOffset + itemsPerPage;
-            setCurrentItems(questions.slice(itemOffset, endOffset));
-            setPageCount(Math.ceil(questions.length / itemsPerPage));
+            setCurrentItems(posts.slice(itemOffset, endOffset));
+            setPageCount(Math.ceil(posts.length / itemsPerPage));
         }, [itemOffset, itemsPerPage]);
 
         // Invoke when user click to request another page.
         const handlePageClick = (event) => {
-            const newOffset = (event.selected * itemsPerPage) % questions.length;
+            const newOffset = (event.selected * itemsPerPage) % posts.length;
             setItemOffset(newOffset);
         };
 
         return (
             <>
-              <Items questions={currentItems} />
+              <Items posts={currentItems} />
               {!dashboardMode && <ReactPaginate className={styles.paginateBar}
                 nextLabel="next >"
                 onPageChange={handlePageClick}
@@ -115,7 +115,7 @@ export default function QuestionList({questions, dashboardMode}) {
     }
     return (
         <>
-            {questions.length === 0 && <p>No result...</p>}
+            {posts.length === 0 && <p>No result...</p>}
             <PaginatedItems itemsPerPage={7} />    
         </>
     )

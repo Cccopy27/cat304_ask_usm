@@ -9,7 +9,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useDocument } from "../../hooks/useDocument";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function EditComment({document,editMode,setEditMode, question_id}) {
+export default function EditComment({document,editMode,setEditMode, post_id}) {
     const [newComment,setNewComment] = useState("");
     const [image, setimage] = useState([]);
     const [imageURL,setImageURL] = useState([]);
@@ -17,7 +17,7 @@ export default function EditComment({document,editMode,setEditMode, question_id}
     // const [loading,setLoading] = useState(false);
     const tempArray =[];
     const formInput = useRef();
-    const {updateDocument,response} = useFirestore(["questions",question_id,"comment"]);
+    const {updateDocument,response} = useFirestore(["posts",post_id,"comment"]);
     const commentRef = useRef();
     const {document:document2, error} = useDocument("users",document.created_by);
     const [userName, setUserName] = useState(null);

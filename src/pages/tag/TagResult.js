@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import QuestionList from "../../components/QuestionList";
+import PostList from "../../components/PostList";
 import { useCollection } from "../../hooks/useCollection";
 import { useGlobalState } from "state-pool";
 import styles from "./TagResult.module.css";
@@ -53,24 +53,24 @@ export default function TagResult({tag,document}) {
 
     },[tag])
 
-    // filter question based on categories
-    const filterQuestion = document ? document.filter((doc)=>{
-        let found = true;
-        // loop selected tag instaed of question original tags
-        for(let i = 0; i < tag.length; i++){
+    // // filter post based on categories
+    // const filterPost = document ? document.filter((doc)=>{
+    //     let found = true;
+    //     // loop selected tag instaed of post original tags
+    //     for(let i = 0; i < tag.length; i++){
            
-                // check exist or not the tags
-                if(!doc.question_tag.includes(tag[i])){
-                    found = false;
-                    break;
-                }
+    //             // check exist or not the tags
+    //             if(!doc.post_tag.includes(tag[i])){
+    //                 found = false;
+    //                 break;
+    //             }
             
-        }
-        return tag.length === 0 ? false: found;
-    }) : null;
+    //     }
+    //     return tag.length === 0 ? false: found;
+    // }) : null;
 
 
-    if(!filterQuestion){
+    if(!document){
         return <div>No Result...</div>
     }
     
@@ -93,12 +93,12 @@ export default function TagResult({tag,document}) {
             } */}
             {
                 <div >
-                    <div className={styles.question_title}>
-                        {filterQuestion.length} Results related to  
+                    <div className={styles.post_title}>
+                        {document.length} Results related to  
                         <span className={styles.result_header}>{resultString}</span>
                     </div>
                     
-                    <QuestionList questions={filterQuestion}/>
+                    <PostList posts={document}/>
                 </div>
             }
             

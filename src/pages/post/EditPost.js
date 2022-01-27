@@ -1,4 +1,4 @@
-import styles from "./EditQuestion.module.css";
+import styles from "./EditPost.module.css";
 import { useEffect, useState,useRef } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
@@ -14,9 +14,9 @@ import { db } from "../../firebase/config"
 import { writeBatch,doc } from "firebase/firestore";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function EditQuestion({document,editMode,setEditMode,displayName}) {
+export default function EditPost({document,editMode,setEditMode,displayName}) {
     
-    const {updateDocument,response} = useFirestore(["questions"]);
+    const {updateDocument,response} = useFirestore(["posts"]);
     const {updateDocument:updateDocument2, response:response2} = useFirestore(["record"]);
     const [loading,setLoading] = useState(false);
     const [title, settitle] = useState("");
@@ -33,11 +33,11 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
     const textAreaTitle = useRef();
     const navigate = useNavigate();
     const [categories,setCategories] = useGlobalState("tag");
-    const [questionType, setQuestionType] = useGlobalState("questionType");
+    const [postType, setPostType] = useGlobalState("postType");
     const [defaultSelector, setDefaultSelector] = useState([]);
     const [defaultSelectorType, setDefaultSelectorType] = useState(null);
     const {user} = useAuthContext();
-    const [questionTypeInput, setQuestionTypeInput] = useState(null);
+    const [postTypeInput, setPostTypeInput] = useState(null);
 
     // set all document value to current input field
     useEffect(() => {
@@ -45,26 +45,26 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
 
         const getData=async()=>{
             if(document){
-                settitle(document.question_title);
-                setdes(document.question_description);
-                setQuestionTypeInput(document.question_type);
-                // settag(document.question_tag); 
+                settitle(document.post_title);
+                setdes(document.post_description);
+                setPostTypeInput(document.post_type);
+                // settag(document.post_tag); 
                 // settag([]);
                 let tempTagArr = [];
                 let tempTagArr2 = [];
-                document.question_tag.forEach(tagsss=>{
+                document.post_tag.forEach(tagsss=>{
                     tempTagArr.push({label:tagsss, value:tagsss});
                     tempTagArr2.push(tagsss);
                 })
                 setOldTag(tempTagArr2);
                 settag(tempTagArr);
                 // get picture
-                if( document.question_image_url){
-                    await document.question_image_url.forEach(item=>{
+                if( document.post_image_url){
+                    await document.post_image_url.forEach(item=>{
                         tempArray.push(item);
                     })
                     setImageURL(tempArray);
-                    setImageName(document.question_image_name);
+                    setImageName(document.post_image_name);
                 }
             }
         }
@@ -80,7 +80,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
 
         // format tag select
         let tempArray2 = [];
-        document.question_tag.forEach(item=>{
+        document.post_tag.forEach(item=>{
             const tempObj={
                 label:item,
                 value:item,
@@ -89,8 +89,8 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
         });
         setDefaultSelector(tempArray2);
         const tempObj2 = {
-            label:document.question_type,
-            value:document.question_type,
+            label:document.post_type,
+            value:document.post_type,
         }
         setDefaultSelectorType(tempObj2);
 
@@ -159,26 +159,26 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
 
                     
                     // user input as object
-                    const question_object={
-                        question_title: title,
-                        question_description: des,
-                        question_tag: tagList,
-                        question_image_name:imageName,
-                        question_image_url:"",
+                    const post_object={
+                        post_title: title,
+                        post_description: des,
+                        post_tag: tagList,
+                        post_image_name:imageName,
+                        post_image_url:"",
                         edited_at: Timestamp.now(),
-                        question_type: questionTypeInput,
+                        post_type: postTypeInput,
                     }
                     // if user use back old image
                     if(image.length === 0){
-                        question_object.question_image_url = document.question_image_url;
+                        post_object.post_image_url = document.post_image_url;
                     }
 
                     // if user upload new image
                     // delete all image from storage
                     if(image.length !== 0){
-                        document.question_image_name.forEach(image_name=>{
+                        document.post_image_name.forEach(image_name=>{
                             // Create a reference to the file to delete
-                            const desertRef = ref(storage, `questions/${document.id}/${image_name}`);
+                            const desertRef = ref(storage, `posts/${document.id}/${image_name}`);
                             // Delete the file
                             deleteObject(desertRef).then(() => {
                                 // File deleted successfully
@@ -192,7 +192,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                     console.log("hi2",image);
         
                     //update  database
-                    await updateDocument(document.id,question_object,image,"questions");
+                    await updateDocument(document.id,post_object,image,"posts");
 
                     //update tag
                     // get the tag tat need to increase
@@ -223,7 +223,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                         setImageURL([]);
                         formInput.current.reset();
                         Swal.fire('Saved!', '', 'success');
-                        navigate(`/question/${document.id}`);
+                        navigate(`/post/${document.id}`);
                         setEditMode(false);
                     }
                     else{
@@ -266,7 +266,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                 setimage([]);
                 setImageURL([]);
                 formInput.current.reset();
-                navigate(`/question/${document.id}`);
+                navigate(`/post/${document.id}`);
                 setEditMode(false);
             }
         })
@@ -274,15 +274,15 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
 
     return (
         <div>
-            <div className={styles.question_container}>
+            <div className={styles.post_container}>
                 {editMode && 
-                    <div className={styles.question_details}>
-                        <form className={styles.add_question_form}  ref={formInput}>
-                            <div className={styles.question_top}>
-                                <div className={styles.question_header}>
-                                    <label className={styles.add_question_title}>
+                    <div className={styles.post_details}>
+                        <form className={styles.add_post_form}  ref={formInput}>
+                            <div className={styles.post_top}>
+                                <div className={styles.post_header}>
+                                    <label className={styles.add_post_title}>
                                         <textarea
-                                        className={styles.question_title}
+                                        className={styles.post_title}
                                         ref={textAreaTitle}
                                         // type="text"
                                         maxLength={74}
@@ -293,24 +293,24 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                                     </label>
                                 </div>
 
-                                <div className={styles.question_subTitle}>
-                                    <div className={styles.question_subTitle_left}>
-                                        <p className={styles.question_subTitle_time}>  
+                                <div className={styles.post_subTitle}>
+                                    <div className={styles.post_subTitle_left}>
+                                        <p className={styles.post_subTitle_time}>  
                                             Added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
                                         </p>
 
                                         {document.edited_at && 
-                                        <p className={styles.question_subTitle_edit}>  
+                                        <p className={styles.post_subTitle_edit}>  
                                             Edited {formatDistanceToNow(document.edited_at.toDate(),{addSuffix:true})}
                                         </p>}
                                         
-                                        <p className={styles.question_subTitle_author}>
+                                        <p className={styles.post_subTitle_author}>
                                             <AiOutlineUser className={styles.peopleIcon}/>
                                             
                                             {displayName}
                                         </p>
                                     </div>
-                                    <div className={styles.question_subTitle_right}>
+                                    <div className={styles.post_subTitle_right}>
                                         {!loading && 
                                         <button className={styles.saveBtn}onClick={handleSave}>Save</button> }
                                         {!loading && 
@@ -323,7 +323,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                                 </div>  
                             </div>
                             
-                    <div className={styles.question_bottom}>
+                    <div className={styles.post_bottom}>
                         <div className={styles.tag_container}>
                             <p className={styles.tag_name}>
                                 <AiOutlineTag className={styles.tagicon}/>
@@ -337,17 +337,17 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                             />
                         </div>
                         
-                        <div className={styles.question_type_container}>
+                        <div className={styles.post_type_container}>
                             <Select
-                                className={styles.question_type}
-                                onChange={(option)=>setQuestionTypeInput(option.value)}
-                                options={questionType.slice(0,2)}
+                                className={styles.post_type}
+                                onChange={(option)=>setPostTypeInput(option.value)}
+                                options={postType.slice(0,2)}
                                 defaultValue={defaultSelectorType}
                             />    
                         </div>
-                        <label className={styles.add_question_des}>
+                        <label className={styles.add_post_des}>
                             <textarea 
-                            className={styles.question_des}
+                            className={styles.post_des}
                             ref={textAreaDes}
                             required
                             onChange={e=>{setdes(e.target.value)}}
@@ -357,7 +357,7 @@ export default function EditQuestion({document,editMode,setEditMode,displayName}
                                 
                         <label>
                             <input
-                            className={styles.add_question_img}
+                            className={styles.add_post_img}
                             type="file"
                             onChange={e => {setimage([...e.target.files])}}
                             multiple accept="image/*"

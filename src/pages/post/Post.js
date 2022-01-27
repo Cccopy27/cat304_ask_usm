@@ -1,4 +1,4 @@
-import styles from "./Question.module.css";
+import styles from "./Post.module.css";
 import { useState, useEffect } from "react";
 import {useParams} from "react-router-dom";
 import {useDocument} from "../../hooks/useDocument";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import {ref, deleteObject } from "firebase/storage";
 import {storage,db} from "../../firebase/config";
 import Swal from "sweetalert2";
-import EditQuestion from "./EditQuestion";
+import EditPost from "./EditPost";
 import AddComment from "../comment/AddComment";
 import CommentSection from "../comment/CommentSection";
 import { writeBatch,doc,collection, getDocs, Timestamp,getDoc, arrayUnion, arrayRemove,increment } from "firebase/firestore";
@@ -18,16 +18,16 @@ import {MdReportProblem} from "react-icons/md";
 import { useComponentVisible } from "../../hooks/useComponentVisible";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function Question() {
+export default function Post() {
     // get id from param
     const {id} = useParams();
     const [change,setChange] = useState(0);
-    const {error, document} = useDocument("questions",id,setChange);
-    const {deleteDocument } = useFirestore(["questions"]);
+    const {error, document} = useDocument("posts",id,setChange);
+    const {deleteDocument } = useFirestore(["posts"]);
     const navigate = useNavigate();
     // const [loading,setLoading] = useState(false);
     const [editMode, setEditMode] = useState(false);
-    const {updateDocument,response} = useFirestore(["questions"]);
+    const {updateDocument,response} = useFirestore(["posts"]);
     const {updateDocument:updateDocument2} = useFirestore(["record"]);
     const [prob, setProb] = useState("");
     const {Comref, isComponentVisible:showReportModal, setIsComponentVisible:setShowReportModal} = useComponentVisible(false);
@@ -62,7 +62,7 @@ export default function Question() {
     },[])
 
     useEffect(async() => {
-        // get user name for question when successful fetch question data
+        // get user name for post when successful fetch post data
         if (document) {
             Swal.showLoading();
             const docRef = doc(db, "users", document.created_by);
@@ -74,12 +74,12 @@ export default function Question() {
 
     },[document])
 
-    // delete question
+    // delete post
     const handleDelete=(e)=>{
         e.preventDefault();
         // alert user
         Swal.fire({
-            title: 'Do you want to delete the question?',
+            title: 'Do you want to delete the post?',
             showDenyButton: true,
             confirmButtonText: 'Delete',
             denyButtonText: `Don't delete`,
@@ -99,9 +99,9 @@ export default function Question() {
                 // delete storage image
                 // loop each image
                 
-                document.question_image_name.forEach(image_name=>{
+                document.post_image_name.forEach(image_name=>{
                     // Create a reference to the file to delete
-                    const desertRef = ref(storage, `question/${document.id}/${image_name}`);
+                    const desertRef = ref(storage, `post/${document.id}/${image_name}`);
                     // Delete the file
                     deleteObject(desertRef).then(() => {
                         // File deleted successfully
@@ -115,12 +115,12 @@ export default function Question() {
                 await deleteDocument(document.id);
                 const updateObj = {}
 
-                document.question_tag.forEach(tag=>{
+                document.post_tag.forEach(tag=>{
                     updateObj[tag] = increment(-1);
                 })
                 await updateDocument2("tag",updateObj);
                 // delete subCollection
-                const commentList = await getDocs(collection(db,"questions",tempKey,"comment"));
+                const commentList = await getDocs(collection(db,"posts",tempKey,"comment"));
                 // batch declare
                 const batch = writeBatch(db);
                 // delete all comment in batch
@@ -151,9 +151,9 @@ export default function Question() {
 
                 Swal.fire('Deleted!', '', 'success');
             //   setLoading(false);
-                navigate("/question");
+                navigate("/post");
             } else if (result.isDenied) {
-              Swal.fire('Question not deleted', '', 'info')
+              Swal.fire('Post not deleted', '', 'info')
             }
           })
     };
@@ -165,14 +165,14 @@ export default function Question() {
         setEditMode(true);
     }
 
-    // add question
-    const handleAddQuestion=(e)=>{
+    // add post
+    const handleAddPost=(e)=>{
         e.preventDefault();
         if (!user) {
             Swal.fire("Please login to add something","","warning");
         }
         else{
-            navigate("/addquestion");
+            navigate("/addpost");
         }
     }
 
@@ -201,7 +201,7 @@ export default function Question() {
                 Swal.showLoading();
                 const reportObj={
                     message: prob,
-                    question: id,
+                    post: id,
                     report_user_id: "",
                     added_at:Timestamp.now(),
                 }
@@ -227,9 +227,9 @@ export default function Question() {
         e.preventDefault();
 
         if (!document.upVoteList.includes(user.uid)) {
-            let question_object = "";
+            let post_object = "";
             if (document.downVoteList.includes(user.uid)) {
-                question_object={
+                post_object={
                     upVote:increment(1),
                     downVote:increment(-1),
                     upVoteList:arrayUnion(user.uid),
@@ -237,25 +237,25 @@ export default function Question() {
                 }
             }
             else {
-                question_object={
+                post_object={
                     upVote:increment(1),
                     upVoteList:arrayUnion(user.uid)
                 }
             }
             
             //update  database
-            await updateDocument(id,question_object);
+            await updateDocument(id,post_object);
     
             if (response.error){
                 Swal.fire("Something wrong","","error");
             }
         } else{
-            const question_object={
+            const post_object={
                 upVote:increment(-1),
                 upVoteList:arrayRemove(user.uid),
             }
             //update  database
-            await updateDocument(id,question_object);
+            await updateDocument(id,post_object);
     
             if (response.error){
                 Swal.fire("Something wrong","","error");
@@ -269,9 +269,9 @@ export default function Question() {
         e.preventDefault();
         
         if (!document.downVoteList.includes(user.uid)) {
-            let question_object = "";
+            let post_object = "";
             if (document.upVoteList.includes(user.uid)) {
-                question_object={
+                post_object={
                     upVote:increment(-1),
                     downVote:increment(1),
                     upVoteList:arrayRemove(user.uid),
@@ -279,27 +279,27 @@ export default function Question() {
                 }
             }
             else {
-                question_object={
+                post_object={
                     downVote:increment(1),
                     downVoteList:arrayUnion(user.uid)
                 }
             }
 
             //update  database
-            await updateDocument(id,question_object);
+            await updateDocument(id,post_object);
 
             if (response.error){
                 Swal.fire("Something wrong","","error");
             }
         }
         else {
-            const question_object = {
+            const post_object = {
                 downVote: increment(-1),
                 downVoteList: arrayRemove(user.uid)
             }
 
             //update  database
-            await updateDocument(id,question_object);
+            await updateDocument(id,post_object);
 
             if (response.error){
                 Swal.fire("Something wrong","","error");
@@ -314,46 +314,46 @@ export default function Question() {
 
     return (
         <div>
-            <div className={styles.question_container}>
+            <div className={styles.post_container}>
                 {!document && <div>Loading</div>}
                 {!editMode && document && 
-                    <div className={styles.question_details}>
-                        <div className={styles.question_top}>
-                            <div className={styles.question_header}>
-                                <p className={styles.question_title}>{document.question_title}</p>
+                    <div className={styles.post_details}>
+                        <div className={styles.post_top}>
+                            <div className={styles.post_header}>
+                                <p className={styles.post_title}>{document.post_title}</p>
                                 <div className={styles.questoin_report}>
-                                    <MdReportProblem className={styles.question_report} onClick={handleReport}/>
+                                    <MdReportProblem className={styles.post_report} onClick={handleReport}/>
                                     <span className={styles.report_span}>Click to Report</span>
                                 </div>
-                                <div className={styles.question_add}>
-                                    <button className={styles.question_add_btn} onClick={handleAddQuestion}>Add Something</button>
+                                <div className={styles.post_add}>
+                                    <button className={styles.post_add_btn} onClick={handleAddPost}>Add Something</button>
                                 </div>
                         
                             </div>
-                            <div className={styles.question_subTitle}>
-                                <div className={styles.question_subTitle_left}>
-                                    <p className={styles.question_view}>
+                            <div className={styles.post_subTitle}>
+                                <div className={styles.post_subTitle_left}>
+                                    <p className={styles.post_view}>
                                         <AiOutlineEye className={styles.eye}/>
                                         {document.view}
                                         
                                     </p>
-                                    <p className={styles.question_subTitle_time}>  
+                                    <p className={styles.post_subTitle_time}>  
                                         Added {formatDistanceToNow(document.added_at.toDate(),{addSuffix:true})}
                                     </p>
 
                                     {document.edited_at && 
-                                        <p className={styles.question_subTitle_edit}>  
+                                        <p className={styles.post_subTitle_edit}>  
                                             Edited {formatDistanceToNow(document.edited_at.toDate(),{addSuffix:true})}
                                         </p>
                                     }
                                     
-                                    <p className={styles.question_subTitle_author}>
+                                    <p className={styles.post_subTitle_author}>
                                         <AiOutlineUser className={styles.peopleIcon}/>
                                         <span className={styles.peopleName}>{userName}</span>
                                     </p>
                                 </div>
                                 {user && ((user.uid === document.created_by) || (user.uid === "ZuYyHrRcx3bVYqhCIp4ZB6U1gve2")) && 
-                                <div className={styles.question_subTitle_right}>
+                                <div className={styles.post_subTitle_right}>
                                     <button className={styles.editBtn}onClick={handleEdit}>Edit</button>
                                     <button className={styles.deleteBtn}
                                     onClick={handleDelete}>Delete</button>
@@ -363,8 +363,8 @@ export default function Question() {
                                 
                             </div>
                         </div>
-                        <div className={styles.question_bottom_container}>
-                            <div className={styles.question_vote_container}> 
+                        <div className={styles.post_bottom_container}>
+                            <div className={styles.post_vote_container}> 
                                 <span className={styles.upVoteSpan}>{document.upVote}</span>
                                 {document.upVoteList.includes(user.uid) && <BsCaretUpFill className={styles.upVote} onClick={(e)=>handleUpVote(e)}/>}
                                 {!document.upVoteList.includes(user.uid) &&<BsCaretUp className={styles.upVote} onClick={(e)=>handleUpVote(e)}/>}
@@ -374,31 +374,31 @@ export default function Question() {
                                 <span className={styles.downVoteSpan}>{document.downVote}</span>
 
                             </div>
-                            <div className={styles.question_bottom}>
-                                <div className={styles.question_tag_big_container}>
-                                    <p className={styles.question_subTitle_tags}>
+                            <div className={styles.post_bottom}>
+                                <div className={styles.post_tag_big_container}>
+                                    <p className={styles.post_subTitle_tags}>
                                         <AiOutlineTag className={styles.tagicon}/>
                                     </p>
-                                    <div className={styles.question_tag_container}>
-                                        {document.question_tag.map(tag=>(
+                                    <div className={styles.post_tag_container}>
+                                        {document.post_tag.map(tag=>(
                                         <span className={styles.tag} key={tag}>{tag}</span>
                                     ))}
                                     </div>
                                 </div>
                                 
-                                <div className={styles.question_type_container}>
-                                    <span className={styles.question_type}>{document.question_type}</span>
+                                <div className={styles.post_type_container}>
+                                    <span className={styles.post_type}>{document.post_type}</span>
                                 </div>
-                                <p className={styles.question_des}>{document.question_description}</p>
-                                {document.question_image_url && document.question_image_url.map(imageSrc=>
+                                <p className={styles.post_des}>{document.post_description}</p>
+                                {document.post_image_url && document.post_image_url.map(imageSrc=>
                                     <img className={styles.image_preview} key={imageSrc}src={imageSrc} alt="image-preview"/>)}
                             </div>
                         </div>
                 </div>
                 }
-                {document && <EditQuestion document = {document}editMode={editMode} setEditMode={setEditMode} displayName={userName}/>}
-                {document && !editMode && <AddComment question_id={document.id}/>}
-                {document && !editMode && <CommentSection question_id={document.id}/>}
+                {document && <EditPost document = {document}editMode={editMode} setEditMode={setEditMode} displayName={userName}/>}
+                {document && !editMode && <AddComment post_id={document.id}/>}
+                {document && !editMode && <CommentSection post_id={document.id}/>}
             </div>
             {showReportModal && <div className={styles.report_modal_container} ref={Comref}>
                 <form className={styles.report_modal_form}>

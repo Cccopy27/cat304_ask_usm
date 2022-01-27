@@ -328,8 +328,8 @@ export default function RightBar() {
         <div className={styles.rightbar_container}>
             
             <div className={styles.rightbar_content}>
-                <div className={styles.my_question}>
-                    <button className={styles.my_question_btn} onClick={(e)=>{handleGo(e)}}>Go to My Post</button>
+                <div className={styles.my_post}>
+                    <button className={styles.my_post_btn} onClick={(e)=>{handleGo(e)}}>Go to My Post</button>
                 </div>
 
                 <div className={styles.bookmark_container}>

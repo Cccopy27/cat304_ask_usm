@@ -6,7 +6,7 @@
     padding: 10px;
 }
 
-.question_container{
+.post_container{
     margin: 20px 0px;
     padding: 0px;
     display: flex;
@@ -16,15 +16,15 @@
     /* overflow: auto; */
 }
 
-.question_details{
+.post_details{
     display: flex;
     flex-direction: column;
 }
 
-.question_top{
+.post_top{
     border-bottom: 1px solid #1A2238;
 }
-.question_header{
+.post_header{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -32,7 +32,7 @@
     margin: 0px 20px;
 }
 
-.question_title{
+.post_title{
     min-height: 85px;
     font-size: 2em;
     flex: 4;
@@ -44,7 +44,7 @@
     /* display: inline-block; */
 }
 
-.question_add{
+.post_add{
     flex: 1;
     display: flex;
     flex-direction: row;
@@ -52,7 +52,7 @@
     
 }
 
-.question_subTitle{
+.post_subTitle{
     display: flex;
     flex-direction: row;
     align-items: center;  
@@ -60,12 +60,12 @@
     margin: 10px 20px 0px 20px;
 }
 
-.question_subTitle p,.deleteBtn, .editBtn {
+.post_subTitle p,.deleteBtn, .editBtn {
     margin-top: 0px;
     margin-bottom: 10px;
 }
 
-.question_subTitle_author{
+.post_subTitle_author{
     display: flex;
     flex-direction: row;
 
@@ -74,7 +74,7 @@
     color: #3ab0c5;
 }
 
-.question_add_btn{
+.post_add_btn{
     /* align-self: flex-end; */
     /* margin-top: 30px; */
     height: 30px;
@@ -83,18 +83,18 @@
     border: none;
 }
 
-.question_add_btn:hover{
+.post_add_btn:hover{
     cursor: pointer;
     color: #9DAAF2;
 }
 
-.question_subTitle_left{
+.post_subTitle_left{
     flex: 2;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.question_subTitle_right{
+.post_subTitle_right{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -118,14 +118,14 @@
     cursor: pointer;
 }
 
-.question_bottom{
+.post_bottom{
     flex: 10;
     margin: 20px 40px 0px 0px;
     padding: 0px 0px 40px 0px;
     border-bottom: 1px solid #1A2238;
 }
 
-.question_des{
+.post_des{
     white-space: pre-wrap;
     font-size: large;
     max-width: 910px;
@@ -135,7 +135,7 @@
     padding: 10px;
 }
 
-.question_tag_big_container{
+.post_tag_big_container{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -143,7 +143,7 @@
 
 }
 
-.question_tag_container{
+.post_tag_container{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -155,7 +155,7 @@
 }
 
 
-.question_subTitle_tags{
+.post_subTitle_tags{
     margin-top: 0px;
     align-self: flex-start;
 }
@@ -164,11 +164,11 @@
     margin: 5px 5px;
 }
 
-.question_subTitle_time, .question_subTitle_author, .question_subTitle_tags, .question_subTitle_edit,.view{
+.post_subTitle_time, .post_subTitle_author, .post_subTitle_tags, .post_subTitle_edit,.view{
     font-weight: 300;
 }
 
-.question_subTitle_edit{
+.post_subTitle_edit{
     margin-left: 20px;
 }
 
@@ -204,7 +204,7 @@
     /* margin-left: 30px; */
 }
 
-.question_view{
+.post_view{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -220,23 +220,23 @@
     margin-right: 5px;
 }
 
-.question_report_btn{
+.post_report_btn{
     background-color: transparent;
     border: none;
 }
 
-.question_report_btn:hover{
+.post_report_btn:hover{
     cursor: pointer;
 }
 
-.question_report{
+.post_report{
     font-size: 30px;
     flex: 1;
     padding-left: 30px;
 
 }
 
-.question_report:hover{
+.post_report:hover{
     cursor: pointer;
     
 }
@@ -249,7 +249,7 @@
     display: none;
 }
 
-.question_report:hover ~ .report_span{
+.post_report:hover ~ .report_span{
     /* visibility: show; */
     display: block;
 }
@@ -329,18 +329,18 @@
 
 }
 
-.question_type{
+.post_type{
     padding-left: 10px;
     color: rgb(88, 184, 88);
 }
 
-.question_bottom_container{
+.post_bottom_container{
     display: flex;
     flex-direction: row;
 }
 
 
-.question_vote_container{
+.post_vote_container{
     flex: 1;
 
     display: flex;
@@ -366,34 +366,34 @@
 }
 
 @media screen and (max-width: 400px) {
-    .question_container p,.question_container span,.question_container button ,.question_des{
+    .post_container p,.post_container span,.post_container button ,.post_des{
         font-size: 10px;
     }
 
-    .question_subTitle{
+    .post_subTitle{
         max-width: 100%;
     }
 
-    .question_title{
+    .post_title{
         min-height: 55px;
         font-size: 1em;
     }
 
-    .question_view{
+    .post_view{
         margin-right: 5px;
         min-width: 50px;
     }
 
-    .question_add_btn{
+    .post_add_btn{
         font-size: 10px;
     }
 
-    .question_subTitle{
+    .post_subTitle{
         display: flex;
         flex-direction: column !important;
     }
 
-    .question_bottom{
+    .post_bottom{
         margin-left: 10px;
         margin-right: 10px;
     }
