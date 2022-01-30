@@ -96,7 +96,7 @@ export default function Home() {
         {popularPost &&
         <div>
             <span>
-                Popular posts...
+                <h2>Popular posts...</h2>
             </span>
             <Select 
                 onChange={(option)=>setFilter(option)}
