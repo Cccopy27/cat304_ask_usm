@@ -192,7 +192,7 @@ export default function EditPost({document,editMode,setEditMode,displayName}) {
                     console.log("hi2",image);
         
                     //update  database
-                    await updateDocument(document.id,post_object,image,"posts");
+                    await updateDocument(document.id,post_object,image,"post");
 
                     //update tag
                     // get the tag tat need to increase
