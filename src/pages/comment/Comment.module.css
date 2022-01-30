@@ -1,4 +1,5 @@
 .comment_container{
+    flex: 10;
     /* margin: 20px 0px;
     display: flex;
     flex-direction: column; */
@@ -34,9 +35,14 @@
     align-items: center;
 }
 
-.comment_author{
-    margin-left: 20px;
+.comment_author,.comment_author_icon{
     color:#3ab0c5
+}
+
+.comment_author_icon{
+    font-size: 15px;
+    margin-left: 20px;
+    margin-right: 5px;
 }
 
 .btn{
@@ -72,4 +78,46 @@
 
 .comment_edit{
     margin-left: 20px;
+}
+
+.comment_container_big{
+    display: flex;
+    flex-direction: row;
+}
+
+.vote_container{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-between; */
+    padding: 20px 0px;
+}
+
+.upVoteSpan, .downVoteSpan{
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.upVote, .downVote{
+    cursor: pointer;
+    font-size: 40px;
+    /* background-color: #3ab0c5; */
+    /* font-weight: 300; */
+}
+
+.upVote:hover, .downVote:hover{
+    color: #3ab0c5;
+}
+
+.vote_container{
+    flex: 1;
+}
+@media screen and (max-width: 400px) {
+    .comments{
+        font-size: 12px;
+    }
+    .comment_container p {
+        font-size: 10px !important;
+    }
 }

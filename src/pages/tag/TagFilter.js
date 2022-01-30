@@ -6,18 +6,29 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function TagFilter({setTag,tag, setFilter}) {
+export default function TagFilter({setTag,tag, setFilter, setPostTypeFilter}) {
     const [categories, setCategories] = useGlobalState("tag");
     const [orderList, setorderList] = useGlobalState("order");
+    const [postType, setPostType] = useGlobalState("postType");
+    const [chosenPostType, setChosenPostType] = useState("");
     const navigate = useNavigate();
     const [tempTag, setTempTag] = useState(tag);
     const tagRef = useRef();
     const {result} = useParams();
-
-    // navigate to add question
-    const handleAddQuestion = (e) =>{
-        navigate("/addquestion");
+    const {user} = useAuthContext();
+    
+    
+    // navigate to add post
+    const handleAddPost = (e) =>{
+        e.preventDefault();
+        if (!user) {
+            Swal.fire("Please login to add something","","warning");
+        }
+        else{
+            navigate("/addpost");            
+        }
     }
   
     // output result
@@ -35,8 +46,11 @@ export default function TagFilter({setTag,tag, setFilter}) {
     
             // remove last &
             paramURL = paramURL.substring(0,paramURL.length-1);
-            setTag([]);
+
+            // setTag([]);
             setTempTag([]);
+            console.log(tagRef.current);
+
             navigate(paramURL);
         }
         else{
@@ -49,8 +63,9 @@ export default function TagFilter({setTag,tag, setFilter}) {
     useEffect(()=>{
         // reset form
         tagRef.current.clearValue();
-        setTag([]);
+        // setTag([]);
         setTempTag([]);
+        
     },[result]);
 
     const handleFilter=(options)=>{
@@ -59,10 +74,10 @@ export default function TagFilter({setTag,tag, setFilter}) {
                 setFilter(["added_at","desc"]);
                 break;
             case "View": 
-                // setFilter(["added_at","desc"]);
+                setFilter(["view","desc"]);
                 break;
             case "Rating":
-                
+                setFilter(["upVote","desc"])
                 break;
             case "Oldest":
                 setFilter(["added_at","asc"]);
@@ -70,6 +85,25 @@ export default function TagFilter({setTag,tag, setFilter}) {
                 break;
             default: 
                 setFilter(["added_at","desc"]);
+        }
+    }
+
+    const handlePostType = (options) => {
+        switch(options.value) {
+            case "Question":
+                setPostTypeFilter(["post_type", "==", "Question"]);
+                break;
+
+            case "Non-Question":
+                setPostTypeFilter(["post_type", "==", "Non-Question"]);
+                break;
+
+            case "All":
+                setPostTypeFilter([]);
+                break;
+
+            default:
+                setPostTypeFilter([]);
         }
     }
 
@@ -86,6 +120,7 @@ export default function TagFilter({setTag,tag, setFilter}) {
                     />
                     
                 </div>
+                
                 <div className={styles.tag_btn_container}>
                     <button className={styles.tag_btn} onClick={handleSearch}>Search</button>
                     <AiOutlineSearch className={styles.tag_search} onClick={handleSearch}/>
@@ -99,10 +134,18 @@ export default function TagFilter({setTag,tag, setFilter}) {
                         defaultValue={orderList[0]}
                     />
                 </div>
+
+                <div className={styles.post_type}>
+                    <Select
+                        onChange={handlePostType}
+                        options={postType}
+                        defaultValue={{label: "All",value:"All"}}
+                    />
+                </div>
             </div>
             
-            <div className={styles.question_add}>
-                <button className={styles.question_add_btn} onClick={handleAddQuestion} >Add Something</button>
+            <div className={styles.post_add}>
+                <button className={styles.post_add_btn} onClick={handleAddPost} >Add Something</button>
             </div>
         </div>
     )

@@ -1,9 +1,9 @@
-.add_question.container{
+.add_post.container{
     display: flex;
     flex-direction: column;
 }
 
-.add_question_header{
+.add_post_header{
     /* background-color: red; */
     margin: 20px 0px 0px 25px;
     /* margin-top: 20px; */
@@ -14,14 +14,14 @@
     flex: 1;
 }
 
-.add_question_title_header{
+.add_post_title_header{
     /* padding-left: 25px; */
     font-weight: 400;
     font-size: 30px;
     flex: 1;
 }
 
-.add_question_form_container{
+.add_post_form_container{
     margin-top: 15px;
     margin-left: 100px;
     margin-right: 100px;
@@ -33,7 +33,7 @@
     justify-content: space-around;
 }
 
-.add_question_form{
+.add_post_form{
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -42,19 +42,19 @@
     padding: 25px 25px;
 }
 
-.add_question_tag{
+.add_post_tag{
     flex: 1;
     margin-top: 40px;
 }
 
-.add_question_title{
+.add_post_title{
     flex:1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
 
-.add_question_des{
+.add_post_des{
     margin-top: 40px;
 
     display: flex;
@@ -62,7 +62,7 @@
     flex:4;
 }
 
-.add_question_des_input{
+.add_post_des_input{
     margin: 10px 0px 0px 0px !important;
     /* margin-top: 10px;
     margin-left: 0px !important;
@@ -74,7 +74,7 @@
 .add_title_input{
 }
 
-.add_question_img{
+.add_post_img{
     flex:1;
     margin: 40px 0px 0px 0px;
 }
@@ -104,13 +104,6 @@
     /* font-family: 'Courier New', Courier, monospace !important; */
 }
 
-.submit_btn{
-    align-self: center;
-    width: 400px;
-    padding: 10px;
-    font-size: 20px;
-}
-
 .image_preview_contaier{
     flex: 1;
     display: flex;
@@ -127,6 +120,8 @@
 }
 
 .submit_btn{
+    align-self: center;
+    padding: 10px;
     font-size: 17px;
     border-radius: 20px;
     width: 150px;
@@ -142,4 +137,34 @@
 
 .add_img_btn{
     background-color: transparent;
+}
+
+@media screen and (max-width: 400px) {
+    .add_post_form_container{
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size: 13px;
+    }
+
+    .add_post_title_header{
+        font-size: 15px;
+    }
+
+    .span_title,.input_style,.add_title_input, .span_title,.add_img_btn,.submit_btn{
+        font-size: 13px;
+    }
+
+    .submit_btn{
+        text-align: center;
+        width: 100px;
+        height: 30px;
+        padding: 5px !important;
+    }
+
+    .input_style{
+        width: 100% !important;
+    }
+
+
+    
 }

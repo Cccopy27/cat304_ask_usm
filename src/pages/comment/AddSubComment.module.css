@@ -34,3 +34,16 @@
     color: #64b6f8;
     cursor: pointer;
 }
+
+@media screen and (max-width: 400px) {
+    .comment_container{
+        margin-left: 10px;
+    }
+    .comment_container p,.comment_container button,.comment_container span, .comment_textarea {
+        font-size: 10px;
+    }
+
+    .comment_textarea{
+        width: 100%;
+    }
+}

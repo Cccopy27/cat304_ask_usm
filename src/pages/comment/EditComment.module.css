@@ -19,7 +19,8 @@
 }
 
 .image_preview{
-    height: 200px;
+    /* height: 200px; */
+    max-width: 40%;
     margin: 5px;
 }
 
@@ -80,4 +81,19 @@
 
 .comment_edited{
     margin-left: 20px;
+}
+
+@media screen and (max-width: 400px) {
+    .input_style{
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .comment_label p, .comment_label span ,.comment_label button, .comment_time, .image_input{
+        font-size: 8px !important;
+    }
+
+    .comment_time, .comment_edited,.comment_author{
+        display: none;
+    }
 }

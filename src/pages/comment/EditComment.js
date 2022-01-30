@@ -6,9 +6,10 @@ import { Timestamp } from "firebase/firestore";
 import {ref, deleteObject } from "firebase/storage";
 import {storage} from "../../firebase/config";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { useDocument } from "../../hooks/useDocument";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
-
-export default function EditComment({document,editMode,setEditMode, question_id}) {
+export default function EditComment({document,editMode,setEditMode, post_id}) {
     const [newComment,setNewComment] = useState("");
     const [image, setimage] = useState([]);
     const [imageURL,setImageURL] = useState([]);
@@ -16,9 +17,17 @@ export default function EditComment({document,editMode,setEditMode, question_id}
     // const [loading,setLoading] = useState(false);
     const tempArray =[];
     const formInput = useRef();
-    const {updateDocument,response} = useFirestore(["questions",question_id,"comment"]);
+    const {updateDocument,response} = useFirestore(["posts",post_id,"comment"]);
     const commentRef = useRef();
+    const {document:document2, error} = useDocument("users",document.created_by);
+    const [userName, setUserName] = useState(null);
+    const {user} = useAuthContext();
 
+    useEffect(() => {
+        if (document2) {
+            setUserName(document2.displayName);
+        }
+    }, [document2])
     // show current comment 
     useEffect(() => {
         const getallData=async()=>{
@@ -79,11 +88,10 @@ export default function EditComment({document,editMode,setEditMode, question_id}
                         // user input as object
                         const comment_object={
                             comments: newComment,
-                            created_by:"",
                             edited_at:Timestamp.now(),
                             comment_image_name:imageName,
                             comment_image_url:"",
-                            subComment:document.subComment,
+                            // subComment:document.subComment,
                         }
 
                         // if user use back old image
@@ -186,7 +194,7 @@ export default function EditComment({document,editMode,setEditMode, question_id}
                                         <p className={styles.comment_edited}>Edited {formatDistanceToNow(document.edited_at.toDate(),{addSuffix:true})}</p>
                                     }
                                     
-                                    <p className={styles.comment_author}>Added by {document.created_by}</p>
+                                    <p className={styles.comment_author}>Added by {userName}</p>
                                 </div>
                                 
                                 <div className={styles.btn}>

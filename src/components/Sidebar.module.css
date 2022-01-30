@@ -18,7 +18,7 @@
     margin-bottom: 40px;
 }
 
-.question, .tag, .new, .club{
+.post, .tag, .new, .club{
     margin-bottom: 10px;
 }
 
@@ -26,7 +26,7 @@
     margin-top:0;
     padding-top:0;
     position:sticky;
-    top:0;
+    top:60px;
 }
 
 .sidebar ul{
@@ -37,7 +37,7 @@
     flex-direction: column;
 }
 
-.sidebar_ul li:not(:first-child){
+.sidebar_ul li{
     padding-left: 50px;
 
 }
@@ -61,4 +61,21 @@
 .sidebar_links a:hover{
     color: #9DAAF2; 
 
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar_ul li{
+        font-size: 13px;
+        padding: 10px !important;
+        margin-bottom: 0px;
+    }
+
+    .sidebar{
+        max-width: 100%;
+    }
+
+    .sidebar_ul {
+        /* display: flex; */
+        flex-direction: row !important;
+    }
 }

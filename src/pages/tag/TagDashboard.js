@@ -10,48 +10,70 @@ import { useCollection } from "../../hooks/useCollection";
 
 export default function TagDashboard() {
     const [filter, setFilter] = useState(["added_at","desc"]);
-    const {document,error} = useCollection(["questions"],"",filter);
+    const [postTypeFilter, setPostTypeFilter] = useState([])
+    // const {document,error} = useCollection(["posts"],"",filter);
     const [fetchData, setFetchData] = useState();
     const {result} = useParams();
     const [tag,setTag]=  useState([]);
+    const [loading, setLoading] = useState(false);
 
     // update fetch data when document exist
+    // useEffect(()=>{
+    //     setFetchData(document);
+    // },[document])
     useEffect(()=>{
-        setFetchData(document);
-    },[document])
-
+        window.scrollTo(0,0);
+    },[])
 
     // update tag when page navigation
     useEffect(() => {
-
-        setTag(result.split("&"));
+        if (result) {
+            setTag(result.split("&"));
+        }
+        else {
+            setTag([]);
+        }
+    
     }, [result]);
 
     useEffect(()=>{
-        // fetch data again with sort by filter
-        const getDataFilter=async()=>{
-            const ref = query(collection(db, "questions"), orderBy(...filter));
-            let results= [];
-            console.log("I keep running in get collections");
-            const querySnapShot = await getDocs(ref);
-    
-            querySnapShot.forEach((doc)=>{
-                results.push({...doc.data(), id: doc.id});
-            })
-            //update state
-            setFetchData(results);
-        }
+        if (tag.length !== 0) {
+            // fetch data again with sort by filter
+            const getDataFilter=async()=>{
+                let ref = "";
+                if (postTypeFilter.length !== 0) {
 
-        getDataFilter();
+                    ref = query(collection(db, "posts"),where(...postTypeFilter), where("post_tag","array-contains-any",tag),orderBy(...filter));
+                }
+                else {
+                    ref = query(collection(db, "posts"),where("post_tag","array-contains-any",tag),orderBy(...filter));
+                   
+                }
+                let results= [];
+                console.log("I keep running in get collections");
+                const querySnapShot = await getDocs(ref);
         
-    },[filter])
+                querySnapShot.forEach((doc)=>{
+                    results.push({...doc.data(), id: doc.id});
+                })
+                //update state
+                setFetchData(results);
+            }
+            setLoading(true);
+            getDataFilter();
+            setLoading(false);
+        }
+        
+        
+    },[filter, postTypeFilter, tag])
 
 
     return (
         <div className={styles.tagDashboard_container}>
-            <TagFilter setTag={setTag} tag={tag} setFilter={setFilter}/>
+            <TagFilter setTag={setTag} tag={tag} setFilter={setFilter} setPostTypeFilter={setPostTypeFilter}/>
             <div className={styles.TagDashboard_content}>
-                 {fetchData && <TagResult tag={tag} document={fetchData}/>}
+                 {!loading && fetchData && <TagResult tag={tag} document={fetchData}/>}
+                 {loading && <div>Loading</div>}
             </div>
         </div>
     )

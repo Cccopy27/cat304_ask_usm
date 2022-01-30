@@ -3,63 +3,81 @@ import styles from "./AddComment.module.css";
 import { useFirestore } from "../../hooks/useFirestore";
 import { Timestamp } from "firebase/firestore";
 import Swal from "sweetalert2";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
-
-export default function AddComment({question_id}) {
+export default function AddComment({post_id}) {
     const [comments, setComments] = useState("");
     const [image, setimage] = useState([]);
     const [imageURLs,setImageURLs] = useState([]);
     const [imageName,setImageName] = useState([]);
     const [focusMode,setFocusMode] = useState(false);
     // const [loading,setLoading] = useState(false);
-    const {addDocument, response} = useFirestore(["questions",question_id,"comment"]);
+    const {addDocument, response} = useFirestore(["posts",post_id,"comment"]);
     const formInput = useRef();
+    const {user} = useAuthContext();
+
     // submit comment
     const handleSubmit=async(e)=>{
         e.preventDefault();
 
-        // make sure form is not empty
-        if(formInput.current.checkValidity()){
-
-            // comment to add to database
-            const commentObj = {
-                comments,
-                created_by:"",
-                added_at:Timestamp.now(),
-                edited_at:"",
-                comment_image_name:imageName,
-                comment_image_url:"",
-                subComment:"",
-            }
-            
-            // add document
-            await addDocument(commentObj,image,"comment");
-
-            // got error
-            if(response.error){
-                console.log("something wrong");
-                // alert user
-                Swal.fire({
-                    icon:"error",
-                    title:"Something wrong",
-                    showConfirmButton: true,
-                })
-            }
-            else{
-                // alert user
-                Swal.fire('Added!', '', 'success');
-                // clear input
-                setComments("");
-                setimage([]);
-                setImageURLs([]);
-                setImageName([]);
-                // hide add comment button
-                setFocusMode(false);
-            }
-        }else{
-            // alert user
-            Swal.fire('Write Something!', '', 'info');  
+        if (!user) {
+            Swal.fire('Please login to add comment',"","info");
         }
+        else{
+            // make sure form is not empty
+            if(formInput.current.checkValidity()){
+                Swal.fire({
+                    title:"Now Loading...",
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+                Swal.showLoading();
+                // comment to add to database
+                const commentObj = {
+                    comments,
+                    created_by:user.uid,
+                    added_at:Timestamp.now(),
+                    edited_at:"",
+                    comment_image_name:imageName,
+                    comment_image_url:"",
+                    subComment:"",
+                    upVote:0,
+                    downVote:0,
+                    upVoteList:[],
+                    downVoteList:[]
+                }
+                
+                // add document
+                await addDocument(commentObj,image,"comment");
+
+                // got error
+                if(response.error){
+                    console.log("something wrong");
+                    // alert user
+                    Swal.fire({
+                        icon:"error",
+                        title:"Something wrong",
+                        showConfirmButton: true,
+                    })
+                }
+                else{
+                    // alert user
+                    Swal.fire('Added!', '', 'success');
+                    // clear input
+                    setComments("");
+                    setimage([]);
+                    setImageURLs([]);
+                    setImageName([]);
+                    // hide add comment button
+                    setFocusMode(false);
+                }
+            }else{
+                // alert user
+                Swal.fire('Write Something!', '', 'info');  
+            }
+        }
+
+        
     }
 
     // preview image

@@ -1,0 +1,20 @@
+.post_list{
+    /* background-color: aqua !important; */
+    height: 800px;
+    /* overflow: auto; */
+}
+
+
+.post_add_btn{
+    /* align-self: flex-end; */
+    /* margin-top: 30px; */
+    height: 30px;
+    background-color: #1A2238;
+    color: white;
+    border: none;
+}
+
+.post_add_btn:hover{
+    cursor: pointer;
+    color: #9DAAF2;
+}

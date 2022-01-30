@@ -1,11 +1,11 @@
-.question_container{
+.post_container{
     display: flex;
     flex-direction: column;
-    height: 1300px;
+    height: 1200px;
 
     /* height:auto; */
 }
-.question_list{
+.post_list{
     /* background-color:aliceblue ; */
     display: flex;
     flex-direction: column;
@@ -24,4 +24,17 @@
     font-size: 25px;
     margin-left: 10px;
     color: #9DAAF2;
+}
+
+@media screen and (max-width: 400px) {
+    .post_list{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .post_container{
+        height: 1150px;
+        /* overflow-y: hidden; */
+    }
+    
 }

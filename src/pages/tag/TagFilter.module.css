@@ -14,12 +14,16 @@
     justify-content: flex-start;
 }
 
-.tag_options,.tag_btn{
+.tag_options,.tag_btn,.post_type{
     margin-left: 10px;
 }
 
 .tag_options{
-    flex: 3;
+    flex: 2;
+}
+
+.post_type{
+    flex: 1;
 }
 
 .tag_title{
@@ -61,20 +65,20 @@
     color: white;
 }
 
-.question_add{
+.post_add{
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.question_add_btn{
+.post_add_btn{
     height: 30px;
     background-color: #1A2238;
     color: white;
 }
 
-.question_add_btn:hover{
+.post_add_btn:hover{
     cursor: pointer;
     color: #9DAAF2;
 }
@@ -89,4 +93,63 @@
     flex: 1;
     margin-left: 20px;
     /* width: 200px; */
+}
+
+@media screen and (max-width: 400px) {
+    .tag_filter{
+        display: grid;
+        grid-template-areas: "top1 top1"
+                            "top2 top3"
+                             "btm_left btm_mid";
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        max-height: 150px;
+        row-gap: 10px;
+    }
+
+    .tag_filter_container{
+        height: 100px;
+        margin-bottom: 20px;
+    }
+
+    .post_type{
+        grid-area: top2;
+    }
+
+    .tag_title{
+        font-size: 14px;
+        grid-area: top1;
+    }
+
+    .tag_options{
+        grid-area: btm_left !important;
+    }
+
+    .tag_btn_container{
+        grid-area: btm_mid;
+        /* font-size: 10px !important; */
+        width: 80%;
+    }
+
+    .tag_btn{
+        font-size: 10px;
+    }
+    .tag_search{
+        /* color: #9DAAF2; */
+        width: 8px;
+    }
+    .post_add_btn{
+        font-size: 10px;
+    }
+
+    .sort_by{
+        grid-area: top3;
+        margin: 0px;
+        font-size: 13px;
+        width: 80%;
+    }
+    .tag_options{
+        font-size: 13px;
+        margin: 0px;
+    }
 }

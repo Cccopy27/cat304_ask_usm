@@ -1,9 +1,10 @@
-.question_list {
+.post_list {
     display: flex;
     flex-direction: column;
+    height: 1000px;
 }
 
-.question_item{
+.post_item{
     /* display: flex; */
     display: flex;
     flex-direction: row;
@@ -19,7 +20,7 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.question_item:hover{
+.post_item:hover{
     border: 1px solid #9DAAF2;
 
 }
@@ -44,11 +45,21 @@
     align-items: flex-start;
 }
 
-.question_title{
+.lower_part{
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    /* align-items: center; */
+}
+
+.post_title{
     flex: 3;
     font-size: 21px;
     font-weight: 400;
     margin: 0px;
+    /* padding: 0px; */
     align-self: flex-start;
     /* text-overflow: ellipsis; */
     /* overflow: hidden; */
@@ -61,15 +72,31 @@
     /* max-height: ; */
 }
 
-.question_span{
+.post_span{
     flex: 1;
     font-weight: 300;
     font-size: 12px;
-    align-self:flex-start;
-    margin-left: 30px;
 }
 
-.question_des{
+.post_type{
+    margin-top: 10px;
+    flex: 2;
+    font-weight: 400;
+    color: rgb(88, 184, 88);
+
+    /* padding: 5px; */
+}
+
+.post_up_right{
+    margin-top: 5px;
+    /* margin: 0px; */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.post_des{
     flex: 1;
     align-self: flex-start;
 }
@@ -80,8 +107,10 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    flex-wrap: wrap;
+    overflow: hidden;
 }
+
 
 .tag_item{
     border: 2px solid #9DAAF2;
@@ -89,11 +118,15 @@
     margin-right: 10px;
     padding: 2px 4px;
     font-size: 13px;
+    /* flex: 1; */
 }
 
+
+
+
 .paginateBar{
-    top: 1230px;
-    position: absolute;
+    /* top: 1230px; */
+    /* position: absolute; */
     margin-left: 10px;
     padding-left: 0px;
     display: flex;
@@ -142,6 +175,101 @@
     font-size: 15px;
     font-weight: 300;
     color: #1A2238;
+}
+
+.left_part{
+    display: flex;
+    flex-direction: column;
+}
+
+.left_part_up{
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upVote, .downVote{
+    flex: 1;
+}
+
+.left_part_down{
+    /* align-items: center; */
+    flex: 1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrowUp, .arrowDown{
+    font-size: 40px;
+    margin-left: 10px;
+    color: #1A2238;
+
+}
+
+.upVoteSpan ,.downVoteSpan{
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.upVote, .downVote{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.left_part_down{
+    margin-top: 10px;
+
+    display: flex;
+    justify-content: center;
+}
+.view{
+    font-weight: 300;
+
+    font-size: 15px;
+}
+.eye{
+    color: rgb(88, 184, 88);
+
+    margin-left: 10px;
+
+    font-size: 35px;
+}
+
+@media screen and (max-width: 400px) {
+    
+    /* .post_list{
+        height: 940px;
+    } */
+    .post_title{
+        font-size: 15px;
+    }
+
+    .upper_part{
+        height: 30px !important;
+    }
+
+    .right_part, .upper_part{
+        font-size: 10px !important;
+    }
+
+    .tag_item {
+        font-size: 8px;
+        margin: 5px;
+    }
+
+    .paginateBar{
+        width:80% !important;
+        font-size: 13px !important;
+    }
+
+    .page_item{
+        font-size: 10px;
+    }
 }
 
 

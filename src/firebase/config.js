@@ -1,6 +1,7 @@
 import {initializeApp} from "firebase/app";
 import {getFirestore} from "firebase/firestore";
 import {getStorage} from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 // two firestore can be used if one of them exceed quote - wenhao
 
@@ -27,6 +28,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const storage = getStorage(app);
+const auth = getAuth();
 
-
-export {db,storage};
+export {db,storage,auth};
