@@ -98,7 +98,7 @@ export default function Home() {
             <span>
                 <h2>Popular posts...</h2>
             </span>
-            <Select 
+            <Select  
                 onChange={(option)=>setFilter(option)}
                 options={postPopularSortOptions}
                 defaultValue={postPopularSortOptions[2]}
@@ -112,15 +112,15 @@ export default function Home() {
 
         {/* popular tag  */}
         {document2 && 
-        <div className={styles.tag_container}>
+        <div>
             <span>
                 <h2>Popular tags...</h2>
             </span>
-            <div>
+            <div >
                 {categories&&categories.map((item)=>(
-                    <Link to={`/tag/${item.tagName}`} key={item.tagName}>
-                        <p className={styles.tags_btn}>{item.tagName}</p>
-                        <p>Results:{item.value} </p>
+                    <Link className={styles.tag_container} to={`/tag/${item.tagName}`} key={item.tagName}>
+                        <button className={styles.tags_btn}>{item.tagName} </button>
+                        <p >Results:{item.value} </p>
                     </Link>
                 ))}
             </div>
