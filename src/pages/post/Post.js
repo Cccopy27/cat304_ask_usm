@@ -83,7 +83,8 @@ export default function Post() {
             showDenyButton: true,
             confirmButtonText: 'Delete',
             denyButtonText: `Don't delete`,
-            
+            confirmButtonColor: `#dc3741`,
+            denyButtonColor: `#7066e0`,
           }).then(async(result) => {
               // delete
             if (result.isConfirmed) {
