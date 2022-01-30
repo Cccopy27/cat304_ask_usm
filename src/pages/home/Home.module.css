@@ -1,10 +1,4 @@
-.container{
-    margin-left: 50px;
-    margin-right: 50px;
-}
-
-
-.question_list{
+.post_list{
     /* background-color: aqua !important; */
     height: 800px;
     margin-top:20px
@@ -12,7 +6,7 @@
 }
 
 
-.question_add_btn{
+.post_add_btn{
     /* align-self: flex-end; */
     /* margin-top: 30px; */
     height: 30px;
@@ -22,7 +16,7 @@
     margin-left:85%;
 }
 
-.question_add_btn:hover{
+.post_add_btn:hover{
     cursor: pointer;
     color: #9DAAF2;
 }

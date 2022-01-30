@@ -1,4 +1,4 @@
-.question_header{
+.post_header{
     /* background-color: red; */
     margin-top: 20px;
     height: 60px;
@@ -8,7 +8,7 @@
     justify-content: space-between;
 }
 
-.question_filter{
+.post_filter{
     justify-content: flex-start;
     align-items: center;
     display: flex;
@@ -16,55 +16,55 @@
     flex:2;
 }
 
-.question_add{
+.post_add{
     flex:1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.question_add_btn{
+.post_add_btn{
     height: 30px;
     background-color: #1A2238;
     color: white;
 }
 
-.question_add_btn:hover{
+.post_add_btn:hover{
     cursor: pointer;
     color: #9DAAF2;
 }
-.question_header_title{
+.post_header_title{
     display: flex;
     justify-content: center;
 }
 
-.question_sort{
+.post_sort{
     display: flex;
     justify-content: center;
 }
 
 
-.question_sort{
+.post_sort{
     margin-left: 60px;
 }
 
-.question_type{
+.post_type{
     margin-left: 60px;
 }
 
 
 @media screen and (max-width: 400px) {
-    .question_header{
+    .post_header{
         margin-left: 10px;
         margin-right: 10px;
         margin-top: 5px;
     }
 
-    .question_header_title{
+    .post_header_title{
         font-size: 14px;
     }
 
-    .question_sort, .question_type{
+    .post_sort, .post_type{
         margin-left: 5px;
         font-size: 13px;
         width: 100px;
@@ -72,11 +72,11 @@
         /* flex: 2; */
     }
 
-    .question_add{
+    .post_add{
 
     }
 
-    .question_add_btn{
+    .post_add_btn{
         /* color: #9DAAF2; */
         font-size: 10px !important;
 

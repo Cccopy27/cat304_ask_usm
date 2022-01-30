@@ -4,8 +4,8 @@ import SubCommentSection from "../comment/SubCommentSection";
 import AddSubComment from "./AddSubComment";
 import Comment from "./Comment";
 
-export default function CommentSection({question_id}) {
-    const {document,error} = useCollection(["questions",question_id,"comment"]);
+export default function CommentSection({post_id}) {
+    const {document,error} = useCollection(["posts",post_id,"comment"],null,["upVote","desc"]);
     
     if(error){
         return <div>{error}</div>
@@ -23,11 +23,11 @@ export default function CommentSection({question_id}) {
                 {document.map(item => (
                     <div className={styles.comment_each} key={item.id}>
                         <div className={styles.comment_each2}>
-                            <Comment comment={item} question_id={question_id} />
+                            <Comment comment={item} post_id={post_id} />
                             <div className={styles.subComment}>
-                            <SubCommentSection subComment={item.subComment} question_id={question_id} comment_id={item.id}/>
+                            <SubCommentSection subComment={item.subComment} post_id={post_id} comment_id={item.id}/>
                             </div>
-                            <AddSubComment question_id={question_id} comment_id={item.id} />
+                            <AddSubComment post_id={post_id} comment_id={item.id} />
                         </div>
                         
                         

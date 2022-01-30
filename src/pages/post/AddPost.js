@@ -3,13 +3,13 @@ import {Timestamp, increment,doc,writeBatch} from "firebase/firestore";
 import {useFirestore} from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import styles from "./AddQuestion.module.css";
+import styles from "./AddPost.module.css";
 import Select from "react-select";
 import { useGlobalState } from "state-pool";
 import {db} from "../../firebase/config";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function AddQuestion() {
+export default function AddPost() {
     const [title, settitle] = useState("");
     const [des, setdes] = useState(""); 
     const [tag, settag] = useState([]);
@@ -21,15 +21,15 @@ export default function AddQuestion() {
     const formInput = useRef();
     const titleRef = useRef();
     const desRef = useRef();
-    const {addDocument, response} = useFirestore(["questions"]);
+    const {addDocument, response} = useFirestore(["posts"]);
     const {updateDocument} = useFirestore(["record"]);
     const navigate = useNavigate();
     const [categories, setCategories] = useGlobalState("tag");
-    const [questionType, setQuestionType] = useGlobalState("questionType")
+    const [postType, setPostType] = useGlobalState("postType")
     const [batchErr,setBatchErr] = useState(false);
     const {user} = useAuthContext();
-    const [questionTypeInput, setQuestionTypeInput] = useState({value:"Question",label:"Question"});
-    const [questionTypeSearch, setQuestionTypeSearch] = useState();
+    const [postTypeInput, setPostTypeInput] = useState({value:"Question",label:"Question"});
+    const [postTypeSearch, setQuestionTypeSearch] = useState();
     
 
 
@@ -41,7 +41,7 @@ export default function AddQuestion() {
             Swal.fire('Please login to add something', '', 'warning')
         }
         else{
-            if(formInput.current.checkValidity() && tag.length !== 0 && questionTypeInput != null){
+            if(formInput.current.checkValidity() && tag.length !== 0 && postTypeInput != null){
                 Swal.fire({
                     title: 'Are you sure?',
                     showDenyButton: true,
@@ -68,25 +68,29 @@ export default function AddQuestion() {
                         const curr = new Date();
                     
                         // user input as object
-                        const question_object={
-                            question_title: title,
-                            question_description: des,
-                            question_tag: tagList,
-                            question_image_name:imageName,
-                            question_image_url:"",
-                            // question_comments:[],
+                        const post_object={
+                            post_title: title,
+                            post_description: des,
+                            post_tag: tagList,
+                            post_image_name:imageName,
+                            post_image_url:"",
+                            // post_comments:[],
                             added_at: Timestamp.now(),
                             edited_at:"",
                             created_by:user.uid,
-                            question_type:questionTypeInput.value,
+                            post_type:postTypeInput.value,
                             view:0,
+                            upVote:0,
+                            downVote:0,
+                            upVoteList:[],
+                            downVoteList:[]
                         }
-                        // console.log(question_object);
+                        // console.log(post_object);
     
     
                         //add to database
-                        await addDocument(question_object,image,"question");
-                        // update tag amount question
+                        await addDocument(post_object,image,"post");
+                        // update tag amount post
     
     
                         const updateObj = {};
@@ -105,7 +109,7 @@ export default function AddQuestion() {
                             setImageURLs([]);
                             formInput.current.reset();
                             Swal.fire('Uploaded!', '', 'success')
-                            navigate("/question");
+                            navigate("/post");
                         }
                         // got error
                         else{
@@ -144,14 +148,14 @@ export default function AddQuestion() {
     },[image]);
 
     return (
-        <div className={styles.add_question_container}>
+        <div className={styles.add_post_container}>
             
-            <div className={styles.add_question_form_container}>
-                <div className={styles.add_question_header}>
-                    <p className={styles.add_question_title_header}>Add something</p>
+            <div className={styles.add_post_form_container}>
+                <div className={styles.add_post_header}>
+                    <p className={styles.add_post_title_header}>Add something</p>
                 </div>
-                <form className={styles.add_question_form} ref={formInput}>
-                    <label className={styles.add_question_title}>
+                <form className={styles.add_post_form} ref={formInput}>
+                    <label className={styles.add_post_title}>
                         <span className={styles.span_title}>Title:</span>
                         <input
                         required
@@ -165,7 +169,7 @@ export default function AddQuestion() {
                         />
                     </label>
 
-                    <label className={styles.add_question_tag}>
+                    <label className={styles.add_post_tag}>
                         <span className={styles.span_title}>Tags:</span>
                         <Select
                             onChange={(option)=>settag(option)}
@@ -175,19 +179,19 @@ export default function AddQuestion() {
                         {/* add tag here  */}
                     </label>
 
-                    <label className={styles.add_question_tag}>
+                    <label className={styles.add_post_tag}>
                         <span className={styles.span_title}>Type:</span>
                         <Select
-                            onChange={(option)=>setQuestionTypeInput(option)}
-                            options={questionType.slice(0,2)}
+                            onChange={(option)=>setPostTypeInput(option)}
+                            options={postType.slice(0,2)}
                             defaultValue={{label: "Question",value:"Question"}}
                         />
                     </label>
 
-                    <label className={styles.add_question_des}>
+                    <label className={styles.add_post_des}>
                         <span className={styles.span_title}>Description:</span>
                         <textarea 
-                        className={`${styles.add_question_des_input} ${styles.input_style}`}
+                        className={`${styles.add_post_des_input} ${styles.input_style}`}
                         required
                         ref={desRef}
                         onChange={e => {setdes(e.target.value)}}
@@ -197,7 +201,7 @@ export default function AddQuestion() {
                     </label>
 
 
-                    <label className={styles.add_question_img}>
+                    <label className={styles.add_post_img}>
                         <span className={styles.span_title}>Image: </span>
                         <input
                         // className={styles.input_style}

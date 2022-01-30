@@ -2,10 +2,10 @@ import './App.css';
 import Navbar from './components/Navbar';
 import {Routes,Route, BrowserRouter, Navigate} from "react-router-dom";
 import Sidebar from './components/Sidebar';
-import QuestionDashboard from './pages/question/QuestionDashboard';
-import AddQuestion from './pages/question/AddQuestion';
+import PostDashboard from './pages/post/PostDashboard';
+import AddPost from './pages/post/AddPost';
 import Rightbar from './components/Rightbar';
-import Question from './pages/question/Question';
+import Post from './pages/post/Post';
 import TagDashboard from './pages/tag/TagDashboard';
 import TagResult from './pages/tag/TagResult';
 import Login from './pages/login/Login';
@@ -75,7 +75,7 @@ const categories = [
  
 ];
 
-const questionType = [
+const postType = [
   {value:"Question", label: "Question"},
   {value:"Non-Question", label: "Non-Question"},
   {value:"All", label: "All"}
@@ -98,7 +98,7 @@ categories.sort((a,b) => a.value.localeCompare(b.value));
 // updateDoc(doc(collection(db,"record"),"tag"), newList);
 
 
-// question order list
+// post order list
 const orderList=[
   {value:"Latest",label:"Latest"},
   {value:"View",label:"View"},
@@ -108,7 +108,7 @@ const orderList=[
 // set global variable tag
 store.setState("tag",categories);
 store.setState("order",orderList);
-store.setState("questionType",questionType);
+store.setState("postType",postType);
 
 
 function App() {
@@ -123,16 +123,16 @@ function App() {
           {user && <Rightbar/> }
           <div className='content'>
             <Routes>
-              {user && <Route path="/question" element={<QuestionDashboard/>}/>}
+              {user && <Route path="/post" element={<PostDashboard/>}/>}
 
-              {user && <Route path="/addquestion" element={<AddQuestion/>}/>}
+              {user && <Route path="/addpost" element={<AddPost/>}/>}
 
-              {user && <Route path="/question/:id" element={<Question/>}/>}
+              {user && <Route path="/post/:id" element={<Post/>}/>}
 
               {user && <Route path="/tag/:result" element={<TagDashboard/>}/>}
               {user && <Route path="/tag" element={<TagDashboard/>}/>}
 
-              {user && <Route path="/question/search/:result" element={<QuestionDashboard/>}/>}
+              {user && <Route path="/post/search/:result" element={<PostDashboard/>}/>}
 
               {<Route path="/contactus" element={<ContactUs/>}/>}
 

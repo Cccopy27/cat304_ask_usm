@@ -1,4 +1,4 @@
-import styles from "./QuestionHeader.module.css";
+import styles from "./PostHeader.module.css";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { useState } from "react";
@@ -6,21 +6,21 @@ import { useGlobalState } from "state-pool";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import Swal from "sweetalert2";
 
-export default function QuestionFilter({setFilter, setQuestionTypeFilter}) {
+export default function PostFilter({setFilter, setPostTypeFilter}) {
     const [orderList, setorderList] = useGlobalState("order");
     const {user} = useAuthContext();
-    const [questionType, setQuestionType] = useGlobalState("questionType");
-    const [chosenQuestionType, setChosenQuestionType] = useState("");
+    const [postType, setPostType] = useGlobalState("postType");
+    const [chosenPostType, setChosenPostType] = useState("");
     const navigate = useNavigate();
 
-    // navigate to add question
-    const handleAddQuestion = (e) =>{
+    // navigate to add post
+    const handleAddPost = (e) =>{
         e.preventDefault();
         if (!user) {
             Swal.fire("Please login to add something","","warning");
         }
         else{
-            navigate("/addquestion");
+            navigate("/addpost");
         }
     }
 
@@ -33,7 +33,7 @@ export default function QuestionFilter({setFilter, setQuestionTypeFilter}) {
                 setFilter(["view","desc"]);
                 break;
             case "Rating":
-                
+                setFilter(["upVote","desc"])
                 break;
             case "Oldest":
                 setFilter(["added_at","asc"]);
@@ -44,33 +44,33 @@ export default function QuestionFilter({setFilter, setQuestionTypeFilter}) {
         }
     }
 
-    const handleQuestionType = (options) => {
+    const handlePostType = (options) => {
         switch(options.value) {
             case "Question":
-                setQuestionTypeFilter(["question_type", "==", "Question"]);
+                setPostTypeFilter(["post_type", "==", "Question"]);
                 break;
 
             case "Non-Question":
-                setQuestionTypeFilter(["question_type", "==", "Non-Question"]);
+                setPostTypeFilter(["post_type", "==", "Non-Question"]);
                 break;
 
             case "All":
-                setQuestionTypeFilter([]);
+                setPostTypeFilter([]);
                 break;
 
             default:
-                setQuestionTypeFilter([]);
+                setPostTypeFilter([]);
         }
     }
 
     return (
         
-        <div className={styles.question_header}>
-            <div className={styles.question_filter}>
-                <h2 className={styles.question_header_title}>All Results</h2>
-                {/* <div className={styles.question_tags}>Tags</div> */}
+        <div className={styles.post_header}>
+            <div className={styles.post_filter}>
+                <h2 className={styles.post_header_title}>All Results</h2>
+                {/* <div className={styles.post_tags}>Tags</div> */}
 
-                <div className={styles.question_sort}>
+                <div className={styles.post_sort}>
                     <Select
                     onChange={handleFilter}
                     options={orderList}
@@ -78,16 +78,16 @@ export default function QuestionFilter({setFilter, setQuestionTypeFilter}) {
                     />
                 </div>
 
-                <div className={styles.question_type}>
+                <div className={styles.post_type}>
                     <Select
-                        onChange={handleQuestionType}
-                        options={questionType}
+                        onChange={handlePostType}
+                        options={postType}
                         defaultValue={{label: "All",value:"All"}}
                     />
                 </div>
             </div>
-            <div className={styles.question_add}>
-                <button className={styles.question_add_btn} onClick={handleAddQuestion}>Add Something</button>
+            <div className={styles.post_add}>
+                <button className={styles.post_add_btn} onClick={handleAddPost}>Add Something</button>
             </div>
 
         </div>

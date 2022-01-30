@@ -15,14 +15,14 @@ export default function UserHeader( {setFilter} ) {
     const {user} = useAuthContext();
     const {result} = useParams();
 
-    // navigate to add question
-    const handleAddQuestion = (e) =>{
+    // navigate to add post
+    const handleAddPost = (e) =>{
         e.preventDefault();
         if (!user) {
             Swal.fire("Please login to add something","","warning");
         }
         else{
-            navigate("/addquestion");            
+            navigate("/addpost");            
         }
     }
 
@@ -52,10 +52,11 @@ export default function UserHeader( {setFilter} ) {
                 setFilter(["added_at","desc"]);
                 break;
             case "View": 
-                // setFilter(["added_at","desc"]);
+                setFilter(["view","desc"]);
                 break;
             case "Rating":
-                
+                setFilter(["upVote","desc"]);
+
                 break;
             case "Oldest":
                 setFilter(["added_at","asc"]);
@@ -98,8 +99,8 @@ export default function UserHeader( {setFilter} ) {
                 </div>
             </div>
             
-            <div className={styles.question_add}>
-                <button className={styles.question_add_btn} onClick={handleAddQuestion} >Add Something</button>
+            <div className={styles.post_add}>
+                <button className={styles.post_add_btn} onClick={handleAddPost} >Add Something</button>
             </div>
         </div>
     )

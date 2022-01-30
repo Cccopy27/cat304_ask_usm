@@ -113,7 +113,7 @@ export default function AdminDashboard() {
                 {currItem && currItem.map(doc=>(
                     <div className={styles.singleContact}key={doc.id}>
                         <div className={styles.contactUp}>
-                            <div className={styles.contactSubject}>Question: {doc.question}</div>
+                            <div className={styles.contactSubject}>Post: {doc.post}</div>
                             <div className={styles.contactMessage}>Problem: {doc.message}</div>
                         </div>
                         <div className={styles.contactdown}>

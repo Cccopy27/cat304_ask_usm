@@ -80,20 +80,20 @@
     color: white;
 }
 
-.question_add{
+.post_add{
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.question_add_btn{
+.post_add_btn{
     height: 30px;
     background-color: #1A2238;
     color: white;
 }
 
-.question_add_btn:hover{
+.post_add_btn:hover{
     cursor: pointer;
     color: #9DAAF2;
 }

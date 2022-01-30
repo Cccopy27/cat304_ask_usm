@@ -15,7 +15,7 @@ export default function Navbar() {
     const handleSearch = (e) => {
         e.preventDefault();
         setSearch("");
-        navigate(`/question/search/${search}`);
+        navigate(`/post/search/${search}`);
     }
 
     useEffect(() => {

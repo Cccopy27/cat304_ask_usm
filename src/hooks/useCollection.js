@@ -3,8 +3,8 @@ import { db } from "../firebase/config";
 import { collection ,onSnapshot, query, where,orderBy } from "firebase/firestore";
 // use to get data from collection (whole collection)
 // collections = name of collection in terms of array
-// example, want to collection(db, questions,"questions_id",comment)
-// pass [ questions,"questions_id",comment]
+// example, want to collection(db, posts,"posts_id",comment)
+// pass [ posts,"posts_id",comment]
 export const useCollection=(collections, queries2,orderBy2)=>{
     const [document, setDocument] = useState(null);
     const [error, setError] = useState(null)

@@ -26,7 +26,7 @@
     flex: 5;
 }
 
-.my_question{
+.my_post{
     margin-top: 10px;
     flex: 1;
 }
@@ -148,7 +148,7 @@
     color: #1A2238;
 }
 
-.my_question{
+.my_post{
     flex: 1;
     display: flex;
     justify-content: center;
@@ -156,7 +156,7 @@
     /* align-items: center; */
 }
 
-.my_question_btn{
+.my_post_btn{
     background-color:#fffaced7;  
 
     
@@ -169,7 +169,7 @@
     padding: 5px 0px;
 }
 
-.my_question_btn:hover{
+.my_post_btn:hover{
     background-color:#ffface;  
 
     /* color: #9DAAF2;   */

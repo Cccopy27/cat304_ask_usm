@@ -3,8 +3,8 @@ import { db } from "../firebase/config"
 import { collection,doc,onSnapshot } from "firebase/firestore";
 // get single document 
 // collections = name of collection, in terms of array
-// example,want to collection(db, questions,"questions_id",comment)
-// pass [ questions,"questions_id",comment]
+// example,want to collection(db, posts,"posts_id",comment)
+// pass [ posts,"posts_id",comment]
 
 // id = id of document u wan to fetch
 // change used to detect auth changing (optional)

@@ -5,9 +5,9 @@ import { Timestamp,arrayUnion } from "firebase/firestore";
 import Swal from "sweetalert2";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function AddSubComment({question_id, comment_id}) {
+export default function AddSubComment({post_id, comment_id}) {
     const [subComments, setSubComments] = useState("");
-    const {updateDocument, response} = useFirestore(["questions",question_id,"comment"]);
+    const {updateDocument, response} = useFirestore(["posts",post_id,"comment"]);
     const [cooldown, setCooldown] = useState(false);
     const subCommentRef = useRef();
     const [focusMode, setFocusMode] = useState(false);

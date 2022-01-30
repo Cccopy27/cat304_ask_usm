@@ -43,9 +43,12 @@ export default function RightBar() {
             setLoading(true);
             const docRef = doc(db, "users", user.uid);
             const unsub = onSnapshot(docRef, (doc) => {
-                if (doc.data().bookmark_tag && doc.data().bookmark_user) {
+                if (doc.data().bookmark_tag) {
                     setUserBookMarkTag(doc.data().bookmark_tag);
+                }
+                if (doc.data().bookmark_user) {
                     setUserBookMarkUser(doc.data().bookmark_user);
+
                 }
             })
           
@@ -105,6 +108,7 @@ export default function RightBar() {
         else{
             setUserBookMarkUserTop5(userBookMarkUser);
         }
+        console.log(userBookMarkTagTop5);
     },[ userBookMarkUser, userBookMarkTag ])
 
 
@@ -324,8 +328,8 @@ export default function RightBar() {
         <div className={styles.rightbar_container}>
             
             <div className={styles.rightbar_content}>
-                <div className={styles.my_question}>
-                    <button className={styles.my_question_btn} onClick={(e)=>{handleGo(e)}}>Go to My Question</button>
+                <div className={styles.my_post}>
+                    <button className={styles.my_post_btn} onClick={(e)=>{handleGo(e)}}>Go to My Post</button>
                 </div>
 
                 <div className={styles.bookmark_container}>

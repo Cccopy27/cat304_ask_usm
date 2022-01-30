@@ -1,10 +1,10 @@
-.question_list {
+.post_list {
     display: flex;
     flex-direction: column;
     height: 1000px;
 }
 
-.question_item{
+.post_item{
     /* display: flex; */
     display: flex;
     flex-direction: row;
@@ -20,7 +20,7 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.question_item:hover{
+.post_item:hover{
     border: 1px solid #9DAAF2;
 
 }
@@ -54,7 +54,7 @@
     /* align-items: center; */
 }
 
-.question_title{
+.post_title{
     flex: 3;
     font-size: 21px;
     font-weight: 400;
@@ -72,13 +72,13 @@
     /* max-height: ; */
 }
 
-.question_span{
+.post_span{
     flex: 1;
     font-weight: 300;
     font-size: 12px;
 }
 
-.question_type{
+.post_type{
     margin-top: 10px;
     flex: 2;
     font-weight: 400;
@@ -87,7 +87,7 @@
     /* padding: 5px; */
 }
 
-.question_up_right{
+.post_up_right{
     margin-top: 5px;
     /* margin: 0px; */
     flex: 1;
@@ -96,7 +96,7 @@
     
 }
 
-.question_des{
+.post_des{
     flex: 1;
     align-self: flex-start;
 }
@@ -177,12 +177,75 @@
     color: #1A2238;
 }
 
+.left_part{
+    display: flex;
+    flex-direction: column;
+}
+
+.left_part_up{
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upVote, .downVote{
+    flex: 1;
+}
+
+.left_part_down{
+    /* align-items: center; */
+    flex: 1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrowUp, .arrowDown{
+    font-size: 40px;
+    margin-left: 10px;
+    color: #1A2238;
+
+}
+
+.upVoteSpan ,.downVoteSpan{
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.upVote, .downVote{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.left_part_down{
+    margin-top: 10px;
+
+    display: flex;
+    justify-content: center;
+}
+.view{
+    font-weight: 300;
+
+    font-size: 15px;
+}
+.eye{
+    color: rgb(88, 184, 88);
+
+    margin-left: 10px;
+
+    font-size: 35px;
+}
+
 @media screen and (max-width: 400px) {
     
-    /* .question_list{
+    /* .post_list{
         height: 940px;
     } */
-    .question_title{
+    .post_title{
         font-size: 15px;
     }
 
