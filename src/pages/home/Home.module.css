@@ -1,3 +1,6 @@
+.container{
+    margin: 0px 50px 0px 50px;
+}
 .post_list{
     /* background-color: aqua !important; */
     height: 800px;
@@ -13,7 +16,7 @@
     background-color: #1A2238;
     color: white;
     border: none;
-    margin-left:85%;
+    margin-left:88%;
 }
 
 .post_add_btn:hover{
