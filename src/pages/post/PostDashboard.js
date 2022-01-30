@@ -7,7 +7,6 @@ import { useParams } from "react-router-dom";
 import stringSimilarity from "string-similarity";
 import { db } from "../../firebase/config";
 import { collection ,onSnapshot, query, where,orderBy,getDocs } from "firebase/firestore";
-import { async } from "@firebase/util";
 
 export default function PostDashboard () {
     // default order = latest
