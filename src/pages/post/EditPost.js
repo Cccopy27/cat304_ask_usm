@@ -178,7 +178,7 @@ export default function EditPost({document,editMode,setEditMode,displayName}) {
                     if(image.length !== 0){
                         document.post_image_name.forEach(image_name=>{
                             // Create a reference to the file to delete
-                            const desertRef = ref(storage, `post/${document.id}/${image_name}`);
+                            const desertRef = ref(storage, `posts/${document.id}/${image_name}`);
                             // Delete the file
                             deleteObject(desertRef).then(() => {
                                 // File deleted successfully
@@ -192,7 +192,7 @@ export default function EditPost({document,editMode,setEditMode,displayName}) {
                     console.log("hi2",image);
         
                     //update  database
-                    await updateDocument(document.id,post_object,image,"post");
+                    await updateDocument(document.id,post_object,image,"posts");
 
                     //update tag
                     // get the tag tat need to increase
