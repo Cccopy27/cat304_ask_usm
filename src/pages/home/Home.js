@@ -87,7 +87,7 @@ export default function Home() {
     <div className={styles.container}>
         {/* header */}
         <div>
-            <span>Dashboard</span>
+            <span><h1>Home : Dashboard</h1></span>
             <button className={styles.post_add_btn} onClick={handleAddPost}>Add Something</button>
         </div>
         {(!popularPost || !document2) && <div>Loading...</div>}
