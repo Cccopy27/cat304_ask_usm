@@ -84,10 +84,12 @@ export default function Home() {
     }
 
     return (
-    <div>
+    <div className={styles.container}>
         {/* header */}
         <div>
-            <span>Dashboard</span>
+            <span>
+                <h1 className={styles.main_title}>Home : Dashboard</h1>
+                </span>
             <button className={styles.question_add_btn} onClick={handleAddQuestion}>Add Something</button>
         </div>
         {(!popularQuestion || !document2) && <div>Loading...</div>}
@@ -96,9 +98,9 @@ export default function Home() {
         {popularQuestion &&
         <div>
             <span>
-                Popular questions...
+                <h2>Popular questions...</h2>
             </span>
-            <Select
+            <Select 
                 onChange={(option)=>setFilter(option)}
                 options={questionPopularSortOptions}
                 defaultValue={questionPopularSortOptions[2]}
@@ -112,14 +114,14 @@ export default function Home() {
 
         {/* popular tag  */}
         {document2 && 
-        <div>
+        <div className={styles.tag_container}>
             <span>
-                Popular tags...
+                <h2>Popular tags...</h2>
             </span>
             <div>
                 {categories&&categories.map((item)=>(
                     <Link to={`/tag/${item.tagName}`} key={item.tagName}>
-                        <p>{item.tagName}</p>
+                        <p className={styles.tags_btn}>{item.tagName}</p>
                         <p>Results:{item.value} </p>
                     </Link>
                 ))}
