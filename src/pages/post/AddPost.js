@@ -89,7 +89,7 @@ export default function AddPost() {
     
     
                         //add to database
-                        await addDocument(post_object,image,"post");
+                        await addDocument(post_object,image,"posts");
                         // update tag amount post
     
     
