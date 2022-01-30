@@ -25,14 +25,15 @@
 }
 
 .tag_container{
-    display:flex;
-    flex-direction: column;
+    display:inline-block;
+    margin: 100px;
 }
 
 .tags_btn{
-    background-color: blue;
-    border: none;
-    border-style: dashed;
-    border-color: red;
+    background-color: yellow;
+    border-style:solid;
+    border-color: black;
+    text-align: center;
+    text-decoration:none;
 }
 
