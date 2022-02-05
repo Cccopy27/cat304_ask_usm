@@ -96,7 +96,7 @@ export default function Home() {
         {popularPost &&
         <div>
             <span>
-                <h2>Popular posts...</h2>
+                <h2>Popular posts:</h2>
             </span>
             <Select  
                 onChange={(option)=>setFilter(option)}
@@ -114,13 +114,13 @@ export default function Home() {
         {document2 && 
         <div>
             <span>
-                <h2>Popular tags...</h2>
+                <h2>Popular tags:</h2>
             </span>
-            <div >
+            <div className={styles.popular_tags_container}>
                 {categories&&categories.map((item)=>(
-                    <Link className={styles.tag_container} to={`/tag/${item.tagName}`} key={item.tagName}>
-                        <button className={styles.tags_btn}>{item.tagName} </button>
-                        <p >Results:{item.value} </p>
+                    <Link className={styles.popular_tags_btn} to={`/tag/${item.tagName}`} key={item.tagName}>
+                        <p className={styles.tags_title}>{item.tagName} </p>
+                        <p className={styles.tags_result} >Results:{item.value} </p>
                     </Link>
                 ))}
             </div>
