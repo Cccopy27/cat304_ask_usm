@@ -83,7 +83,8 @@ export default function Post() {
             showDenyButton: true,
             confirmButtonText: 'Delete',
             denyButtonText: `Don't delete`,
-            
+            confirmButtonColor: `#dc3741`,
+            denyButtonColor: `#7066e0`,
           }).then(async(result) => {
               // delete
             if (result.isConfirmed) {
@@ -101,7 +102,7 @@ export default function Post() {
                 
                 document.post_image_name.forEach(image_name=>{
                     // Create a reference to the file to delete
-                    const desertRef = ref(storage, `post/${document.id}/${image_name}`);
+                    const desertRef = ref(storage, `posts/${document.id}/${image_name}`);
                     // Delete the file
                     deleteObject(desertRef).then(() => {
                         // File deleted successfully

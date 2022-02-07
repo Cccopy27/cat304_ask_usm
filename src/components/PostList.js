@@ -54,7 +54,7 @@ export default function PostList({posts, dashboardMode}) {
                             <div className={styles.lower_part}>
                                 <div className={styles.tag}>
                                     {post.post_tag.map(item=>(
-                                        <span className={styles.tag_item}>{item}</span>
+                                        <span key={item} className={styles.tag_item}>{item}</span>
                                     ))}
                                 </div>
                                 

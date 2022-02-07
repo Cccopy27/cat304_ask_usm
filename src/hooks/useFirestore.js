@@ -55,7 +55,7 @@ export const useFirestore=(collections)=>{
             
             const addedDocument = await addDoc(collection_Ref, document);
             const changes = (imgURL)=>{
-                if(uploadPathName==="post"){
+                if(uploadPathName==="posts"){
                     return {
                         post_image_url: arrayUnion(imgURL)
                     }
