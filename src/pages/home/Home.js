@@ -90,7 +90,7 @@ export default function Home() {
             <span><h1>Home : Dashboard</h1></span>
             <button className={styles.post_add_btn} onClick={handleAddPost}>Add Something</button>
         </div>
-        {(!popularPost || !document2) && <div>Loading...</div>}
+        {(!popularPost || !document2) && <div className={styles.loading}>Loading...</div>}
 
         {/* popular post */}
         {popularPost &&
@@ -106,6 +106,7 @@ export default function Home() {
             />
             <div className={styles.post_list} >
                 {popularPost&&<PostList posts={popularPost} dashboardMode={true} />}
+                
             </div>
         </div>
         }
