@@ -42,12 +42,22 @@ export default function TagDashboard() {
             const getDataFilter=async()=>{
                 let ref = "";
                 if (postTypeFilter.length !== 0) {
-
-                    ref = query(collection(db, "posts"),where(...postTypeFilter), where("post_tag","array-contains-any",tag),orderBy(...filter));
+                    if (tag.length === 1) {
+                        ref = query(collection(db, "posts"),where(...postTypeFilter), where("post_tag","array-contains-any",tag),orderBy(...filter));
+                    } else {
+                        ref = query(collection(db, "posts"),where(...postTypeFilter), where("post_tag","in",[tag]),orderBy(...filter));
+                    }
+                    
+                    
                 }
                 else {
-                    ref = query(collection(db, "posts"),where("post_tag","array-contains-any",tag),orderBy(...filter));
-                   
+                    if (tag.length === 1) {
+                        ref = query(collection(db, "posts"),where("post_tag","array-contains-any",tag),orderBy(...filter));
+                    } else {
+                        ref = query(collection(db, "posts"),where("post_tag","in",[tag]),orderBy(...filter));
+                    }
+                    
+                    
                 }
                 let results= [];
                 console.log("I keep running in get collections");

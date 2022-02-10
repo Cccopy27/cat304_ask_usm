@@ -18,6 +18,7 @@ import AdminDashboard from "./admin/AdminDashboard";
 import UserDashboard from './pages/user/UserDashboard';
 import { useAuthContext } from "./hooks/useAuthContext";
 import Home from './pages/home/Home';
+import AboutUs from './components/AboutUs';
 
 // categories
 const categories = [
@@ -123,6 +124,7 @@ function App() {
           {user && <Rightbar/> }
           <div className='content'>
             <Routes>
+              
               {user && <Route path="/post" element={<PostDashboard/>}/>}
 
               {user && <Route path="/addpost" element={<AddPost/>}/>}
@@ -135,6 +137,8 @@ function App() {
               {user && <Route path="/post/search/:result" element={<PostDashboard/>}/>}
 
               {<Route path="/contactus" element={<ContactUs/>}/>}
+
+              <Route path="/aboutus" element={<AboutUs/>}/>
 
               {user && <Route path="/admin" element={<AdminDashboard/>}/>}
 
