@@ -44,8 +44,8 @@ export default function TagResult({tag,document}) {
         // format tag result
         if (tag) {
             let tempString = "";
-            tag.forEach(element => {
-                tempString += element;
+            tag.forEach(element => { 
+                tempString += element + " ";
             });
             setresultString(tempString);
         } 
